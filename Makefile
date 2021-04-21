@@ -5,13 +5,13 @@
 ## project makefile
 ##
 
-SRC =   src/
+SRC =   src/Serializer/Serializer.cpp
 
 OBJ =   $(SRC:.cpp=.o)
 
 NAME =	plazza
 
-INCLUDES =	-I ../../include -I ../../include/Interfaces -I src
+INCLUDES =	-I include -I include/interfaces -I src
 CXXFLAGS =	$(INCLUDES) -W -Wall -Wextra
 
 
@@ -21,7 +21,6 @@ $(NAME):    $(OBJ)
 		@$(ECHO)
 		@g++ -o $(NAME) $(OBJ) \
 		&& $(ECHO) $(BOLD) $(GREEN)"► BUILD SUCCESS !"$(DEFAULT) || $(ECHO) $(BOLD) $(RED)"► BUILD FAILED"$(DEFAULT)
-		@mkdir -p ../../lib && mv $(NAME) ../../lib
 
 clean:
 		@rm -f $(OBJ)

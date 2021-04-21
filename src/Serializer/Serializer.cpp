@@ -1,0 +1,26 @@
+/*
+ * EPITECH PROJECT, 2021
+ * serializer
+ * File description:
+ * serializer.cpp - Created: 20/04/2021
+ */
+
+#include <unistd.h>
+#include <stdio.h>
+#include "Serializer/Serializer.hpp"
+
+void Serializer::pack(const int fd, void *object)
+{
+    if (write(fd, object, sizeof(object)) == -1) {
+        perror("write");
+        return;
+    }
+}
+
+void Serializer::unpack(const int fd, void *object)
+{
+    if (read(fd, object, sizeof(object)) == -1) {
+        perror("read");
+        return;
+    }
+}
