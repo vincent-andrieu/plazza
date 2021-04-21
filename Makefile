@@ -5,13 +5,19 @@
 ## project makefile
 ##
 
-SRC =   src/Serializer/Serializer.cpp
+SRC =   src/main.cpp														\
+		src/Error/Error.cpp													\
+		src/Serializer/Serializer.cpp										\
+		src/Encapsulations/Processes/Processes.cpp							\
+		src/Encapsulations/Threads/Threads.cpp								\
+		src/Encapsulations/Mutex/Mutex.cpp									\
+		src/Encapsulations/ConditionalVariables/ConditionalVariables.cpp	\
 
 OBJ =   $(SRC:.cpp=.o)
 
 NAME =	plazza
 
-INCLUDES =	-I include -I include/interfaces -I src
+INCLUDES =	-I include -I include/Interfaces -I src
 CXXFLAGS =	$(INCLUDES) -W -Wall -Wextra
 
 

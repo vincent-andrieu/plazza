@@ -8,19 +8,16 @@
 #include <unistd.h>
 #include <stdio.h>
 #include "Serializer/Serializer.hpp"
+#include "Error/Error.hpp"
 
 void Serializer::pack(const int fd, void *object)
 {
-    if (write(fd, object, sizeof(object)) == -1) {
-        perror("write");
-        return;
-    }
+    if (write(fd, object, sizeof(object)) == -1)
+        throw SerializerError(getErrnoMsg());
 }
 
 void Serializer::unpack(const int fd, void *object)
 {
-    if (read(fd, object, sizeof(object)) == -1) {
-        perror("read");
-        return;
-    }
+    if (read(fd, object, sizeof(object)) == -1)
+        throw SerializerError(getErrnoMsg());
 }
