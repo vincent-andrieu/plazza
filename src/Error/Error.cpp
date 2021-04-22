@@ -9,7 +9,7 @@
 #include <errno.h>
 #include "Error.hpp"
 
-string getErrnoMsg()
+const string getErrnoMsg()
 {
     return strerror(errno);
 }
