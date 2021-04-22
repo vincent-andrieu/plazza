@@ -5,7 +5,7 @@
  * main.cpp - Created: 21/04/2021
  */
 
-#include "cstring"
+#include <cstring>
 #include "Plazza.hpp"
 
 void printHelp(const string binaryName)

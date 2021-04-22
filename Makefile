@@ -7,6 +7,7 @@
 
 SRC =   src/main.cpp														\
 		src/Error/Error.cpp													\
+		src/Plazza.cpp														\
 		src/Serializer/Serializer.cpp										\
 		src/Encapsulations/Processes/Processes.cpp							\
 		src/Encapsulations/Threads/Threads.cpp								\

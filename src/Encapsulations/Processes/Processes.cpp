@@ -42,6 +42,12 @@ bool Processes::isChild() const
     return this->_isChild;
 }
 
+/**
+ * @brief Wait child process and return the process exit value. Throw an error if the child try to wait himself or if waitpid
+ * fail.
+ *
+ * @return int (exit value)
+ */
 int Processes::waitChild() const
 {
     int exit_value;
@@ -53,6 +59,10 @@ int Processes::waitChild() const
     return WIFEXITED(exit_value) ? WEXITSTATUS(exit_value) : 0;
 }
 
+/**
+ * @brief The child can kill himself ! An error is throw if kill fail.
+ *
+ */
 void Processes::killChild() const
 {
     if (kill(this->_childPid, SIGKILL) == -1)
