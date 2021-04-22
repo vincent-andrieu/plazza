@@ -10,7 +10,7 @@
 
 class Serializer {
   public:
-    static void pack(const int fd, void *object);
+    static void pack(const int fd, const void *object);
     static void unpack(const int fd, void *object);
 };
 

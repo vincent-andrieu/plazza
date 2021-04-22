@@ -9,6 +9,7 @@ SRC =   src/main.cpp														\
 		src/Error/Error.cpp													\
 		src/Plazza.cpp														\
 		src/Serializer/Serializer.cpp										\
+		src/Communication/Communication.cpp									\
 		src/Encapsulations/Processes/Processes.cpp							\
 		src/Encapsulations/Threads/Threads.cpp								\
 		src/Encapsulations/Mutex/Mutex.cpp									\

@@ -48,6 +48,11 @@ class ConditionalVariablesError : public ManageError {
     ConditionalVariablesError(string const &message = "Standard", string const &component = "ConditionalVariables");
 };
 
+class CommunicationError : public ManageError {
+  public:
+    CommunicationError(string const &message = "Standard", string const &component = "Serializer");
+};
+
 class SerializerError : public ManageError {
   public:
     SerializerError(string const &message = "Standard", string const &component = "Serializer");

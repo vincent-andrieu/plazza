@@ -10,7 +10,7 @@
 #include "Serializer/Serializer.hpp"
 #include "Error/Error.hpp"
 
-void Serializer::pack(const int fd, void *object)
+void Serializer::pack(const int fd, const void *object)
 {
     if (write(fd, object, sizeof(object)) == -1)
         throw SerializerError(getErrnoMsg());
