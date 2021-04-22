@@ -12,6 +12,10 @@
 #include "Communication/Communication.hpp"
 #include "Serializer/Serializer.hpp"
 
+Communication::Communication()
+{
+}
+
 Communication::Communication(const string &filename)
 {
     this->_filepath = FIFO_ROOT + filename;
@@ -20,11 +24,23 @@ Communication::Communication(const string &filename)
         throw CommunicationError(getErrnoMsg());
 }
 
+Communication::Communication(const Communication &copy)
+{
+    this->_filepath = copy._filepath;
+}
+
 Communication::~Communication()
 {
 }
 
-void Communication::write(const void *object)
+Communication &Communication::operator=(const Communication &communication)
+{
+    this->_filepath = communication._filepath;
+
+    return *this;
+}
+
+void Communication::write(const void *object) const
 {
     int fd = open(this->_filepath.c_str(), O_WRONLY);
 
@@ -37,7 +53,7 @@ void Communication::write(const void *object)
         throw CommunicationError(getErrnoMsg());
 }
 
-void Communication::read(void *object)
+void Communication::read(void *object) const
 {
     int fd = open(this->_filepath.c_str(), O_RDONLY);
 

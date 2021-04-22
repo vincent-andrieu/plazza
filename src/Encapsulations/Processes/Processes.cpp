@@ -26,6 +26,7 @@ Processes::Processes()
         this->_isParent = true;
         this->_isChild = false;
     }
+    this->_communication = Communication("Process/" + this->_childPid);
 }
 
 Processes::~Processes()
@@ -69,14 +70,12 @@ void Processes::killChild() const
         throw ProcessError(getErrnoMsg());
 }
 
-void Processes::send(const string &msg) const
+void Processes::send(const void *object) const
 {
-    // TODO
-    (void) msg;
+    this->_communication.write(object);
 }
 
-string Processes::receive() const
+void Processes::receive(void *object) const
 {
-    // TODO
-    return "";
+    this->_communication.read(object);
 }

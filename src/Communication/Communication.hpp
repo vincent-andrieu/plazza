@@ -15,11 +15,15 @@
 
 class Communication {
   public:
+    Communication();
     Communication(const string &filename);
+    Communication(const Communication &communication);
     ~Communication();
 
-    void write(const void *object);
-    void read(void *object);
+    Communication &operator=(const Communication &communication);
+
+    void write(const void *object) const;
+    void read(void *object) const;
 
   private:
     string _filepath;
