@@ -1,1 +1,11 @@
 plazza
+unit_tests
+
+build
+cmake-build-debug
+
+*.o
+*.gcno
+*.gcda
+
+.idea
