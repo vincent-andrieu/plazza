@@ -31,7 +31,7 @@ set(MY_INCLUDE
         )
 
 set(MY_DEPENDENCIES
-        )
+        pthread)
 
 set(MY_BINARY plazza)
 
