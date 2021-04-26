@@ -51,16 +51,14 @@ template <typename T>
 bool ConditionalVariables<T>::setVar(T var)
 {
     if (this->_available) {
-        this->force_lock();
-        this->_var = var;
-        this->force_unlock();
+        this->forceSetVar(var);
         return true;
     }
     return false;
 }
 
 template <typename T>
-void ConditionalVariables<T>::force_lock()
+void ConditionalVariables<T>::forceLock()
 {
     if (this->_available) {
         this->_available = false;
@@ -69,12 +67,20 @@ void ConditionalVariables<T>::force_lock()
 }
 
 template <typename T>
-void ConditionalVariables<T>::force_unlock()
+void ConditionalVariables<T>::forceUnlock()
 {
     if (!this->_available) {
         this->_mutex->unlock();
         this->_available = true;
     }
+}
+
+template <typename T>
+void ConditionalVariables<T>::forceSetVar(T var)
+{
+    this->forceLock();
+    this->_var = var;
+    this->forceUnlock();
 }
 
 template class ConditionalVariables<int>;

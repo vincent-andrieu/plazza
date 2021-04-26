@@ -22,8 +22,9 @@ template <typename T> class ConditionalVariables {
     void wait();
     T getVar();
     bool setVar(T var);
-    void force_lock();
-    void force_unlock();
+    void forceLock();
+    void forceUnlock();
+    void forceSetVar(T var);
 
   private:
     std::unique_ptr<Mutex> _mutex;
