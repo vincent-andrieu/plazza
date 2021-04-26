@@ -7,10 +7,72 @@
 
 #include "Encapsulations/ConditionalVariables/ConditionalVariables.hpp"
 
-ConditionalVariables::ConditionalVariables()
+template <typename T>
+ConditionalVariables<T>::ConditionalVariables() : _mutex(std::make_unique<Mutex>()), _available(true), _var(0)
 {
 }
 
-ConditionalVariables::~ConditionalVariables()
+template <typename T>
+ConditionalVariables<T>::ConditionalVariables(T var) : _mutex(std::make_unique<Mutex>()), _available(true), _var(var)
 {
 }
+
+template <typename T>
+ConditionalVariables<T>::ConditionalVariables(std::unique_ptr<Mutex> &&mutex, T var) : _mutex(std::move(mutex)), _available(true), _var(var)
+{
+}
+
+template <typename T>
+ConditionalVariables<T>::~ConditionalVariables()
+{
+    this->_mutex.reset();
+}
+
+template <typename T>
+bool ConditionalVariables<T>::isAvailable()
+{
+    return this->_available;
+}
+
+template <typename T>
+void ConditionalVariables<T>::wait()
+{
+    while (!this->_available)
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+}
+
+template <typename T>
+T ConditionalVariables<T>::getVar()
+{
+    return this->_var;
+}
+
+template <typename T>
+void ConditionalVariables<T>::setVar(T var)
+{
+    if (this->_available) {
+        this->force_lock();
+        this->_var = var;
+        this->force_unlock();
+    }
+}
+
+template <typename T>
+void ConditionalVariables<T>::force_lock()
+{
+    if (this->_available) {
+        this->_available = false;
+        this->_mutex->lock();
+    }
+}
+
+template <typename T>
+void ConditionalVariables<T>::force_unlock()
+{
+    if (!this->_available) {
+        this->_mutex->unlock();
+        this->_available = true;
+    }
+}
+
+template class ConditionalVariables<int>;

@@ -27,7 +27,7 @@ all:    $(NAME)
 
 $(NAME):    $(OBJ)
 		@$(ECHO)
-		@g++ -o $(NAME) $(OBJ) \
+		@g++ -o $(NAME) $(OBJ) -lpthread\
 		&& $(ECHO) $(BOLD) $(GREEN)"► BUILD SUCCESS !"$(DEFAULT) || $(ECHO) $(BOLD) $(RED)"► BUILD FAILED"$(DEFAULT)
 
 clean:
