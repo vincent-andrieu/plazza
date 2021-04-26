@@ -21,7 +21,7 @@ template <typename T> class ConditionalVariables {
     bool isAvailable();
     void wait();
     T getVar();
-    void setVar(T var);
+    bool setVar(T var);
     void force_lock();
     void force_unlock();
 

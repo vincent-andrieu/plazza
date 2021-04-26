@@ -48,13 +48,15 @@ T ConditionalVariables<T>::getVar()
 }
 
 template <typename T>
-void ConditionalVariables<T>::setVar(T var)
+bool ConditionalVariables<T>::setVar(T var)
 {
     if (this->_available) {
         this->force_lock();
         this->_var = var;
         this->force_unlock();
+        return true;
     }
+    return false;
 }
 
 template <typename T>
