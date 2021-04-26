@@ -58,4 +58,9 @@ class SerializerError : public ManageError {
     SerializerError(string const &message = "Standard", string const &component = "Serializer");
 };
 
+class FactoryError : public ManageError {
+  public:
+    FactoryError(string const &message = "Standard", string const &component = "Factory");
+};
+
 #endif

@@ -8,7 +8,7 @@
 #ifndef ENUM_PLAZZA_HPP
 #define ENUM_PLAZZA_HPP
 
-enum PizzaType
+enum class PizzaType
 {
     Regina = 1,
     Margarita = 2,
@@ -16,7 +16,7 @@ enum PizzaType
     Fantasia = 8,
 };
 
-enum PizzaSize
+enum class PizzaSize
 {
     S = 1,
     M = 2,
@@ -25,7 +25,7 @@ enum PizzaSize
     XXL = 16,
 };
 
-enum PizzaIngredient
+enum class PizzaIngredient
 {
     DOE,
     TOMATOE,

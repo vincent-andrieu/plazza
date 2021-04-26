@@ -52,3 +52,7 @@ CommunicationError::CommunicationError(string const &message, string const &comp
 SerializerError::SerializerError(string const &message, string const &component) : ManageError(message, component)
 {
 }
+
+FactoryError::FactoryError(string const &message, string const &component) : ManageError(message, component)
+{
+}

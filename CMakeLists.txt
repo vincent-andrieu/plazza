@@ -16,6 +16,8 @@ set(MY_ERROR_DIR ${MY_UTILS_DIR}Error/)
 set(MY_SERIALIZER_DIR ${MY_UTILS_DIR}Serializer/)
 set(MY_COMMUNICATION_DIR ${MY_UTILS_DIR}Communication/)
 set(MY_PIZZA_DIR ${MY_PLAZZA_DIR}Pizza/)
+set(MY_PIZZATYPE_DIR ${MY_PIZZA_DIR}PizzaType/)
+set(MY_FACTORY_DIR ${MY_PIZZA_DIR}Factory/)
 
 set(MY_SRC
         ${MY_ENCAPSULATION_DIR}ConditionalVariables/ConditionalVariables.cpp
@@ -26,6 +28,11 @@ set(MY_SRC
         ${MY_SERIALIZER_DIR}Serializer.cpp
         ${MY_COMMUNICATION_DIR}Communication.cpp
         ${MY_PIZZA_DIR}Pizza.cpp
+        ${MY_PIZZATYPE_DIR}Americana/Americana.cpp
+        ${MY_PIZZATYPE_DIR}Fantasia/Fantasia.cpp
+        ${MY_PIZZATYPE_DIR}Margarita/Margarita.cpp
+        ${MY_PIZZATYPE_DIR}Regina/Regina.cpp
+        ${MY_FACTORY_DIR}Factory.cpp
         )
 
 set(MY_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
