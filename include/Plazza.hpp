@@ -15,5 +15,6 @@
 #define EXIT_ERROR   84
 
 typedef std::string string;
+typedef std::size_t size_t;
 
 #endif
