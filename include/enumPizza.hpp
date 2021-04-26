@@ -25,4 +25,17 @@ typedef enum class PizzaSize
     XXL = 16,
 } PizzaSize;
 
+typedef enum class PizzaIngredient
+{
+    DOE,
+    TOMATOE,
+    GRUYERE,
+    HAM,
+    MUSHROOMS,
+    STEAK,
+    EGGPLANT,
+    GOAT_CHEESE,
+    CHIEF_LOVE
+} PizzaIngredient;
+
 #endif

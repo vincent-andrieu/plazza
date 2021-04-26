@@ -9,7 +9,7 @@
 #define PLAZZA_HPP
 
 #include <iostream>
-#include "enumPlazza.hpp"
+#include "enumPizza.hpp"
 
 #define EXIT_SUCCESS 0
 #define EXIT_ERROR   84
