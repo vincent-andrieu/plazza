@@ -15,16 +15,6 @@
 #define EXIT_ERROR   84
 
 typedef std::string string;
-
-#endif
-
-#ifdef DEBUG
-
-#include <sstream>
-
-typedef std::stringstream stringstream;
-
-void dump(const string &msg);
-void dump(const stringstream &ss);
+typedef std::size_t size_t;
 
 #endif

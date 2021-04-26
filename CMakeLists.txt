@@ -18,7 +18,6 @@ set(MY_PIZZATYPE_DIR ${MY_PIZZA_DIR}PizzaType/)
 set(MY_FACTORY_DIR ${MY_SRC_DIR}Factory/)
 
 set(MY_SRC
-        ${MY_SRC_DIR}Plazza.cpp
         ${MY_ENCAPSULATION_DIR}ConditionalVariables/ConditionalVariables.cpp
         ${MY_ENCAPSULATION_DIR}Mutex/Mutex.cpp
         ${MY_ENCAPSULATION_DIR}Processes/Processes.cpp
