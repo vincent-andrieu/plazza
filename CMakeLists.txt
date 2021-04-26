@@ -9,11 +9,13 @@ project(the_plazza
         )
 
 set(MY_SRC_DIR ${PROJECT_SOURCE_DIR}/src/)
-set(MY_ENCAPSULATION_DIR ${MY_SRC_DIR}Encapsulations/)
-set(MY_ERROR_DIR ${MY_SRC_DIR}Error/)
-set(MY_SERIALIZER_DIR ${MY_SRC_DIR}Serializer/)
-set(MY_COMMUNICATION_DIR ${MY_SRC_DIR}Communication/)
-set(MY_PIZZA_DIR ${MY_SRC_DIR}Pizza/)
+set(MY_PLAZZA_DIR ${MY_SRC_DIR}/Plazza/)
+set(MY_UTILS_DIR ${MY_SRC_DIR}/Utils/)
+set(MY_ENCAPSULATION_DIR ${MY_UTILS_DIR}Encapsulations/)
+set(MY_ERROR_DIR ${MY_UTILS_DIR}Error/)
+set(MY_SERIALIZER_DIR ${MY_UTILS_DIR}Serializer/)
+set(MY_COMMUNICATION_DIR ${MY_UTILS_DIR}Communication/)
+set(MY_PIZZA_DIR ${MY_PLAZZA_DIR}Pizza/)
 
 set(MY_SRC
         ${MY_ENCAPSULATION_DIR}ConditionalVariables/ConditionalVariables.cpp
@@ -30,7 +32,8 @@ set(MY_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 
 set(MY_INCLUDE
         ${MY_INCLUDE_DIR}
-        ${MY_SRC_DIR}
+        ${MY_SRC_DIR}/Plazza
+        ${MY_SRC_DIR}/Utils
         )
 
 set(MY_DEPENDENCIES

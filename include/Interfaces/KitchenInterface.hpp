@@ -8,18 +8,20 @@
 #ifndef KITCHEN_INTERFACE_HPP
 #define KITCHEN_INTERFACE_HPP
 
-#include "CommandInterpreter/CommandInterpreter.hpp"
 #include "Order/Order.hpp"
 
-class IKitchen : CommandInterpreter {
+class IKitchen {
   public:
     virtual ~IKitchen() = default;
-    virtual bool isOpen() const = 0;
-    virtual Order getOrder() const = 0;
-    virtual void sayStatus() = 0;
+    virtual void cook() = 0;      // while work
+    virtual bool isCooking() = 0; // while is true, loop
 
   protected:
-    void receiveCommand() = 0; // take from cmdLine
+    virtual void receiveOrder() = 0; // from pipe
+    virtual bool isOrderReady(Order order) = 0;
+    virtual void sendOrder() = 0; // through pipe
+    virtual void assignOrder(Order order, Cook cook) = 0;
+    virtual void restock() = 0;
 };
 
 #endif
