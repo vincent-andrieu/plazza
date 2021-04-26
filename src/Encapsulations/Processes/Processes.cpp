@@ -26,7 +26,7 @@ Processes::Processes()
         this->_isParent = true;
         this->_isChild = false;
     }
-    this->_communication = Communication("Process/" + this->_childPid);
+    this->_communication = Communication(std::to_string(this->_childPid));
 }
 
 Processes::~Processes()
@@ -70,12 +70,12 @@ void Processes::killChild() const
         throw ProcessError(getErrnoMsg());
 }
 
-void Processes::send(const void *object) const
+void Processes::send(const Serializer &object) const
 {
     this->_communication.write(object);
 }
 
-void Processes::receive(void *object) const
+void Processes::receive(const Serializer &object) const
 {
     this->_communication.read(object);
 }

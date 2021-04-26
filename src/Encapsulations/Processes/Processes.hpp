@@ -21,8 +21,8 @@ class Processes {
     bool isChild() const;
     int waitChild() const;
     void killChild() const;
-    void send(const void *object) const;
-    void receive(void *object) const;
+    void send(const Serializer &object) const;
+    void receive(const Serializer &object) const;
 
   private:
     pid_t _parentPid;

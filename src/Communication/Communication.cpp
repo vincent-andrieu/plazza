@@ -6,8 +6,7 @@
  */
 
 #include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
+#include <fstream>
 #include "Error/Error.hpp"
 #include "Communication/Communication.hpp"
 #include "Serializer/Serializer.hpp"
@@ -18,9 +17,10 @@ Communication::Communication()
 
 Communication::Communication(const string &filename)
 {
+    mkdir(FIFO_ROOT, FIFO_FOLDER_PERMISSIONS);
     this->_filepath = FIFO_ROOT + filename;
 
-    if (mkfifo(this->_filepath.c_str(), FIFO_PERMISSIONS) == -1)
+    if (mkfifo(this->_filepath.c_str(), FIFO_PERMISSIONS) == -1 && errno != EEXIST)
         throw CommunicationError(getErrnoMsg());
 }
 
@@ -40,28 +40,24 @@ Communication &Communication::operator=(const Communication &communication)
     return *this;
 }
 
-void Communication::write(const void *object) const
+void Communication::write(const Serializer &object) const
 {
-    int fd = open(this->_filepath.c_str(), O_WRONLY);
+    std::ofstream file(this->_filepath, std::ios::out | std::ios::binary);
 
-    if (fd == -1)
-        throw CommunicationError(getErrnoMsg());
-
-    Serializer::pack(fd, object);
-
-    if (close(fd) == -1)
-        throw CommunicationError(getErrnoMsg());
+    if (file.is_open()) {
+        object.pack(file);
+        file.close();
+    } else
+        throw CommunicationError("Fail to open file to write: " + this->_filepath);
 }
 
-void Communication::read(void *object) const
+void Communication::read(const Serializer &object) const
 {
-    int fd = open(this->_filepath.c_str(), O_RDONLY);
+    std::ifstream file(this->_filepath, std::ios::in | std::ios::binary);
 
-    if (fd == -1)
-        throw CommunicationError(getErrnoMsg());
-
-    Serializer::unpack(fd, object);
-
-    if (close(fd) == -1)
-        throw CommunicationError(getErrnoMsg());
+    if (file.is_open()) {
+        object.unpack(file);
+        file.close();
+    } else
+        throw CommunicationError("Fail to open file to read: " + this->_filepath);
 }

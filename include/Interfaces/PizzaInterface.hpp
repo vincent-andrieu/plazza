@@ -26,7 +26,7 @@ enum PizzaSize
 };
 
 // TODO: This class must be edited, it was a test
-class PizzaInterface {
+class PizzaInterface : public Serializer {
   public:
     PizzaInterface(int nbr, int size);
     PizzaInterface();

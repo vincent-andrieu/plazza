@@ -10,8 +10,14 @@
 
 class Serializer {
   public:
-    static void pack(const int fd, const void *object);
-    static void unpack(const int fd, void *object);
+    Serializer();
+    Serializer(std::size_t size);
+
+    void pack(std::ofstream &file) const;
+    void unpack(std::ifstream &file) const;
+
+  private:
+    std::size_t _size;
 };
 
 #endif
