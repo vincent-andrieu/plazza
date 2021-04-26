@@ -5,8 +5,8 @@
  * Pizza.hpp
  */
 
-#ifndef MUTEX_HPP
-#define MUTEX_HPP
+#ifndef PIZZA_HPP
+#define PIZZA_HPP
 
 #include <vector>
 #include "Interfaces/ProductInterface.hpp"
