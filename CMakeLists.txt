@@ -16,7 +16,6 @@ set(MY_COMMUNICATION_DIR ${MY_SRC_DIR}Communication/)
 set(MY_PIZZA_DIR ${MY_SRC_DIR}Pizza/)
 
 set(MY_SRC
-        ${MY_SRC_DIR}Plazza.cpp
         ${MY_ENCAPSULATION_DIR}ConditionalVariables/ConditionalVariables.cpp
         ${MY_ENCAPSULATION_DIR}Mutex/Mutex.cpp
         ${MY_ENCAPSULATION_DIR}Processes/Processes.cpp

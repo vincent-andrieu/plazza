@@ -17,14 +17,3 @@
 typedef std::string string;
 
 #endif
-
-#ifdef DEBUG
-
-#include <sstream>
-
-typedef std::stringstream stringstream;
-
-void dump(const string &msg);
-void dump(const stringstream &ss);
-
-#endif
