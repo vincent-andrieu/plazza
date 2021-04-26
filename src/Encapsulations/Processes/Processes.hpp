@@ -8,8 +8,9 @@
 #ifndef PROCESSES_HPP
 #define PROCESSES_HPP
 
-#include "Plazza.hpp"
 #include <unistd.h>
+#include "Plazza.hpp"
+#include "Communication/Communication.hpp"
 
 class Processes {
   public:
@@ -20,14 +21,15 @@ class Processes {
     bool isChild() const;
     int waitChild() const;
     void killChild() const;
-    void send(const string &msg) const;
-    string receive() const;
+    void send(const Serializer &object) const;
+    void receive(const Serializer &object) const;
 
   private:
     pid_t _parentPid;
     bool _isParent;
     pid_t _childPid;
     bool _isChild;
+    Communication _communication;
 };
 
 #endif

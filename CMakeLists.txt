@@ -12,6 +12,8 @@ set(MY_SRC_DIR ${PROJECT_SOURCE_DIR}/src/)
 set(MY_ENCAPSULATION_DIR ${MY_SRC_DIR}Encapsulations/)
 set(MY_ERROR_DIR ${MY_SRC_DIR}Error/)
 set(MY_SERIALIZER_DIR ${MY_SRC_DIR}Serializer/)
+set(MY_COMMUNICATION_DIR ${MY_SRC_DIR}Communication/)
+set(MY_PIZZA_DIR ${MY_SRC_DIR}Pizza/)
 
 set(MY_SRC
         ${MY_SRC_DIR}Plazza.cpp
@@ -21,6 +23,8 @@ set(MY_SRC
         ${MY_ENCAPSULATION_DIR}Threads/Threads.cpp
         ${MY_ERROR_DIR}Error.cpp
         ${MY_SERIALIZER_DIR}Serializer.cpp
+        ${MY_COMMUNICATION_DIR}Communication.cpp
+        ${MY_PIZZA_DIR}Pizza.cpp
         )
 
 set(MY_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)

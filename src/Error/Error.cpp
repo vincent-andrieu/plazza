@@ -6,7 +6,7 @@
  */
 
 #include <cstring>
-#include <errno.h>
+#include <cerrno>
 #include "Error.hpp"
 
 const string getErrnoMsg()
@@ -42,6 +42,10 @@ MutexError::MutexError(string const &message, string const &component) : ManageE
 
 ConditionalVariablesError::ConditionalVariablesError(string const &message, string const &component)
     : ManageError(message, component)
+{
+}
+
+CommunicationError::CommunicationError(string const &message, string const &component) : ManageError(message, component)
 {
 }
 

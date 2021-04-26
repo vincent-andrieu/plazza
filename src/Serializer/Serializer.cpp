@@ -5,19 +5,24 @@
  * serializer.cpp - Created: 20/04/2021
  */
 
-#include <unistd.h>
-#include <stdio.h>
+#include <fstream>
 #include "Serializer/Serializer.hpp"
 #include "Error/Error.hpp"
 
-void Serializer::pack(const int fd, void *object)
+Serializer::Serializer(std::size_t size) : _size(size)
 {
-    if (write(fd, object, sizeof(object)) == -1)
-        throw SerializerError(getErrnoMsg());
 }
 
-void Serializer::unpack(const int fd, void *object)
+void Serializer::pack(std::ofstream &file) const
 {
-    if (read(fd, object, sizeof(object)) == -1)
-        throw SerializerError(getErrnoMsg());
+    file.write((char *) this, this->_size);
+    if (file.bad())
+        throw SerializerError("Fail to pack");
+}
+
+void Serializer::unpack(std::ifstream &file) const
+{
+    file.read((char *) this, this->_size);
+    if (file.bad())
+        throw SerializerError("Fail to unpack");
 }
