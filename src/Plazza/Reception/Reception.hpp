@@ -11,6 +11,14 @@
 #include "Interfaces/ReceptionInterface.hpp"
 
 class Reception : IReception {
+  public:
+    ~IReception();
+    bool isOpen() const;
+    Order getOrder() const;
+    void sayStatus();
+
+  protected:
+    void receiveCommand();
 };
 
 #endif
