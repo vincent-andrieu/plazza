@@ -12,6 +12,11 @@ Restaurant::Restaurant(double bakingTime, size_t cooksPerKitchen, size_t restock
 {
 }
 
+bool Restaurant::isOpen() const
+{
+    this->_isOpen;
+}
+
 void Restaurant::distributeOrder(const Order &order)
 {
     KitchenManage &selectedKitchen;
