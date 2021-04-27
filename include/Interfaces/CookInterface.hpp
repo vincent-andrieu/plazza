@@ -14,7 +14,7 @@
 class ICook {
   public:
     virtual ~ICook() = default;
-    virtual bool cook(Pizza) = 0; // {if has 2 pizzas, return false, if not, put pizza in pending}
+    virtual bool cook(Pizza pizza) = 0; // {if has 2 pizzas, return false, if not, put pizza in pending}
     virtual Pizza getCookingPizza() const = 0;
     virtual Pizza getPendingPizza() const = 0;
     virtual std::queue<Pizza> getFinishedPizzas() const = 0;
