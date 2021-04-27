@@ -8,8 +8,10 @@
 #ifndef KITCHEN_HPP
 #define KITCHEN_HPP
 
+#include <queue>
 #include "Interfaces/KitchenInterface.hpp"
-#include "Encapsulations/Processes/Processes.hpp"
+#include "Encapsulations/Process/Process.hpp"
+#include "Order/Order.hpp"
 #include "Cook/Cook.hpp"
 
 class Kitchen : public IKitchen, public Process {
@@ -17,17 +19,21 @@ class Kitchen : public IKitchen, public Process {
     Kitchen(double bakingTime, size_t cooksPerKitchen, size_t restockTime);
     ~Kitchen();
     void cook();
-    bool isCooking();
+    bool isCooking() const;
 
   protected:
-    void receiveOrder();
-    bool isOrderReady(Order order);
-    void sendOrder();
-    void assignOrder(Order order, Cook cook);
-    void retreiveOrder();
-    void restock();
+    Order &receiveOrder();
+    void addPendingOrder(const Order order);
+    void sendFinishOrders();
+    void retreiveOrder() const;
 
-    std::deque<Cook> workers;
+  private:
+    bool _isCooking;
+    double _bakingTime;
+    size_t _cooksPerKitchen;
+    size_t _restockTime;
+    std::queue<Order> _pendingOrders;
+    std::queue<Order> _finishedOrders;
 };
 
 #endif

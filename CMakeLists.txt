@@ -22,7 +22,7 @@ set(MY_FACTORY_DIR ${MY_PIZZA_DIR}Factory/)
 set(MY_SRC
         ${MY_ENCAPSULATION_DIR}ConditionalVariables/ConditionalVariables.cpp
         ${MY_ENCAPSULATION_DIR}Mutex/Mutex.cpp
-        ${MY_ENCAPSULATION_DIR}Processes/Processes.cpp
+        ${MY_ENCAPSULATION_DIR}Process/Process.cpp
         ${MY_ENCAPSULATION_DIR}Threads/Threads.cpp
         ${MY_ERROR_DIR}Error.cpp
         ${MY_SERIALIZER_DIR}Serializer.cpp
