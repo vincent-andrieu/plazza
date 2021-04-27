@@ -15,7 +15,11 @@
 class Processes {
   public:
     Processes();
+    Processes(const Processes &processes);
     ~Processes();
+
+    Processes &operator=(const Processes &processes);
+    bool operator==(const Processes &processes) const;
 
     bool isParent() const;
     bool isChild() const;

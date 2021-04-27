@@ -29,8 +29,37 @@ Processes::Processes()
     this->_communication = Communication(std::to_string(this->_childPid));
 }
 
+Processes::Processes(const Processes &processes)
+{
+    this->_parentPid = processes._parentPid;
+    this->_isParent = processes._isParent;
+    this->_childPid = processes._childPid;
+    this->_isChild = processes._isChild;
+    this->_communication = processes._communication;
+}
+
 Processes::~Processes()
 {
+}
+
+Processes &Processes::operator=(const Processes &processes)
+{
+    this->_parentPid = processes._parentPid;
+    this->_isParent = processes._isParent;
+    this->_childPid = processes._childPid;
+    this->_isChild = processes._isChild;
+    this->_communication = processes._communication;
+
+    return *this;
+}
+
+bool Processes::operator==(const Processes &processes) const
+{
+    if (this->isParent() && processes.isChild())
+        return this->_parentPid == processes._parentPid && this->_childPid == processes._childPid;
+    if (this->isChild() && processes.isParent())
+        return this->_childPid == processes._childPid && this->_parentPid == processes._parentPid;
+    return false;
 }
 
 bool Processes::isParent() const

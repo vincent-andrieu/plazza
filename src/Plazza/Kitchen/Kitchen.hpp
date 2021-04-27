@@ -9,10 +9,12 @@
 #define KITCHEN_HPP
 
 #include "Interfaces/KitchenInterface.hpp"
+#include "Encapsulations/Processes/Processes.hpp"
 #include "Cook/Cook.hpp"
 
-class Kitchen : public IKitchen {
+class Kitchen : public IKitchen, public Processes {
   public:
+    Kitchen(double bakingTime, size_t cooksPerKitchen, size_t restockTime);
     ~Kitchen();
     void cook();
     bool isCooking();

@@ -8,7 +8,10 @@
 #ifndef ORDER_HPP
 #define ORDER_HPP
 
-class Order {
+#include "Interfaces/FoodInterface.hpp"
+#include "Serializer/Serializer.hpp"
+
+class Order : public IFood, public Serializer {
 };
 
 #endif

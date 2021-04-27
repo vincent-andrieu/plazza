@@ -10,14 +10,13 @@
 
 #include "enumPizza.hpp"
 
-template <typename T>
-class IProduct {
-    public :
-        virtual ~IProduct() = default;
-        virtual PizzaType getType() const = 0;
-        virtual PizzaSize getSize() const = 0;
-        virtual size_t getPreparationTime() const = 0;
-        virtual std::vector<T> getIngredientsList() const = 0;
+template <typename T> class IProduct {
+  public:
+    virtual ~IProduct() = default;
+    virtual PizzaType getType() const = 0;
+    virtual PizzaSize getSize() const = 0;
+    virtual size_t getPreparationTime() const = 0;
+    virtual std::vector<T> getIngredientsList() const = 0;
 };
 
 #endif

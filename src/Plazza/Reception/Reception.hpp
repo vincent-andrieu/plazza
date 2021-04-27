@@ -12,10 +12,10 @@
 
 class Reception : IReception {
   public:
-    ~IReception();
-    bool isOpen() const;
+    Reception();
+    ~Reception();
     Order getOrder() const;
-    void sayStatus();
+    void sendOrder(const Order &order) const;
 
   protected:
     void receiveCommand();

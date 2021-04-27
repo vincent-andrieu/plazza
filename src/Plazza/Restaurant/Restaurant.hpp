@@ -8,23 +8,39 @@
 #ifndef RESTAURANT_HPP
 #define RESTAURANT_HPP
 
+#include <vector>
 #include "Interfaces/RestaurantInterface.hpp"
+#include "Order/Order.hpp"
+#include "Kitchen/Kitchen.hpp"
+#include "Reception/Reception.hpp"
+#include "Encapsulations/Processes/Processes.hpp"
+
+struct KitchenManage {
+    const Kitchen &kitchen;
+    std::vector<Order> orders;
+};
 
 class Restaurant : public IRestaurant {
   public:
-    Restaurant();
+    Restaurant(double bakingTime, size_t cooksPerKitchen, size_t restockTime);
     ~Restaurant();
-    void lunchTime();
 
   protected:
-    void settings(double bakingTime, size_t cooksPerKitchen, size_t restockTime);
-    void getOrder() const;
-    void writeStatus();
-    void newKitchen();
-    void kitchenCook(const Kitchen &kitchen);
-    void deleteKitchen();
-    void retreiveOrder(const Kitchen &kitchen);
-    void order(Kitchen, Order);
+    bool isOpen() const;
+    void newKitchen(const Order &order);
+    void distributeOrder(const Order &order);
+    void sendOrder(const Kitchen &kitchen, const Order &order);
+    void retreiveOrders() const;
+
+  private:
+    void _retreiveOrder(const Kitchen &kitchen) const;
+
+    bool _isOpen;
+    double _bakingTime;
+    size_t _cooksPerKitchen;
+    size_t _restockTime;
+    std::vector<KitchenManage> _kitchens;
+    Reception _reception;
 };
 
 #endif
