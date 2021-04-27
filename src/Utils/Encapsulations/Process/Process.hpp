@@ -1,25 +1,25 @@
 /*
  * EPITECH PROJECT, 2021
- * Processes
+ * Process
  * File description:
- * Processes.hpp - Created: 21/04/2021
+ * Process.hpp - Created: 21/04/2021
  */
 
-#ifndef PROCESSES_HPP
-#define PROCESSES_HPP
+#ifndef PROCESS_HPP
+#define PROCESS_HPP
 
 #include <unistd.h>
 #include "Plazza.hpp"
 #include "Communication/Communication.hpp"
 
-class Processes {
+class Process {
   public:
-    Processes();
-    Processes(const Processes &processes);
-    ~Processes();
+    Process();
+    Process(const Process &process);
+    ~Process();
 
-    Processes &operator=(const Processes &processes);
-    bool operator==(const Processes &processes) const;
+    Process &operator=(const Process &process);
+    bool operator==(const Process &process) const;
 
     bool isParent() const;
     bool isChild() const;

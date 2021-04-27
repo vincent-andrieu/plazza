@@ -1,16 +1,16 @@
 /*
  * EPITECH PROJECT, 2021
- * Processes
+ * Process
  * File description:
- * Processes.cpp - Created: 21/04/2021
+ * Process.cpp - Created: 21/04/2021
  */
 
 #include <signal.h>
 #include <sys/wait.h>
 #include "Error/Error.hpp"
-#include "Encapsulations/Processes/Processes.hpp"
+#include "Encapsulations/Process/Process.hpp"
 
-Processes::Processes()
+Process::Process()
 {
     this->_parentPid = getpid();
     pid_t pid = fork();
@@ -29,45 +29,45 @@ Processes::Processes()
     this->_communication = Communication(std::to_string(this->_childPid));
 }
 
-Processes::Processes(const Processes &processes)
+Process::Process(const Process &process)
 {
-    this->_parentPid = processes._parentPid;
-    this->_isParent = processes._isParent;
-    this->_childPid = processes._childPid;
-    this->_isChild = processes._isChild;
-    this->_communication = processes._communication;
+    this->_parentPid = process._parentPid;
+    this->_isParent = process._isParent;
+    this->_childPid = process._childPid;
+    this->_isChild = process._isChild;
+    this->_communication = process._communication;
 }
 
-Processes::~Processes()
+Process::~Process()
 {
 }
 
-Processes &Processes::operator=(const Processes &processes)
+Process &Process::operator=(const Process &process)
 {
-    this->_parentPid = processes._parentPid;
-    this->_isParent = processes._isParent;
-    this->_childPid = processes._childPid;
-    this->_isChild = processes._isChild;
-    this->_communication = processes._communication;
+    this->_parentPid = process._parentPid;
+    this->_isParent = process._isParent;
+    this->_childPid = process._childPid;
+    this->_isChild = process._isChild;
+    this->_communication = process._communication;
 
     return *this;
 }
 
-bool Processes::operator==(const Processes &processes) const
+bool Process::operator==(const Process &process) const
 {
-    if (this->isParent() && processes.isChild())
-        return this->_parentPid == processes._parentPid && this->_childPid == processes._childPid;
-    if (this->isChild() && processes.isParent())
-        return this->_childPid == processes._childPid && this->_parentPid == processes._parentPid;
+    if (this->isParent() && process.isChild())
+        return this->_parentPid == process._parentPid && this->_childPid == process._childPid;
+    if (this->isChild() && process.isParent())
+        return this->_childPid == process._childPid && this->_parentPid == process._parentPid;
     return false;
 }
 
-bool Processes::isParent() const
+bool Process::isParent() const
 {
     return this->_isParent;
 }
 
-bool Processes::isChild() const
+bool Process::isChild() const
 {
     return this->_isChild;
 }
@@ -78,7 +78,7 @@ bool Processes::isChild() const
  *
  * @return int (exit value)
  */
-int Processes::waitChild() const
+int Process::waitChild() const
 {
     int exit_value;
 
@@ -93,18 +93,18 @@ int Processes::waitChild() const
  * @brief The child can kill himself ! An error is throw if kill fail.
  *
  */
-void Processes::killChild() const
+void Process::killChild() const
 {
     if (kill(this->_childPid, SIGKILL) == -1)
         throw ProcessError(getErrnoMsg());
 }
 
-void Processes::send(const Serializer &object) const
+void Process::send(const Serializer &object) const
 {
     this->_communication.write(object);
 }
 
-void Processes::receive(const Serializer &object) const
+void Process::receive(const Serializer &object) const
 {
     this->_communication.read(object);
 }

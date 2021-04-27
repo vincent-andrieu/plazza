@@ -12,7 +12,7 @@
 #include "Encapsulations/Processes/Processes.hpp"
 #include "Cook/Cook.hpp"
 
-class Kitchen : public IKitchen, public Processes {
+class Kitchen : public IKitchen, public Process {
   public:
     Kitchen(double bakingTime, size_t cooksPerKitchen, size_t restockTime);
     ~Kitchen();
