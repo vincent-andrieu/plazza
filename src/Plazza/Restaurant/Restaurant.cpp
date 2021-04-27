@@ -37,7 +37,7 @@ void Restaurant::newKitchen(const Order &order)
 
     kitchenManage.kitchen = kitchen;
     if (kitchen.isParent())
-        sendOrder(kitchenManage, order);
+        this->sendOrder(kitchenManage, order);
     else if (kitchen.isChild())
         kitchen.cook();
 }
