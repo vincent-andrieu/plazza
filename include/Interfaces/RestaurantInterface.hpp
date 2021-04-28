@@ -9,7 +9,7 @@
 #define RESTAURANT_INTERFACE_HPP
 
 #include <vector>
-#include "Interfaces/KitchenInterface.hpp"
+#include "Kitchen/Kitchen.hpp"
 #include "Order/Order.hpp"
 
 struct KitchenManage {

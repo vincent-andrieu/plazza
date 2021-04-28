@@ -16,7 +16,7 @@ class IReception : public CommandInterpreter {
   public:
     virtual ~IReception() = default;
     virtual bool doesGetPendingOrders() const = 0;
-    virtual const Order getOrder() const = 0;
+    virtual const Order getOrder() = 0;
     virtual void sendOrder(const Order &order) const = 0;
 
   protected:

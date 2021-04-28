@@ -15,6 +15,10 @@ Stock::Stock(size_t restockTime) : _restockTime(restockTime)
     time(&this->_restockClock);
 }
 
+Stock::~Stock()
+{
+}
+
 void Stock::restock()
 {
     if (difftime(time(NULL), this->_restockClock) >= this->_restockTime) {

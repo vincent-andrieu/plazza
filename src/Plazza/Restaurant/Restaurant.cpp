@@ -12,6 +12,10 @@ Restaurant::Restaurant(double bakingTime, size_t cooksPerKitchen, size_t restock
 {
 }
 
+Restaurant::~Restaurant()
+{
+}
+
 void Restaurant::lunchTime()
 {
     while (this->isOpen()) {
@@ -23,7 +27,7 @@ void Restaurant::lunchTime()
 
 bool Restaurant::isOpen() const
 {
-    this->_isOpen;
+    return this->_isOpen;
 }
 
 void Restaurant::distributeOrder(const Order &order)

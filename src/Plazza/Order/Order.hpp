@@ -10,10 +10,13 @@
 
 #include "Interfaces/FoodInterface.hpp"
 #include "Serializer/Serializer.hpp"
+#include "enumPizza.hpp"
 
 class Order : public IFood, public Serializer {
   public:
+    Order();
     Order(PizzaType type, PizzaSize size);
+    ~Order();
 
   private:
     PizzaType _type;

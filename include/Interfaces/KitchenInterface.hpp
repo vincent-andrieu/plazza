@@ -8,6 +8,7 @@
 #ifndef KITCHEN_INTERFACE_HPP
 #define KITCHEN_INTERFACE_HPP
 
+#include "Encapsulations/Process/Process.hpp"
 #include "Order/Order.hpp"
 
 class IKitchen : public Process {
@@ -17,8 +18,8 @@ class IKitchen : public Process {
     virtual bool isCooking() const = 0; // while is true, loop
 
   protected:
-    virtual Order &receiveOrder() const = 0; // from pipe
-    virtual void addPendingOrder(const Order order) = 0;
+    virtual const Order receiveOrder() const = 0; // from pipe
+    virtual void addPendingOrder(const Order &order) = 0;
     virtual void sendFinishOrders() = 0;
 };
 

@@ -7,6 +7,14 @@
 
 #include "Order/Order.hpp"
 
-Order::Order(PizzaType type, PizzaSize size) : _type(type), _size(size)
+Order::Order() : Serializer(sizeof(Order))
+{
+}
+
+Order::Order(PizzaType type, PizzaSize size) : Serializer(sizeof(Order)), _type(type), _size(size)
+{
+}
+
+Order::~Order()
 {
 }
