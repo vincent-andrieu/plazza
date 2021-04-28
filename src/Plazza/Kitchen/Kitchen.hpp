@@ -21,23 +21,23 @@ template <typename T> struct LockedQueue {
 
 class Kitchen : public IKitchen {
   public:
-    Kitchen(double bakingTime, size_t cooksPerKitchen, size_t restockTime);
+    Kitchen(double bakingMultiplier, size_t cooksPerKitchen, size_t restockTime);
     ~Kitchen();
     void cook();
     bool isCooking() const;
 
   protected:
-    Order &receiveOrder() const;
-    void addPendingOrder(const Order order);
+    const Order receiveOrder() const;
+    void addPendingOrder(const Order &order);
     void sendFinishOrders();
 
   private:
+    Stock _stock;
     bool _isCooking;
     double _bakingMultiplier;
     size_t _cooksPerKitchen;
     LockedQueue<Order> _pendingOrders;
     LockedQueue<Order> _finishedOrders;
-    Stock _stock;
 };
 
 #endif
