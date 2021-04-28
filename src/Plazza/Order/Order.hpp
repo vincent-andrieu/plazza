@@ -12,6 +12,12 @@
 #include "Serializer/Serializer.hpp"
 
 class Order : public IFood, public Serializer {
+  public:
+    Order(PizzaType type, PizzaSize size);
+
+  private:
+    PizzaType _type;
+    PizzaSize _size;
 };
 
 #endif
