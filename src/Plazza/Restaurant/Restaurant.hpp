@@ -36,7 +36,7 @@ class Restaurant : public IRestaurant {
     void _retreiveOrder(const Kitchen &kitchen) const;
 
     bool _isOpen;
-    double _bakingTime;
+    double _bakingMultiplier;
     size_t _cooksPerKitchen;
     size_t _restockTime;
     std::vector<KitchenManage> _kitchens;

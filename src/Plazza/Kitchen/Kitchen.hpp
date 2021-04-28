@@ -10,7 +10,6 @@
 
 #include <queue>
 #include "Interfaces/KitchenInterface.hpp"
-#include "Order/Order.hpp"
 #include "Stock/Stock.hpp"
 #include "Encapsulations/Process/Process.hpp"
 #include "Encapsulations/Mutex/Mutex.hpp"
@@ -20,7 +19,7 @@ template <typename T> struct LockedQueue {
     Mutex mutex;
 };
 
-class Kitchen : public IKitchen, public Process {
+class Kitchen : public IKitchen, protected Process {
   public:
     Kitchen(double bakingTime, size_t cooksPerKitchen, size_t restockTime);
     ~Kitchen();
@@ -28,14 +27,13 @@ class Kitchen : public IKitchen, public Process {
     bool isCooking() const;
 
   protected:
-    Order &receiveOrder();
+    Order &receiveOrder() const;
     void addPendingOrder(const Order order);
     void sendFinishOrders();
-    void retreiveOrder() const;
 
   private:
     bool _isCooking;
-    double _bakingTime;
+    double _bakingMultiplier;
     size_t _cooksPerKitchen;
     LockedQueue<Order> _pendingOrders;
     LockedQueue<Order> _finishedOrders;

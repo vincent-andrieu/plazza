@@ -8,7 +8,7 @@
 #include "Restaurant.hpp"
 
 Restaurant::Restaurant(double bakingTime, size_t cooksPerKitchen, size_t restockTime)
-    : _isOpen(true), _bakingTime(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime)
+    : _isOpen(true), _bakingMultiplier(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime)
 {
 }
 
@@ -37,7 +37,7 @@ void Restaurant::distributeOrder(const Order &order)
 
 void Restaurant::newKitchen(const Order &order)
 {
-    Kitchen kitchen(this->_bakingTime, this->_cooksPerKitchen, this->_restockTime);
+    Kitchen kitchen(this->_bakingMultiplier, this->_cooksPerKitchen, this->_restockTime);
     KitchenManage kitchenManage;
 
     kitchenManage.kitchen = kitchen;

@@ -7,8 +7,8 @@
 
 #include "Kitchen/Kitchen.hpp"
 
-Kitchen::Kitchen(double bakingTime, size_t cooksPerKitchen, size_t restockTime)
-    : _isCooking(true), _bakingTime(bakingTime), _cooksPerKitchen(cooksPerKitchen), _stock(restockTime)
+Kitchen::Kitchen(double bakingMultiplier, size_t cooksPerKitchen, size_t restockTime)
+    : _isCooking(true), _bakingMultiplier(bakingMultiplier), _cooksPerKitchen(cooksPerKitchen), _stock(restockTime)
 {
     // TODO: Create threads per cooks
 }

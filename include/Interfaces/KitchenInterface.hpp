@@ -17,11 +17,9 @@ class IKitchen {
     virtual bool isCooking() = 0; // while is true, loop
 
   protected:
-    virtual void receiveOrder() = 0; // from pipe
-    virtual bool isOrderReady(Order order) = 0;
-    virtual void sendOrder() = 0; // through pipe
-    virtual void assignOrder(Order order, Cook cook) = 0;
-    virtual void restock() = 0;
+    virtual Order &receiveOrder() const = 0; // from pipe
+    virtual void addPendingOrder(const Order order) = 0;
+    virtual void sendFinishOrders() = 0;
 };
 
 #endif
