@@ -16,14 +16,14 @@ class Process {
   public:
     Process();
     Process(const Process &process);
-    ~Process();
+    ~Process() = default;
 
-    Process &operator=(const Process &process);
-    bool operator==(const Process &process) const;
+    Process &operator=(const Process &process) = default;
+    [[nodiscard]] bool operator==(const Process &process) const;
 
-    bool isParent() const;
-    bool isChild() const;
-    int waitChild() const;
+    [[nodiscard]] bool isParent() const;
+    [[nodiscard]] bool isChild() const;
+    [[nodiscard]] int waitChild() const;
     void killChild() const;
     void send(const Serializer &object) const;
     void receive(const Serializer &object) const;

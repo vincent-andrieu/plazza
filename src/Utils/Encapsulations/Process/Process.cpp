@@ -38,21 +38,6 @@ Process::Process(const Process &process)
     this->_communication = process._communication;
 }
 
-Process::~Process()
-{
-}
-
-Process &Process::operator=(const Process &process)
-{
-    this->_parentPid = process._parentPid;
-    this->_isParent = process._isParent;
-    this->_childPid = process._childPid;
-    this->_isChild = process._isChild;
-    this->_communication = process._communication;
-
-    return *this;
-}
-
 bool Process::operator==(const Process &process) const
 {
     if (this->isParent() && process.isChild())
@@ -73,8 +58,8 @@ bool Process::isChild() const
 }
 
 /**
- * @brief Wait child process and return the process exit value. Throw an error if the child try to wait himself or if waitpid
- * fail.
+ * @brief Wait child process and return the process exit value.
+ * @throw If the child try to wait himself or if waitpid fails.
  *
  * @return int (exit value)
  */
@@ -90,7 +75,8 @@ int Process::waitChild() const
 }
 
 /**
- * @brief The child can kill himself ! An error is throw if kill fail.
+ * @brief The child can kill himself !
+ * @throw If kill fail.
  *
  */
 void Process::killChild() const

@@ -18,11 +18,11 @@
 class Communication {
   public:
     Communication();
-    Communication(const string &filename);
+    explicit Communication(const string &filename);
     Communication(const Communication &communication);
-    ~Communication();
+    ~Communication() = default;
 
-    Communication &operator=(const Communication &communication);
+    Communication &operator=(const Communication &communication) = default;
 
     void write(const Serializer &object) const;
     void read(const Serializer &object) const;

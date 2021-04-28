@@ -29,16 +29,6 @@ Communication::Communication(const Communication &copy)
     this->_filepath = copy._filepath;
 }
 
-Communication::~Communication()
-{
-}
-
-Communication &Communication::operator=(const Communication &communication)
-{
-    this->_filepath = communication._filepath;
-
-    return *this;
-}
 
 void Communication::write(const Serializer &object) const
 {
