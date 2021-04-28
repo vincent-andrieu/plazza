@@ -8,7 +8,7 @@
 #include "Kitchen/Kitchen.hpp"
 
 Kitchen::Kitchen(double bakingTime, size_t cooksPerKitchen, size_t restockTime)
-    : _isCooking(true), _bakingTime(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime)
+    : _isCooking(true), _bakingTime(bakingTime), _cooksPerKitchen(cooksPerKitchen), _stock(restockTime)
 {
     // TODO: Create threads per cooks
 }
@@ -19,7 +19,7 @@ void Kitchen::cook()
         Order &order = this->receiveOrder();
         this->addPendingOrder(order);
         this->sendFinishOrders();
-        // TODO: Add restock
+        this->_stock.restock();
     }
 }
 
@@ -38,13 +38,17 @@ Order &Kitchen::receiveOrder() const
 
 void Kitchen::addPendingOrder(const Order order)
 {
-    this->_pendingOrders.push(order);
+    this->_pendingOrders.mutex.lock();
+    this->_pendingOrders.queue.push(order);
+    this->_pendingOrders.mutex.unlock();
 }
 
 void Kitchen::sendFinishOrders()
 {
-    while (!this->_finishedOrders.empty()) {
-        this->send(this->_finishedOrders.front());
-        this->_finishedOrders.pop();
+    this->_finishedOrders.mutex.lock();
+    while (!this->_finishedOrders.queue.empty()) {
+        this->send(this->_finishedOrders.queue.front());
+        this->_finishedOrders.queue.pop();
     }
+    this->_finishedOrders.mutex.unlock();
 }

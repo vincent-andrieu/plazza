@@ -10,9 +10,15 @@
 
 #include <queue>
 #include "Interfaces/KitchenInterface.hpp"
-#include "Encapsulations/Process/Process.hpp"
 #include "Order/Order.hpp"
-#include "Cook/Cook.hpp"
+#include "Stock/Stock.hpp"
+#include "Encapsulations/Process/Process.hpp"
+#include "Encapsulations/Mutex/Mutex.hpp"
+
+template <typename T> struct LockedQueue {
+    std::queue<T> queue;
+    Mutex mutex;
+};
 
 class Kitchen : public IKitchen, public Process {
   public:
@@ -31,9 +37,9 @@ class Kitchen : public IKitchen, public Process {
     bool _isCooking;
     double _bakingTime;
     size_t _cooksPerKitchen;
-    size_t _restockTime;
-    std::queue<Order> _pendingOrders;
-    std::queue<Order> _finishedOrders;
+    LockedQueue<Order> _pendingOrders;
+    LockedQueue<Order> _finishedOrders;
+    Stock _stock;
 };
 
 #endif

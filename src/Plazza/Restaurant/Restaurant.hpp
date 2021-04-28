@@ -13,7 +13,7 @@
 #include "Order/Order.hpp"
 #include "Kitchen/Kitchen.hpp"
 #include "Reception/Reception.hpp"
-#include "Encapsulations/Processes/Processes.hpp"
+#include "Encapsulations/Process/Process.hpp"
 
 struct KitchenManage {
     const Kitchen &kitchen;
