@@ -11,9 +11,9 @@
 #include "Pizza/PizzaType/Fantasia/Fantasia.hpp"
 #include "Pizza/PizzaType/Regina/Regina.hpp"
 
-Factory::Factory() : _list()
-{
-    this->_list = {
+const std::unordered_map<PizzaType,
+    std::function<std::unique_ptr<IProduct<PizzaIngredient>>(const PizzaSize size, const long multiplier)>>
+    Factory::_list = {
         {PizzaType::Americana,
             [](const PizzaSize size, const long multiplier) {
                 return std::make_unique<Americana>(size, multiplier);
@@ -30,18 +30,16 @@ Factory::Factory() : _list()
             [](const PizzaSize size, const long multiplier) {
                 return std::make_unique<Regina>(size, multiplier);
             }},
-    };
-}
+};
 
-Factory::~Factory()
-{
-    this->_list.clear();
-}
+Factory::Factory() = default;
+
+Factory::~Factory() = default;
 
 std::unique_ptr<IProduct<PizzaIngredient>> Factory::callFactory(const PizzaType type, const PizzaSize size, const long multiplier)
 {
-    if (this->_list.find(type) != this->_list.end())
-        return this->_list[type](size, multiplier);
+    if (_list.find(type) != _list.end())
+        return _list.at(type)(size, multiplier);
     else
         throw FactoryError("No match", "Factory");
 }

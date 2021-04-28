@@ -16,13 +16,15 @@
 #include "Interfaces/ProductInterface.hpp"
 
 class Factory {
-    public:
-        Factory();
-        ~Factory();
-        std::unique_ptr<IProduct<PizzaIngredient>> callFactory(const PizzaType type, const PizzaSize size, const long multiplier);
+  public:
+    Factory();
+    ~Factory();
+    static std::unique_ptr<IProduct<PizzaIngredient>> callFactory(PizzaType type, PizzaSize size, long multiplier);
 
-    private:
-        std::unordered_map <PizzaType, std::function<std::unique_ptr<IProduct<PizzaIngredient>>(const PizzaSize size, const long multiplier)>> _list;
+  private:
+    static const std::unordered_map<PizzaType,
+        std::function<std::unique_ptr<IProduct<PizzaIngredient>>(const PizzaSize size, const long multiplier)>>
+        _list;
 };
 
 #endif
