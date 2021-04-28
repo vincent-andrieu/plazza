@@ -13,6 +13,16 @@ Serializer::Serializer(std::size_t size) : _size(size)
 {
 }
 
+void Serializer::operator>>(std::ofstream &file) const
+{
+    this->pack(file);
+}
+
+void Serializer::operator<<(std::ifstream &file) const
+{
+    this->unpack(file);
+}
+
 void Serializer::pack(std::ofstream &file) const
 {
     file.write((char *) this, this->_size);

@@ -45,7 +45,7 @@ void Communication::write(const Serializer &object) const
     std::ofstream file(this->_filepath, std::ios::out | std::ios::binary);
 
     if (file.is_open()) {
-        object.pack(file);
+        object >> file;
         file.close();
     } else
         throw CommunicationError("Fail to open file to write: " + this->_filepath);
@@ -56,7 +56,7 @@ void Communication::read(const Serializer &object) const
     std::ifstream file(this->_filepath, std::ios::in | std::ios::binary);
 
     if (file.is_open()) {
-        object.unpack(file);
+        object << file;
         file.close();
     } else
         throw CommunicationError("Fail to open file to read: " + this->_filepath);

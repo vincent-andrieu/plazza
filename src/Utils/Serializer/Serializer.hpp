@@ -13,6 +13,9 @@ class Serializer {
     Serializer();
     Serializer(std::size_t size);
 
+    void operator>>(std::ofstream &file) const;
+    void operator<<(std::ifstream &file) const;
+
     void pack(std::ofstream &file) const;
     void unpack(std::ifstream &file) const;
 
