@@ -19,7 +19,7 @@ template <typename T> struct LockedQueue {
     Mutex mutex;
 };
 
-class Kitchen : public IKitchen, protected Process {
+class Kitchen : public IKitchen {
   public:
     Kitchen(double bakingTime, size_t cooksPerKitchen, size_t restockTime);
     ~Kitchen();

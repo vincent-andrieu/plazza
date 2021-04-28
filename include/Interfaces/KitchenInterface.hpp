@@ -10,11 +10,11 @@
 
 #include "Order/Order.hpp"
 
-class IKitchen {
+class IKitchen : public Process {
   public:
     virtual ~IKitchen() = default;
-    virtual void cook() = 0;      // while work
-    virtual bool isCooking() = 0; // while is true, loop
+    virtual void cook() = 0;            // while work
+    virtual bool isCooking() const = 0; // while is true, loop
 
   protected:
     virtual Order &receiveOrder() const = 0; // from pipe
