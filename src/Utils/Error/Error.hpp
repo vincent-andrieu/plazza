@@ -63,4 +63,9 @@ class FactoryError : public ManageError {
     FactoryError(string const &message = "Standard", string const &component = "Factory");
 };
 
+class ReceptionError : public ManageError {
+  public:
+    ReceptionError(string const &message = "Standard", string const &component = "Reception");
+};
+
 #endif

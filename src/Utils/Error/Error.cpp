@@ -56,3 +56,7 @@ SerializerError::SerializerError(string const &message, string const &component)
 FactoryError::FactoryError(string const &message, string const &component) : ManageError(message, component)
 {
 }
+
+ReceptionError::ReceptionError(string const &message, string const &component) : ManageError(message, component)
+{
+}
