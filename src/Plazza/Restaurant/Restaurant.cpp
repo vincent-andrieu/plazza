@@ -12,6 +12,15 @@ Restaurant::Restaurant(double bakingTime, size_t cooksPerKitchen, size_t restock
 {
 }
 
+void Restaurant::lunchTime()
+{
+    while (this->isOpen()) {
+        const Order order = this->_reception.getOrder();
+        this->distributeOrder(order);
+        this->retreiveOrders();
+    }
+}
+
 bool Restaurant::isOpen() const
 {
     this->_isOpen;

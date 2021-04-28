@@ -8,18 +8,17 @@
 #ifndef RESTAURANT_HPP
 #define RESTAURANT_HPP
 
-#include <vector>
 #include "Interfaces/RestaurantInterface.hpp"
 #include "Order/Order.hpp"
 #include "Kitchen/Kitchen.hpp"
 #include "Reception/Reception.hpp"
-#include "Encapsulations/Process/Process.hpp"
 
 class Restaurant : public IRestaurant {
   public:
-    Restaurant(double bakingTime, size_t cooksPerKitchen, size_t restockTime);
+    Restaurant(double bakingMultiplier, size_t cooksPerKitchen, size_t restockTime);
     ~Restaurant();
 
+    void lunchTime();
     bool isOpen() const;
 
   protected:
