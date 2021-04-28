@@ -12,6 +12,7 @@ set(MY_SRC_DIR ${PROJECT_SOURCE_DIR}/src/)
 set(MY_PLAZZA_DIR ${MY_SRC_DIR}/Plazza/)
 set(MY_UTILS_DIR ${MY_SRC_DIR}/Utils/)
 set(MY_ENCAPSULATION_DIR ${MY_UTILS_DIR}Encapsulations/)
+set(MY_CMD_INTERPRETER_DIR ${MY_UTILS_DIR}CommandInterpreter/)
 set(MY_ERROR_DIR ${MY_UTILS_DIR}Error/)
 set(MY_SERIALIZER_DIR ${MY_UTILS_DIR}Serializer/)
 set(MY_COMMUNICATION_DIR ${MY_UTILS_DIR}Communication/)
@@ -22,10 +23,10 @@ set(MY_FACTORY_DIR ${MY_PIZZA_DIR}Factory/)
 set(MY_SRC
         ${MY_ENCAPSULATION_DIR}ConditionalVariables/ConditionalVariables.cpp
         ${MY_ENCAPSULATION_DIR}Mutex/Mutex.cpp
-        ${MY_ENCAPSULATION_DIR}Processes/Processes.cpp
         ${MY_ENCAPSULATION_DIR}Threads/Threads.cpp
         ${MY_ERROR_DIR}Error.cpp
         ${MY_SERIALIZER_DIR}Serializer.cpp
+        ${MY_CMD_INTERPRETER_DIR}CommandInterpreter.cpp
         ${MY_COMMUNICATION_DIR}Communication.cpp
         ${MY_PIZZA_DIR}Pizza.cpp
         ${MY_PIZZATYPE_DIR}Americana/Americana.cpp
