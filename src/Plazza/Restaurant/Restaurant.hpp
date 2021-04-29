@@ -13,7 +13,8 @@
 #include "Kitchen/Kitchen.hpp"
 #include "Reception/Reception.hpp"
 
-class Restaurant : public IRestaurant {
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredientType> {
   public:
     Restaurant(double bakingMultiplier, size_t cooksPerKitchen, size_t restockTime);
     ~Restaurant() override = default;
@@ -22,20 +23,21 @@ class Restaurant : public IRestaurant {
     [[nodiscard]] bool isOpen() const override;
 
   protected:
-    void newKitchen(const Order &order) override;
-    void distributeOrder(const Order &order) override;
-    void sendOrder(KitchenManage &kitchen, const Order &order) override;
+    void newKitchen(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
+    void distributeOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
+    void sendOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchen,
+        const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void retreiveOrders() const override;
 
   private:
-    void _retreiveOrder(const Kitchen &kitchen) const;
+    void _retreiveOrder(const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen) const;
 
     bool _isOpen{true};
     double _bakingMultiplier;
     size_t _cooksPerKitchen;
     size_t _restockTime;
-    std::vector<KitchenManage> _kitchens;
-    Reception _reception;
+    std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> _kitchens;
+    Reception<ProductType, ProductSize, ProductIngredientType> _reception;
 };
 
 #endif

@@ -10,11 +10,10 @@
 
 #include "Pizza/Pizza.hpp"
 
-class Regina : public Pizza<PizzaIngredient>
-{
-    public:
-        Regina(PizzaSize size, long multiplier);
-        ~Regina() override = default;
+class Regina : public Pizza {
+  public:
+    Regina(PizzaSize size, long multiplier);
+    ~Regina() override = default;
 };
 
 #endif

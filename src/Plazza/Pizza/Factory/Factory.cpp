@@ -6,13 +6,10 @@
  */
 
 #include "Pizza/Factory/Factory.hpp"
-#include "Pizza/PizzaType/Americana/Americana.hpp"
-#include "Pizza/PizzaType/Margarita/Margarita.hpp"
-#include "Pizza/PizzaType/Fantasia/Fantasia.hpp"
-#include "Pizza/PizzaType/Regina/Regina.hpp"
 
 const std::unordered_map<enum PizzaType,
-    std::function<std::unique_ptr<IProduct<PizzaIngredient>>(const enum PizzaSize size, const long multiplier)>>
+    std::function<std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>>(
+        const enum PizzaSize size, const long multiplier)>>
     Factory::_list = {
         {PizzaType::Americana,
             [](const enum PizzaSize size, const long multiplier) {
@@ -36,7 +33,7 @@ Factory::Factory() = default;
 
 Factory::~Factory() = default;
 
-std::unique_ptr<IProduct<PizzaIngredient>> Factory::callFactory(
+std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>> Factory::callFactory(
     const enum PizzaType type, const enum PizzaSize size, const long multiplier)
 {
     if (_list.find(type) != _list.end())

@@ -10,7 +10,7 @@
 
 #include "Pizza/Pizza.hpp"
 
-class Fantasia : public Pizza<PizzaIngredient> {
+class Fantasia : public Pizza {
   public:
     Fantasia(PizzaSize size, long multiplier);
     ~Fantasia() override = default;

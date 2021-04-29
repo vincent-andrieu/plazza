@@ -8,19 +8,19 @@
 #ifndef ORDER_HPP
 #define ORDER_HPP
 
-#include "Interfaces/FoodInterface.hpp"
 #include "Serializer/Serializer.hpp"
 #include "enumPizza.hpp"
+#include "Interfaces//ProductInterface.hpp"
 
-class Order : public IFood, public Serializer {
+template <typename T> class Order : public Serializer {
   public:
-    Order();
-    Order(PizzaType type, PizzaSize size);
-    ~Order();
+    explicit Order(T object);
+    ~Order() = default;
+
+    const T &getOrder() const;
 
   private:
-    PizzaType _type;
-    PizzaSize _size;
+    T _object;
 };
 
 #endif

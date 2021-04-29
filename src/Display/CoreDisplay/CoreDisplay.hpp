@@ -11,7 +11,8 @@
 #include <iostream>
 #include "Interfaces/ICoreDisplay.hpp"
 
-class CoreDisplay : public ICoreDisplay {
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+class CoreDisplay : public ICoreDisplay<ProductType, ProductSize, ProductIngredientType> {
   public:
     CoreDisplay(std::string filepath);
     ~CoreDisplay();

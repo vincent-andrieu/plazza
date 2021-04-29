@@ -7,45 +7,52 @@
 
 #include "Kitchen/Kitchen.hpp"
 
-Kitchen::Kitchen(double bakingMultiplier, size_t cooksPerKitchen, size_t restockTime)
-    : _stock(restockTime), _isCooking(true), _bakingMultiplier(bakingMultiplier), _cooksPerKitchen(cooksPerKitchen)
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+Kitchen<ProductType, ProductSize, ProductIngredientType>::Kitchen(
+    double bakingMultiplier, size_t cooksPerKitchen, size_t restockTime)
+    : _stock(restockTime), _bakingMultiplier(bakingMultiplier), _cooksPerKitchen(cooksPerKitchen)
 {
     // TODO: Create threads per cooks
 }
 
-Kitchen::~Kitchen() = default;
-
-void Kitchen::cook()
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
 {
     while (this->isCooking()) {
-        const Order &order = this->receiveOrder();
+        const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order = this->receiveOrder();
         this->addPendingOrder(order);
         this->sendFinishedOrders();
         this->_stock.restock();
     }
 }
 
-bool Kitchen::isCooking() const
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+bool Kitchen<ProductType, ProductSize, ProductIngredientType>::isCooking() const
 {
     return this->_isCooking;
 }
 
-Order Kitchen::receiveOrder() const
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+Order<IProduct<ProductType, ProductSize, ProductIngredientType>>
+Kitchen<ProductType, ProductSize, ProductIngredientType>::receiveOrder() const
 {
-    Order order;
+    Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order;
 
     this->receive(order);
     return order;
 }
 
-void Kitchen::addPendingOrder(const Order &order)
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Kitchen<ProductType, ProductSize, ProductIngredientType>::addPendingOrder(
+    const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     this->_pendingOrders.mutex.lock();
     this->_pendingOrders.queue.push(order);
     this->_pendingOrders.mutex.unlock();
 }
 
-void Kitchen::sendFinishedOrders()
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Kitchen<ProductType, ProductSize, ProductIngredientType>::sendFinishedOrders()
 {
     this->_finishedOrders.mutex.lock();
     while (!this->_finishedOrders.queue.empty()) {

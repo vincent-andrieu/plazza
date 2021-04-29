@@ -7,26 +7,32 @@
 
 #include "Restaurant.hpp"
 
-Restaurant::Restaurant(double bakingTime, size_t cooksPerKitchen, size_t restockTime)
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+Restaurant<ProductType, ProductSize, ProductIngredientType>::Restaurant(
+    double bakingTime, size_t cooksPerKitchen, size_t restockTime)
     : _bakingMultiplier(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime)
 {
 }
 
-void Restaurant::lunchTime()
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
 {
     while (this->isOpen()) {
-        const Order order = this->_reception.getOrder();
+        const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order = this->_reception.getOrder();
         this->distributeOrder(order);
         this->retreiveOrders();
     }
 }
 
-bool Restaurant::isOpen() const
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+bool Restaurant<ProductType, ProductSize, ProductIngredientType>::isOpen() const
 {
     return this->_isOpen;
 }
 
-void Restaurant::distributeOrder(const Order &order)
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Restaurant<ProductType, ProductSize, ProductIngredientType>::distributeOrder(
+    const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     size_t selectedKitchenIndex;
     size_t maxOrders = this->_cooksPerKitchen * 2;
@@ -44,10 +50,13 @@ void Restaurant::distributeOrder(const Order &order)
     }
 }
 
-void Restaurant::newKitchen(const Order &order)
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Restaurant<ProductType, ProductSize, ProductIngredientType>::newKitchen(
+    const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
-    Kitchen kitchen(this->_bakingMultiplier, this->_cooksPerKitchen, this->_restockTime);
-    KitchenManage kitchenManage = {kitchen, {}};
+    Kitchen<ProductType, ProductSize, ProductIngredientType> kitchen(
+        this->_bakingMultiplier, this->_cooksPerKitchen, this->_restockTime);
+    KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchenManage = {kitchen, {}};
 
     if (kitchen.isParent())
         this->sendOrder(kitchenManage, order);
@@ -55,21 +64,27 @@ void Restaurant::newKitchen(const Order &order)
         kitchen.cook();
 }
 
-void Restaurant::sendOrder(KitchenManage &kitchenManage, const Order &order)
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Restaurant<ProductType, ProductSize, ProductIngredientType>::sendOrder(
+    KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage,
+    const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     kitchenManage.orders.push_back(order);
     kitchenManage.kitchen.send(order);
 }
 
-void Restaurant::retreiveOrders() const
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Restaurant<ProductType, ProductSize, ProductIngredientType>::retreiveOrders() const
 {
-    for (const KitchenManage &kitchenManage : this->_kitchens)
+    for (const KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage : this->_kitchens)
         this->_retreiveOrder(kitchenManage.kitchen);
 }
 
-void Restaurant::_retreiveOrder(const Kitchen &kitchen) const
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder(
+    const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen) const
 {
-    Order order;
+    Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order;
 
     kitchen.receive(order);
     this->_reception.sendOrder(order);

@@ -12,22 +12,23 @@
 #include "Kitchen/Kitchen.hpp"
 #include "Order/Order.hpp"
 
-struct KitchenManage {
-    const Kitchen &kitchen;
-    std::vector<Order> orders;
+template <typename ProductType, typename ProductSize, typename ProductIngredientType> struct KitchenManage {
+    const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen;
+    std::vector<Order<IProduct<ProductType, ProductSize, ProductIngredientType>>> orders;
 };
 
-class IRestaurant {
+template <typename ProductType, typename ProductSize, typename ProductIngredientType> class IRestaurant {
   public:
     virtual ~IRestaurant() = default;
 
     virtual void lunchTime() = 0;
-    virtual bool isOpen() const = 0;
+    [[nodiscard]] virtual bool isOpen() const = 0;
 
   protected:
-    virtual void newKitchen(const Order &order) = 0;
-    virtual void distributeOrder(const Order &order) = 0;
-    virtual void sendOrder(KitchenManage &kitchen, const Order &order) = 0;
+    virtual void newKitchen(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
+    virtual void distributeOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
+    virtual void sendOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchen,
+        const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
     virtual void retreiveOrders() const = 0;
 };
 

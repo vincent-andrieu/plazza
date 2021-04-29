@@ -7,12 +7,13 @@
 
 #include "CoreDisplay.hpp"
 
-CoreDisplay::CoreDisplay(std::string filepath)
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+CoreDisplay<ProductType, ProductSize, ProductIngredientType>::CoreDisplay(std::string filepath)
 {
     (void) filepath;
 }
 
-CoreDisplay::~CoreDisplay()
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+CoreDisplay<ProductType, ProductSize, ProductIngredientType>::~CoreDisplay()
 {
-
 }

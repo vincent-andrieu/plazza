@@ -10,7 +10,7 @@
 
 #include "Pizza/Pizza.hpp"
 
-class Americana : public Pizza<PizzaIngredient> {
+class Americana : public Pizza {
   public:
     Americana(PizzaSize size, long multiplier);
     ~Americana() override = default;

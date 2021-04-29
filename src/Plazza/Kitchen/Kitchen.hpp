@@ -19,25 +19,26 @@ template <typename T> struct LockedQueue {
     Mutex mutex;
 };
 
-class Kitchen : public IKitchen {
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType> {
   public:
     Kitchen(double bakingMultiplier, size_t cooksPerKitchen, size_t restockTime);
-    ~Kitchen() override;
+    ~Kitchen() override = default;
     void cook() override;
     bool isCooking() const override;
 
   protected:
-    Order receiveOrder() const override;
-    void addPendingOrder(const Order &order) override;
+    [[nodiscard]] Order<IProduct<ProductType, ProductSize, ProductIngredientType>> receiveOrder() const override;
+    void addPendingOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void sendFinishedOrders() override;
 
   private:
     Stock _stock;
-    bool _isCooking;
+    bool _isCooking = true;
     double _bakingMultiplier;
     size_t _cooksPerKitchen;
-    LockedQueue<Order> _pendingOrders;
-    LockedQueue<Order> _finishedOrders;
+    LockedQueue<Order<IProduct<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
+    LockedQueue<Order<IProduct<ProductType, ProductSize, ProductIngredientType>>> _finishedOrders;
 };
 
 #endif

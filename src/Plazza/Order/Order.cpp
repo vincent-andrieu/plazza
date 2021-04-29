@@ -7,14 +7,11 @@
 
 #include "Order/Order.hpp"
 
-Order::Order() : Serializer(sizeof(Order))
+template <typename T> Order<T>::Order(T object) : Serializer(sizeof(Order)), _object(object)
 {
 }
 
-Order::Order(PizzaType type, PizzaSize size) : Serializer(sizeof(Order)), _type(type), _size(size)
+template <typename T> const T &Order<T>::getOrder() const
 {
-}
-
-Order::~Order()
-{
+    return _object;
 }

@@ -10,25 +10,31 @@
 #include "Error/Error.hpp"
 #include "enumPizza.hpp"
 
-bool Reception::doesGetPendingOrders() const
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+bool Reception<ProductType, ProductSize, ProductIngredientType>::doesGetPendingOrders() const
 {
     return !this->_pendingOrders.empty();
 }
 
-const Order &Reception::getOrder()
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &
+Reception<ProductType, ProductSize, ProductIngredientType>::getOrder()
 {
-    const Order &order = this->_pendingOrders.front();
+    const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order = this->_pendingOrders.front();
 
     this->_pendingOrders.pop();
     return order;
 }
 
-void Reception::sendOrder(const Order &order) const
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Reception<ProductType, ProductSize, ProductIngredientType>::sendOrder(
+    const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) const
 {
     // TODO: Print msg & save it in log file
 }
 
-void Reception::receiveCommands(const string &commands)
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Reception<ProductType, ProductSize, ProductIngredientType>::receiveCommands(const string &commands)
 {
     stringstream ss(commands);
     string segment;
@@ -38,7 +44,8 @@ void Reception::receiveCommands(const string &commands)
     }
 }
 
-void Reception::_writePizzasCommand(const string &cmd)
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Reception<ProductType, ProductSize, ProductIngredientType>::_writePizzasCommand(const string &cmd)
 {
     stringstream ss(cmd);
     string word;
@@ -51,24 +58,28 @@ void Reception::_writePizzasCommand(const string &cmd)
 
     const size_t nbr = _getNbr(words[2]);
     for (size_t i = 0; i < nbr; i++)
-        this->_pendingOrders.push(Order(_getType(words[0]), _getSize(words[1])));
+        this->_pendingOrders.push(
+            Order<IProduct<ProductType, ProductSize, ProductIngredientType>>(_getType(words[0]), _getSize(words[1])));
 }
 
-PizzaType Reception::_getType(const string &type)
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+PizzaType Reception<ProductType, ProductSize, ProductIngredientType>::_getType(const string &type)
 {
     if (PizzaNames.find(type) == PizzaNames.end())
         throw ReceptionError("Unknown command type");
     return PizzaNames.at(type);
 }
 
-PizzaSize Reception::_getSize(const string &size)
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+PizzaSize Reception<ProductType, ProductSize, ProductIngredientType>::_getSize(const string &size)
 {
     if (PizzaSizeList.find(size) == PizzaSizeList.end())
         throw ReceptionError("Unknown command size");
     return PizzaSizeList.at(size);
 }
 
-size_t Reception::_getNbr(const string &nbr)
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+size_t Reception<ProductType, ProductSize, ProductIngredientType>::_getNbr(const string &nbr)
 {
     if (nbr[0] != 'x')
         throw ReceptionError("Invalid number syntax");

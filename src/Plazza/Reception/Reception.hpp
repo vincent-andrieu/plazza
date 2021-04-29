@@ -13,13 +13,14 @@
 
 #define COMMAND_DELIMITER ';'
 
-class Reception : IReception {
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+class Reception : IReception<ProductType, ProductSize, ProductIngredientType> {
   public:
     Reception() = default;
     ~Reception() override = default;
     [[nodiscard]] bool doesGetPendingOrders() const override;
-    const Order &getOrder() override;
-    void sendOrder(const Order &order) const override;
+    const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &getOrder() override;
+    void sendOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) const override;
 
   protected:
     void receiveCommands(const string &cmd) override;
@@ -30,7 +31,7 @@ class Reception : IReception {
     [[nodiscard]] static PizzaSize _getSize(const string &size);
     [[nodiscard]] static size_t _getNbr(const string &nbr);
 
-    std::queue<Order> _pendingOrders;
+    std::queue<Order<IProduct<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
 };
 
 #endif

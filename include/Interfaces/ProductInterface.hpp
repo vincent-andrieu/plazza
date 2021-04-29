@@ -8,15 +8,15 @@
 #ifndef PRODUCT_INTERFACE_HPP
 #define PRODUCT_INTERFACE_HPP
 
-#include "enumPizza.hpp"
+#include <vector>
 
-template <typename T> class IProduct {
+template <typename Type, typename Size, typename IngredientType> class IProduct {
   public:
     virtual ~IProduct() = default;
-    [[nodiscard]] virtual PizzaType getType() const = 0;
-    [[nodiscard]] virtual PizzaSize getSize() const = 0;
+    [[nodiscard]] virtual Type getType() const = 0;
+    [[nodiscard]] virtual Size getSize() const = 0;
     [[nodiscard]] virtual size_t getPreparationTime() const = 0;
-    virtual const std::vector<T> &getIngredientsList() const = 0;
+    [[nodiscard]] virtual const std::vector<IngredientType> &getIngredientList() const = 0;
 };
 
 #endif

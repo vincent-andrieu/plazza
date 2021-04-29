@@ -11,16 +11,17 @@
 #include "Encapsulations/Process/Process.hpp"
 #include "Order/Order.hpp"
 #include "Encapsulations/Process/Process.hpp"
+#include "Interfaces/ProductInterface.hpp"
 
-class IKitchen : public Process {
+template <typename ProductType, typename ProductSize, typename ProductIngredientType> class IKitchen : public Process {
   public:
     virtual ~IKitchen() = default;
     virtual void cook() = 0;                          // while work
     [[nodiscard]] virtual bool isCooking() const = 0; // while is true, loop
 
   protected:
-    [[nodiscard]] virtual Order receiveOrder() const = 0; // from pipe
-    virtual void addPendingOrder(const Order &order) = 0;
+    [[nodiscard]] virtual Order<IProduct<ProductType, ProductSize, ProductIngredientType>> receiveOrder() const = 0; // from pipe
+    virtual void addPendingOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
     virtual void sendFinishedOrders() = 0;
 };
 
