@@ -6,46 +6,77 @@
  */
 
 #include <sys/stat.h>
+#include <sys/ipc.h>
 #include <fstream>
-#include "Error/Error.hpp"
 #include "Communication/Communication.hpp"
 #include "Serializer/Serializer.hpp"
-
-Communication::Communication() = default;
+#include "Error/Error.hpp"
 
 Communication::Communication(const string &filename)
 {
-    mkdir(FIFO_ROOT, FIFO_FOLDER_PERMISSIONS);
-    this->_filepath = FIFO_ROOT + filename;
+    mkdir(FILES_ROOT, FILES_FOLDER_PERMISSIONS);
+    const string filepath = FILES_ROOT + filename;
+    std::ofstream outfile(filepath);
 
-    if (mkfifo(this->_filepath.c_str(), FIFO_PERMISSIONS) == -1 && errno != EEXIST)
-        throw CommunicationError(getErrnoMsg());
+    if (!outfile.is_open())
+        throw CommunicationError("Fail to create file");
+    outfile.close();
+
+    this->_key = ftok(filepath.c_str(), 65);
+    if (this->_key == -1)
+        throw CommunicationError(getErrnoMsg("ftok"));
 }
 
 Communication::Communication(const Communication &copy)
 {
-    this->_filepath = copy._filepath;
+    this->_key = copy._key;
 }
 
+void Communication::operator<<(const Serializer &object) const
+{
+    this->write(object);
+}
+
+void Communication::operator>>(Serializer &object)
+{
+    this->read(object);
+}
 
 void Communication::write(const Serializer &object) const
 {
-    std::ofstream file(this->_filepath, std::ios::out | std::ios::binary);
+    int msqId = msgget(this->_key, IPC_PERMISSION | IPC_CREAT);
 
-    if (file.is_open()) {
-        object >> file;
-        file.close();
-    } else
-        throw CommunicationError("Fail to open file to write: " + this->_filepath);
+    if (msqId == -1)
+        throw CommunicationError(getErrnoMsg("write => msgget"));
+    object >> msqId;
 }
 
-void Communication::read(const Serializer &object) const
+void Communication::read(Serializer &object)
 {
-    std::ifstream file(this->_filepath, std::ios::in | std::ios::binary);
+    int msqId = msgget(this->_key, IPC_PERMISSION | IPC_CREAT);
 
-    if (file.is_open()) {
-        object << file;
-        file.close();
-    } else
-        throw CommunicationError("Fail to open file to read: " + this->_filepath);
+    if (msqId == -1)
+        throw CommunicationError(getErrnoMsg("read => msgget"));
+    object << msqId;
+
+    if (this->getQueueSize(msqId) <= 0)
+        this->_removeQueue(msqId);
+}
+
+msgqnum_t Communication::getQueueSize(int msqId) const
+{
+    if (msqId == -1)
+        msqId = msgget(this->_key, IPC_PERMISSION | IPC_CREAT);
+    struct msqid_ds msq_ds;
+
+    if (msgctl(msqId, IPC_STAT, &msq_ds) == -1)
+        throw CommunicationError(getErrnoMsg("msgctl"));
+
+    return msq_ds.msg_qnum;
+}
+
+void Communication::_removeQueue(const int msqId)
+{
+    if (msgctl(msqId, IPC_RMID, NULL) == -1)
+        throw CommunicationError(getErrnoMsg("msgctl"));
 }

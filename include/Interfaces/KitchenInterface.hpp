@@ -19,7 +19,7 @@ class IKitchen : public Process {
     [[nodiscard]] virtual bool isCooking() const = 0; // while is true, loop
 
   protected:
-    [[nodiscard]] virtual Order receiveOrder() const = 0; // from pipe
+    [[nodiscard]] virtual Order receiveOrder() = 0; // from pipe
     virtual void addPendingOrder(const Order &order) = 0;
     virtual void sendFinishedOrders() = 0;
 };

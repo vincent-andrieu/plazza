@@ -61,13 +61,13 @@ void Restaurant::sendOrder(KitchenManage &kitchenManage, const Order &order)
     kitchenManage.kitchen.send(order);
 }
 
-void Restaurant::retreiveOrders() const
+void Restaurant::retreiveOrders()
 {
     for (const KitchenManage &kitchenManage : this->_kitchens)
         this->_retreiveOrder(kitchenManage.kitchen);
 }
 
-void Restaurant::_retreiveOrder(const Kitchen &kitchen) const
+void Restaurant::_retreiveOrder(Kitchen &kitchen)
 {
     Order order;
 

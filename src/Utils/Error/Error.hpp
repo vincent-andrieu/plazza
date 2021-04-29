@@ -13,7 +13,7 @@
 
 typedef std::string string;
 
-const string getErrnoMsg();
+const string getErrnoMsg(const string name = "");
 
 class ManageError : public std::exception {
   public:
