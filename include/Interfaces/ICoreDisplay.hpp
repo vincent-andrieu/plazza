@@ -20,6 +20,8 @@ class ICoreDisplay : public ICommandInterpreter {
         virtual void printPrompt() const = 0;
         virtual void printKitchen(std::vector<std::unique_ptr<IKitchen>> kitchenList) = 0;
         virtual void printDetailledKitchen(std::unique_ptr<IKitchen> kitchen) = 0;
+        virtual std::string getLine() const = 0;
+        virtual void setLine(std::string line) = 0;
 };
 
 #endif
