@@ -10,6 +10,7 @@
 
 #include "Encapsulations/Process/Process.hpp"
 #include "Order/Order.hpp"
+#include "Encapsulations/Process/Process.hpp"
 
 class IKitchen : public Process {
   public:
