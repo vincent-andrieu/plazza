@@ -12,8 +12,8 @@
 
 class Serializer {
   public:
-    Serializer();
-    Serializer(size_t size);
+    Serializer() = default;
+    explicit Serializer(size_t size);
 
     void operator>>(std::ofstream &file) const;
     void operator<<(std::ifstream &file) const;

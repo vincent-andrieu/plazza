@@ -78,7 +78,7 @@ endif ()
 set(MY_TESTS_DIR ${PROJECT_SOURCE_DIR}/tests/)
 
 set(MY_SRC_TESTS
-#        ${MY_TESTS_DIR}src/.cpp
+        #        ${MY_TESTS_DIR}src/.cpp
         )
 
 set(MY_INCLUDE_TESTS

@@ -11,9 +11,7 @@
 #include "Communication/Communication.hpp"
 #include "Serializer/Serializer.hpp"
 
-Communication::Communication()
-{
-}
+Communication::Communication() = default;
 
 Communication::Communication(const string &filename)
 {

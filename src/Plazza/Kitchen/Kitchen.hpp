@@ -22,14 +22,14 @@ template <typename T> struct LockedQueue {
 class Kitchen : public IKitchen {
   public:
     Kitchen(double bakingMultiplier, size_t cooksPerKitchen, size_t restockTime);
-    ~Kitchen();
-    void cook();
-    bool isCooking() const;
+    ~Kitchen() override;
+    void cook() override;
+    bool isCooking() const override;
 
   protected:
-    const Order receiveOrder() const;
-    void addPendingOrder(const Order &order);
-    void sendFinishOrders();
+    Order receiveOrder() const override;
+    void addPendingOrder(const Order &order) override;
+    void sendFinishedOrders() override;
 
   private:
     Stock _stock;

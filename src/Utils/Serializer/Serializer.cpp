@@ -27,12 +27,12 @@ void Serializer::pack(std::ofstream &file) const
 {
     file.write((char *) this, this->_size);
     if (file.bad())
-        throw SerializerError("Fail to pack");
+        throw SerializerError("Failed to pack");
 }
 
 void Serializer::unpack(std::ifstream &file) const
 {
     file.read((char *) this, this->_size);
     if (file.bad())
-        throw SerializerError("Fail to unpack");
+        throw SerializerError("Failed to unpack");
 }

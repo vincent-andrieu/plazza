@@ -13,16 +13,14 @@ Kitchen::Kitchen(double bakingMultiplier, size_t cooksPerKitchen, size_t restock
     // TODO: Create threads per cooks
 }
 
-Kitchen::~Kitchen()
-{
-}
+Kitchen::~Kitchen() = default;
 
 void Kitchen::cook()
 {
     while (this->isCooking()) {
         const Order &order = this->receiveOrder();
         this->addPendingOrder(order);
-        this->sendFinishOrders();
+        this->sendFinishedOrders();
         this->_stock.restock();
     }
 }
@@ -32,7 +30,7 @@ bool Kitchen::isCooking() const
     return this->_isCooking;
 }
 
-const Order Kitchen::receiveOrder() const
+Order Kitchen::receiveOrder() const
 {
     Order order;
 
@@ -47,7 +45,7 @@ void Kitchen::addPendingOrder(const Order &order)
     this->_pendingOrders.mutex.unlock();
 }
 
-void Kitchen::sendFinishOrders()
+void Kitchen::sendFinishedOrders()
 {
     this->_finishedOrders.mutex.lock();
     while (!this->_finishedOrders.queue.empty()) {

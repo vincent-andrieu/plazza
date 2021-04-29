@@ -14,13 +14,13 @@
 class IKitchen : public Process {
   public:
     virtual ~IKitchen() = default;
-    virtual void cook() = 0;            // while work
-    virtual bool isCooking() const = 0; // while is true, loop
+    virtual void cook() = 0;                          // while work
+    [[nodiscard]] virtual bool isCooking() const = 0; // while is true, loop
 
   protected:
-    virtual const Order receiveOrder() const = 0; // from pipe
+    [[nodiscard]] virtual Order receiveOrder() const = 0; // from pipe
     virtual void addPendingOrder(const Order &order) = 0;
-    virtual void sendFinishOrders() = 0;
+    virtual void sendFinishedOrders() = 0;
 };
 
 #endif
