@@ -9,7 +9,8 @@
 
 CoreDisplay::CoreDisplay(std::string filepath, Vector screenSize, Vector screenScale, std::size_t maxLen) :
 _prompt(""), _maxLen(maxLen), _line(""),
-_loader(std::make_unique<DLLib<IDisplayModule>>(filepath))
+_loader(std::make_unique<DLLib<IDisplayModule>>(filepath)),
+_input(std::make_unique<UserInput>())
 {
     this->_loader->getEntryPoint()->open(screenSize, screenScale);
 }
@@ -18,6 +19,7 @@ CoreDisplay::~CoreDisplay()
 {
     this->_loader->getEntryPoint()->close();
     this->_loader.reset();
+    this->_input.reset();
 }
 
 void CoreDisplay::setPrompt(std::string prompt)

@@ -11,6 +11,7 @@
 #include <iostream>
 #include <algorithm>
 #include "DLLib/DLLib.hpp"
+#include "UserInput/UserInput.hpp"
 #include "Interfaces/ICoreDisplay.hpp"
 #include "Interfaces/IDisplayModule.hpp"
 
@@ -32,6 +33,7 @@ class CoreDisplay : public ICoreDisplay {
     std::size_t _maxLen;
     std::string _line;
     std::unique_ptr<DLLib<IDisplayModule>> _loader;
+    std::unique_ptr<UserInput> _input;
 };
 
 #endif
