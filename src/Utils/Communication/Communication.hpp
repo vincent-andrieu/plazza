@@ -17,7 +17,7 @@
 
 class Communication {
   public:
-    Communication();
+    Communication() = default;
     explicit Communication(const string &filename);
     Communication(const Communication &communication);
     ~Communication() = default;

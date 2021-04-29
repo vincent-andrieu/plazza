@@ -11,8 +11,6 @@
 #include "Communication/Communication.hpp"
 #include "Serializer/Serializer.hpp"
 
-Communication::Communication() = default;
-
 Communication::Communication(const string &filename)
 {
     mkdir(FIFO_ROOT, FIFO_FOLDER_PERMISSIONS);
@@ -26,7 +24,6 @@ Communication::Communication(const Communication &copy)
 {
     this->_filepath = copy._filepath;
 }
-
 
 void Communication::write(const Serializer &object) const
 {
