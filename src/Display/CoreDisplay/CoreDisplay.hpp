@@ -23,8 +23,8 @@ class CoreDisplay : public ICoreDisplay {
     ~CoreDisplay();
     void setPrompt(std::string prompt);
     void printPrompt() const;
-    void printKitchen(std::vector<std::unique_ptr<IKitchen>> kitchenList);
-    void printDetailledKitchen(std::unique_ptr<IKitchen> kitchen);
+    void printKitchen(std::vector<std::shared_ptr<IKitchen>> kitchenList);
+    void printDetailledKitchen(std::shared_ptr<IKitchen> kitchen);
     std::string getLine() const;
     void setLine(std::string line);
     void update();
