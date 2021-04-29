@@ -8,7 +8,7 @@ on:
 
 
 jobs:
-  compile:
+  compilation:
     runs-on: ubuntu-20.04
     container: epitechcontent/epitest-docker
     steps:
@@ -21,11 +21,11 @@ jobs:
         run: cmake .
 
       - name: Run make
-        run: make &> /tmp/compile
+        run: make &> /tmp/compilation
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         if: always()
         with:
           name: compilation_output
-          path: /tmp/compile
+          path: /tmp/compilation
