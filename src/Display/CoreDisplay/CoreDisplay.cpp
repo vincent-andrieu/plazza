@@ -12,6 +12,7 @@ _prompt(""), _maxLen(maxLen),
 _loader(std::make_unique<DLLib<IDisplayModule>>(filepath)),
 _input(std::make_unique<UserInput>())
 {
+    this->_loader->setEntryPoint("entryPoint");
     this->_loader->getEntryPoint()->open(screenSize, screenScale);
 }
 

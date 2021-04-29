@@ -18,6 +18,13 @@ void printHelp(const string binaryName)
 
 int main(int argc, char **argv)
 {
+    /*CoreDisplay *tmp = new CoreDisplay(argv[1], Vector(1400, 900), Vector(9.95, 21.6));
+
+    while (1) {
+        tmp->clear();
+        tmp->printPrompt();
+        tmp->update();
+    }*/
     if (argc != 4) {
         printHelp(argv[0]);
         return argc == 2 && (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")) ? EXIT_SUCCESS : EXIT_ERROR;

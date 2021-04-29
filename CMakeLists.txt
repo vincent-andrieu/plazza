@@ -59,6 +59,7 @@ set(MY_INCLUDE
 
 set(MY_DEPENDENCIES
         dl
+        ncurses
         pthread)
 
 set(MY_BINARY plazza)
