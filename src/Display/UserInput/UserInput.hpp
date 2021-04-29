@@ -23,13 +23,11 @@ class UserInput {
     UserInput();
     ~UserInput();
     void reset();
-    void runInput(std::shared_ptr<IDisplayModule> &module);
+    void runInput(std::shared_ptr<IDisplayModule> module);
     std::string getInput() const;
-    bool inputRunning() const;
-    void setInputState(bool isRunning);
+    void setInputState(std::string line);
 
   private:
-    bool _end;
     std::string _input;
     const std::unordered_map<IDisplayModule::KeyList, char> _link = {
         {IDisplayModule::KeyList::KEY_A, 'A'}, // A
@@ -68,6 +66,8 @@ class UserInput {
         {IDisplayModule::KeyList::KEY_8, '8'}, // 8
         {IDisplayModule::KeyList::KEY_9, '9'}, // 9
         {IDisplayModule::KeyList::KEY_0, '0'}, // 0
+        {IDisplayModule::KeyList::KEY_SPACE, ' '}, // ' '
+        {IDisplayModule::KeyList::EXIT, '|'}, // '|'
     };
 };
 

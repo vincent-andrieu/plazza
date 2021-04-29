@@ -27,11 +27,12 @@ class CoreDisplay : public ICoreDisplay {
     void printDetailledKitchen(std::unique_ptr<IKitchen> kitchen);
     std::string getLine() const;
     void setLine(std::string line);
+    void update();
+    void clear();
 
   private:
     std::string _prompt;
     std::size_t _maxLen;
-    std::string _line;
     std::unique_ptr<DLLib<IDisplayModule>> _loader;
     std::unique_ptr<UserInput> _input;
 };

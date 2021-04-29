@@ -22,6 +22,8 @@ class ICoreDisplay : public ICommandInterpreter {
         virtual void printDetailledKitchen(std::unique_ptr<IKitchen> kitchen) = 0;
         virtual std::string getLine() const = 0;
         virtual void setLine(std::string line) = 0;
+        virtual void update() = 0;
+        virtual void clear() = 0;
 };
 
 #endif

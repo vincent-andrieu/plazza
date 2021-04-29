@@ -7,21 +7,21 @@
 
 #include "UserInput.hpp"
 
-UserInput::UserInput() : _end(true), _input("")
+UserInput::UserInput() : _input("")
 {
 }
 
 UserInput::~UserInput()
 {
+    this->_input.clear();
 }
 
 void UserInput::reset()
 {
-    this->_end = false;
     this->_input = "";
 }
 
-void UserInput::runInput(std::shared_ptr<IDisplayModule> &module)
+void UserInput::runInput(std::shared_ptr<IDisplayModule> module)
 {
     for (auto it = this->_link.begin(); it != this->_link.end(); it++) {
         if (module->isKeyPress(it->first) && this->_input.length() < USERMAXLEN) {
@@ -37,12 +37,7 @@ std::string UserInput::getInput() const
     return this->_input;
 }
 
-bool UserInput::inputRunning() const
+void UserInput::setInputState(std::string line)
 {
-    return !this->_end;
-}
-
-void UserInput::setInputState(bool isRunning)
-{
-    this->_end = !isRunning;
+    this->_input = line;
 }

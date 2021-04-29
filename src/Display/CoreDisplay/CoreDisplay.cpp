@@ -8,7 +8,7 @@
 #include "CoreDisplay.hpp"
 
 CoreDisplay::CoreDisplay(std::string filepath, Vector screenSize, Vector screenScale, std::size_t maxLen) :
-_prompt(""), _maxLen(maxLen), _line(""),
+_prompt(""), _maxLen(maxLen),
 _loader(std::make_unique<DLLib<IDisplayModule>>(filepath)),
 _input(std::make_unique<UserInput>())
 {
@@ -29,7 +29,7 @@ void CoreDisplay::setPrompt(std::string prompt)
 
 void CoreDisplay::printPrompt() const
 {
-    std::string to_display = this->_prompt + this->_line;
+    std::string to_display = this->_prompt + this->_input->getInput();
 
     to_display = to_display.substr(0, this->_maxLen);
     this->_loader->getEntryPoint()->putText(IDisplayModule::Color::WHITE, Coord(0, 0), to_display);
@@ -51,10 +51,30 @@ void CoreDisplay::printDetailledKitchen(std::unique_ptr<IKitchen> kitchen)
 
 std::string CoreDisplay::getLine() const
 {
-    return this->_line;
+    std::string input = this->_input->getInput();
+    std::size_t pos = input.find('|');
+    std::string exec = "";
+
+    if (pos == std::string::npos)
+        return std::string("");
+    exec = input.substr(0, pos - 1);
+    this->_input->setInputState(input.substr(pos + 1, input.length()));
+    return exec;
 }
 
 void CoreDisplay::setLine(std::string line)
 {
-    this->_line = line;
+    this->_input->setInputState(line);
+}
+
+void CoreDisplay::update()
+{
+    this->_loader->getEntryPoint()->displayScreen();
+    this->_loader->getEntryPoint()->refreshScreen();
+}
+
+void CoreDisplay::clear()
+{
+    this->_input->runInput(this->_loader->getEntryPoint());
+    this->_loader->getEntryPoint()->clearScreen();
 }
