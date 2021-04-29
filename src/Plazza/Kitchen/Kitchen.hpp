@@ -27,7 +27,7 @@ class Kitchen : public IKitchen {
     bool isCooking() const override;
 
   protected:
-    Order receiveOrder() const override;
+    Order receiveOrder() override;
     void addPendingOrder(const Order &order) override;
     void sendFinishedOrders() override;
 

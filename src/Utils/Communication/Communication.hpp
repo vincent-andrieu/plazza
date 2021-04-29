@@ -8,12 +8,13 @@
 #ifndef COMMUNICATION_HPP
 #define COMMUNICATION_HPP
 
+#include <sys/msg.h>
 #include "Plazza.hpp"
 #include "Serializer/Serializer.hpp"
 
-#define FIFO_FOLDER_PERMISSIONS 0766
-#define FIFO_ROOT               "/tmp/plazza/"
-#define FIFO_PERMISSIONS        0666
+#define FILES_FOLDER_PERMISSIONS 0766
+#define FILES_ROOT               "/tmp/plazza/"
+#define IPC_PERMISSION           0666
 
 class Communication {
   public:
@@ -22,13 +23,19 @@ class Communication {
     Communication(const Communication &communication);
     ~Communication() = default;
 
+    void operator<<(const Serializer &object) const;
+    void operator>>(Serializer &object);
+
     Communication &operator=(const Communication &communication) = default;
 
     void write(const Serializer &object) const;
-    void read(const Serializer &object) const;
+    void read(Serializer &object);
+    msgqnum_t getQueueSize(int msqId = -1) const;
 
   private:
-    string _filepath;
+    static void _removeQueue(const int msqId);
+
+    key_t _key;
 };
 
 #endif

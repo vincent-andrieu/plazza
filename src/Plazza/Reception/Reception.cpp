@@ -25,6 +25,7 @@ const Order &Reception::getOrder()
 
 void Reception::sendOrder(const Order &order) const
 {
+    (void) order;
     // TODO: Print msg & save it in log file
 }
 

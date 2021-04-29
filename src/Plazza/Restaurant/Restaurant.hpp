@@ -25,10 +25,10 @@ class Restaurant : public IRestaurant {
     void newKitchen(const Order &order);
     void distributeOrder(const Order &order);
     void sendOrder(KitchenManage &kitchen, const Order &order);
-    void retreiveOrders() const;
+    void retreiveOrders();
 
   private:
-    void _retreiveOrder(const Kitchen &kitchen) const;
+    void _retreiveOrder(Kitchen &kitchen);
 
     bool _isOpen;
     double _bakingMultiplier;

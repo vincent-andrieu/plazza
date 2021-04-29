@@ -13,7 +13,7 @@
 #include "Order/Order.hpp"
 
 struct KitchenManage {
-    const Kitchen &kitchen;
+    Kitchen &kitchen;
     std::vector<Order> orders;
 };
 
@@ -28,7 +28,7 @@ class IRestaurant {
     virtual void newKitchen(const Order &order) = 0;
     virtual void distributeOrder(const Order &order) = 0;
     virtual void sendOrder(KitchenManage &kitchen, const Order &order) = 0;
-    virtual void retreiveOrders() const = 0;
+    virtual void retreiveOrders() = 0;
 };
 
 #endif

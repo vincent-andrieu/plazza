@@ -5,34 +5,42 @@
  * serializer.cpp - Created: 20/04/2021
  */
 
-#include <fstream>
+#include <cstring>
+#include <sys/msg.h>
 #include "Serializer/Serializer.hpp"
 #include "Error/Error.hpp"
 
-Serializer::Serializer(std::size_t size) : _size(size)
+Serializer::Serializer(size_t size) : _size(size)
 {
+    if (size > MAX_OBJECT_SIZE)
+        throw SerializerError(
+            "The sending object is over limit: " + std::to_string(size) + ". Limited to: " + std::to_string(MAX_OBJECT_SIZE));
 }
 
-void Serializer::operator>>(std::ofstream &file) const
+void Serializer::operator>>(const int msqId) const
 {
-    this->pack(file);
+    this->pack(msqId);
 }
 
-void Serializer::operator<<(std::ifstream &file) const
+void Serializer::operator<<(const int msqId)
 {
-    this->unpack(file);
+    this->unpack(msqId);
 }
 
-void Serializer::pack(std::ofstream &file) const
+void Serializer::pack(const int msqId) const
 {
-    file.write((char *) this, this->_size);
-    if (file.bad())
-        throw SerializerError("Failed to pack");
+    SendedObject sendedObject;
+    sendedObject.type = 1;
+    memcpy(sendedObject.object, this, this->_size);
+    if (msgsnd(msqId, &sendedObject, sizeof(sendedObject), 0) == -1)
+        throw SerializerError(getErrnoMsg("msgsnd"));
 }
 
-void Serializer::unpack(std::ifstream &file) const
+void Serializer::unpack(const int msqId)
 {
-    file.read((char *) this, this->_size);
-    if (file.bad())
-        throw SerializerError("Failed to unpack");
+    SendedObject sendedObject;
+
+    if (msgrcv(msqId, &sendedObject, sizeof(sendedObject), 1, 0) == -1)
+        throw SerializerError(getErrnoMsg("msgrcv"));
+    memcpy(this, sendedObject.object, this->_size);
 }

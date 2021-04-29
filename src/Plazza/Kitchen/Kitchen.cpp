@@ -30,7 +30,7 @@ bool Kitchen::isCooking() const
     return this->_isCooking;
 }
 
-Order Kitchen::receiveOrder() const
+Order Kitchen::receiveOrder()
 {
     Order order;
 
