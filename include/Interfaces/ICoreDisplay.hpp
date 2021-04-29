@@ -8,6 +8,7 @@
 #ifndef ICOREDISPLAY_HPP
 #define ICOREDISPLAY_HPP
 
+#include <memory>
 #include <vector>
 #include "KitchenInterface.hpp"
 #include "ICommandInterpreter.hpp"
@@ -17,8 +18,8 @@ class ICoreDisplay : public ICommandInterpreter {
         virtual ~ICoreDisplay() = default;
         virtual void setPrompt(std::string prompt) = 0;
         virtual void printPrompt() const = 0;
-        virtual void printKitchen(std::vector<IKitchen> kitchenList) = 0;
-        virtual void printDetailledKitchen(IKitchen kitchen) = 0;
+        virtual void printKitchen(std::vector<std::unique_ptr<IKitchen>> kitchenList) = 0;
+        virtual void printDetailledKitchen(std::unique_ptr<IKitchen> kitchen) = 0;
 };
 
 #endif

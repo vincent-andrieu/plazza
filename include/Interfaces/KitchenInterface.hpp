@@ -9,6 +9,7 @@
 #define KITCHEN_INTERFACE_HPP
 
 #include "Order/Order.hpp"
+#include "Encapsulations/Process/Process.hpp"
 
 class IKitchen : public Process {
   public:
