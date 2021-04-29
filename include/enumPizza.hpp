@@ -38,4 +38,16 @@ enum class PizzaIngredient
     CHIEF_LOVE
 };
 
+const PizzaIngredient pizzaIngredientList[] = {
+    PizzaIngredient::DOE,
+    PizzaIngredient::TOMATOE,
+    PizzaIngredient::GRUYERE,
+    PizzaIngredient::HAM,
+    PizzaIngredient::MUSHROOMS,
+    PizzaIngredient::STEAK,
+    PizzaIngredient::EGGPLANT,
+    PizzaIngredient::GOAT_CHEESE,
+    PizzaIngredient::CHIEF_LOVE,
+};
+
 #endif

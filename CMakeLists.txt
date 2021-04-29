@@ -11,6 +11,7 @@ project(the_plazza
 set(MY_SRC_DIR ${PROJECT_SOURCE_DIR}/src/)
 set(MY_PLAZZA_DIR ${MY_SRC_DIR}/Plazza/)
 set(MY_UTILS_DIR ${MY_SRC_DIR}/Utils/)
+set(MY_DISPLAY_DIR ${MY_SRC_DIR}/Display/)
 set(MY_ENCAPSULATION_DIR ${MY_UTILS_DIR}Encapsulations/)
 set(MY_CMD_INTERPRETER_DIR ${MY_UTILS_DIR}CommandInterpreter/)
 set(MY_ERROR_DIR ${MY_UTILS_DIR}Error/)
@@ -23,6 +24,7 @@ set(MY_FACTORY_DIR ${MY_PIZZA_DIR}Factory/)
 set(MY_SRC
         ${MY_ENCAPSULATION_DIR}ConditionalVariables/ConditionalVariables.cpp
         ${MY_ENCAPSULATION_DIR}Mutex/Mutex.cpp
+        ${MY_ENCAPSULATION_DIR}Process/Process.cpp
         ${MY_ENCAPSULATION_DIR}Threads/Threads.cpp
         ${MY_ERROR_DIR}Error.cpp
         ${MY_SERIALIZER_DIR}Serializer.cpp
@@ -34,6 +36,9 @@ set(MY_SRC
         ${MY_PIZZATYPE_DIR}Margarita/Margarita.cpp
         ${MY_PIZZATYPE_DIR}Regina/Regina.cpp
         ${MY_FACTORY_DIR}Factory.cpp
+        ${MY_DISPLAY_DIR}DLLoader/DLLoader.cpp
+        ${MY_DISPLAY_DIR}DLLib/DLLib.cpp
+        ${MY_DISPLAY_DIR}Vector.cpp
         )
 
 set(MY_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
@@ -42,9 +47,11 @@ set(MY_INCLUDE
         ${MY_INCLUDE_DIR}
         ${MY_SRC_DIR}/Plazza
         ${MY_SRC_DIR}/Utils
+        ${MY_SRC_DIR}Display
         )
 
 set(MY_DEPENDENCIES
+        dl
         pthread)
 
 set(MY_BINARY plazza)

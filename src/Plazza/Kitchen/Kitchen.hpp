@@ -8,26 +8,36 @@
 #ifndef KITCHEN_HPP
 #define KITCHEN_HPP
 
+#include <queue>
 #include "Interfaces/KitchenInterface.hpp"
-#include "Encapsulations/Processes/Processes.hpp"
-#include "Cook/Cook.hpp"
+#include "Stock/Stock.hpp"
+#include "Encapsulations/Process/Process.hpp"
+#include "Encapsulations/Mutex/Mutex.hpp"
 
-class Kitchen : public IKitchen, public Process {
+template <typename T> struct LockedQueue {
+    std::queue<T> queue;
+    Mutex mutex;
+};
+
+class Kitchen : public IKitchen {
   public:
     Kitchen(double bakingTime, size_t cooksPerKitchen, size_t restockTime);
     ~Kitchen();
     void cook();
-    bool isCooking();
+    bool isCooking() const;
 
   protected:
-    void receiveOrder();
-    bool isOrderReady(Order order);
-    void sendOrder();
-    void assignOrder(Order order, Cook cook);
-    void retreiveOrder();
-    void restock();
+    Order &receiveOrder() const;
+    void addPendingOrder(const Order order);
+    void sendFinishOrders();
 
-    std::deque<Cook> workers;
+  private:
+    bool _isCooking;
+    double _bakingMultiplier;
+    size_t _cooksPerKitchen;
+    LockedQueue<Order> _pendingOrders;
+    LockedQueue<Order> _finishedOrders;
+    Stock _stock;
 };
 
 #endif

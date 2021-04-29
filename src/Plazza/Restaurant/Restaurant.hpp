@@ -13,30 +13,26 @@
 #include "Order/Order.hpp"
 #include "Kitchen/Kitchen.hpp"
 #include "Reception/Reception.hpp"
-#include "Encapsulations/Processes/Processes.hpp"
-
-struct KitchenManage {
-    const Kitchen &kitchen;
-    std::vector<Order> orders;
-};
+#include "Encapsulations/Process/Process.hpp"
 
 class Restaurant : public IRestaurant {
   public:
     Restaurant(double bakingTime, size_t cooksPerKitchen, size_t restockTime);
     ~Restaurant();
 
-  protected:
     bool isOpen() const;
+
+  protected:
     void newKitchen(const Order &order);
     void distributeOrder(const Order &order);
-    void sendOrder(const Kitchen &kitchen, const Order &order);
+    void sendOrder(KitchenManage &kitchen, const Order &order);
     void retreiveOrders() const;
 
   private:
     void _retreiveOrder(const Kitchen &kitchen) const;
 
     bool _isOpen;
-    double _bakingTime;
+    double _bakingMultiplier;
     size_t _cooksPerKitchen;
     size_t _restockTime;
     std::vector<KitchenManage> _kitchens;

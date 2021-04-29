@@ -8,7 +8,7 @@
 #include "Restaurant.hpp"
 
 Restaurant::Restaurant(double bakingTime, size_t cooksPerKitchen, size_t restockTime)
-    : _isOpen(true), _bakingTime(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime)
+    : _isOpen(true), _bakingMultiplier(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime)
 {
 }
 
@@ -19,17 +19,17 @@ bool Restaurant::isOpen() const
 
 void Restaurant::distributeOrder(const Order &order)
 {
-    KitchenManage &selectedKitchen;
+    size_t selectedKitchenIndex;
     size_t maxOrders = this->_cooksPerKitchen * 2;
 
-    for (KitchenManage &kitchen : this->_kitchens) {
-        if (kitchen.orders.size() < maxOrders) {
-            maxOrders = kitchen.orders.size();
-            selectedKitchen = kitchen;
+    for (size_t i = 0; i < this->_kitchens.size(); i++) {
+        if (this->_kitchens[i].orders.size() < maxOrders) {
+            maxOrders = this->_kitchens[i].orders.size();
+            selectedKitchenIndex = i;
         }
     }
     if (maxOrders < this->_cooksPerKitchen * 2) {
-        sendOrder(selectedKitchen, order);
+        sendOrder(this->_kitchens[selectedKitchenIndex], order);
     } else {
         newKitchen(order);
     }
@@ -37,10 +37,9 @@ void Restaurant::distributeOrder(const Order &order)
 
 void Restaurant::newKitchen(const Order &order)
 {
-    Kitchen kitchen(this->_bakingTime, this->_cooksPerKitchen, this->_restockTime);
-    KitchenManage kitchenManage;
+    Kitchen kitchen(this->_bakingMultiplier, this->_cooksPerKitchen, this->_restockTime);
+    KitchenManage kitchenManage = {kitchen, {}};
 
-    kitchenManage.kitchen = kitchen;
     if (kitchen.isParent())
         this->sendOrder(kitchenManage, order);
     else if (kitchen.isChild())
@@ -49,7 +48,7 @@ void Restaurant::newKitchen(const Order &order)
 
 void Restaurant::sendOrder(KitchenManage &kitchenManage, const Order &order)
 {
-    kitchenManage.order.push(order);
+    kitchenManage.orders.push_back(order);
     kitchenManage.kitchen.send(order);
 }
 
