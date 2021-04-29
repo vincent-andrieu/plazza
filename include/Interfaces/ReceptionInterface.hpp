@@ -10,16 +10,17 @@
 
 #include "CommandInterpreter/CommandInterpreter.hpp"
 #include "Order/Order.hpp"
+#include "Plazza.hpp"
 
-class IReception : CommandInterpreter {
+class IReception : public CommandInterpreter {
   public:
     virtual ~IReception() = default;
-    virtual bool isOpen() const = 0;
-    virtual Order getOrder() const = 0;
-    virtual void sayStatus() = 0;
+    virtual bool doesGetPendingOrders() const = 0;
+    virtual const Order getOrder() = 0;
+    virtual void sendOrder(const Order &order) const = 0;
 
   protected:
-    virtual void receiveCommand() = 0; // take from cmdLine
+    virtual void receiveCommands(const string cmd) = 0; // take from cmdLine
 };
 
 #endif

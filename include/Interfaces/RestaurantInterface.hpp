@@ -8,12 +8,12 @@
 #ifndef RESTAURANT_INTERFACE_HPP
 #define RESTAURANT_INTERFACE_HPP
 
-#include "Plazza.hpp"
-#include "Interfaces/KitchenInterface.hpp"
+#include <vector>
+#include "Kitchen/Kitchen.hpp"
 #include "Order/Order.hpp"
 
 struct KitchenManage {
-    const IKitchen &kitchen;
+    const Kitchen &kitchen;
     std::vector<Order> orders;
 };
 
@@ -21,6 +21,7 @@ class IRestaurant {
   public:
     virtual ~IRestaurant() = default;
 
+    virtual void lunchTime() = 0;
     virtual bool isOpen() const = 0;
 
   protected:

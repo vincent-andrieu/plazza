@@ -7,18 +7,18 @@
 
 #include "CommandInterpreter.hpp"
 
-commandInterpreter::commandInterpreter(std::istream &inputStream) : _inputStream(inputStream), _end(false)
+CommandInterpreter::CommandInterpreter(std::istream &inputStream) : _inputStream(inputStream), _end(false)
 {
 }
 
-commandInterpreter::~commandInterpreter() = default;
+CommandInterpreter::~CommandInterpreter() = default;
 
-void commandInterpreter::setEnd(bool isEnd)
+void CommandInterpreter::setEnd(bool isEnd)
 {
     _end = isEnd;
 }
 
-bool commandInterpreter::isEnd() const
+bool CommandInterpreter::isEnd() const
 {
     const std::string &my_actCommand(getActCommand());
 
@@ -28,27 +28,27 @@ bool commandInterpreter::isEnd() const
     return _end;
 }
 
-void commandInterpreter::setPrompt(const std::string &prompt)
+void CommandInterpreter::setPrompt(const std::string &prompt)
 {
     _prompt = prompt;
 }
 
-const std::string &commandInterpreter::getPrompt() const
+const std::string &CommandInterpreter::getPrompt() const
 {
     return _prompt;
 }
 
-void commandInterpreter::printPrompt()
+void CommandInterpreter::printPrompt()
 {
     std::cout << _prompt;
 }
 
-const std::string &commandInterpreter::getActCommand() const
+const std::string &CommandInterpreter::getActCommand() const
 {
     return _actCommand;
 }
 
-const std::string &commandInterpreter::setCommand()
+const std::string &CommandInterpreter::setCommand()
 {
     std::string my_command;
 
@@ -59,13 +59,13 @@ const std::string &commandInterpreter::setCommand()
     return getActCommand();
 }
 
-void commandInterpreter::setActCommand(std::string &command)
+void CommandInterpreter::setActCommand(std::string &command)
 {
     _actCommand = command;
 }
 
 // return true if _actCommand is listed as existing
-bool commandInterpreter::commandExists() const
+bool CommandInterpreter::commandExists() const
 {
     const std::string &my_actCommand(getActCommand());
 
@@ -75,7 +75,7 @@ bool commandInterpreter::commandExists() const
 }
 
 // parse command and set vector of strings with command and arguments
-void commandInterpreter::parseCommand()
+void CommandInterpreter::parseCommand()
 {
     const std::string &my_actCommand(getActCommand());
     std::stringstream ssin(my_actCommand);
@@ -88,22 +88,22 @@ void commandInterpreter::parseCommand()
     }
 }
 
-const std::vector<std::string> &commandInterpreter::getActCommandParams() const
+const std::vector<std::string> &CommandInterpreter::getActCommandParams() const
 {
     return _actCommandParams;
 }
 
-bool commandInterpreter::executeCommand()
+bool CommandInterpreter::executeCommand()
 {
     return false;
 }
 
-const std::string &commandInterpreter::getErrorMsg(const uint msgId)
+const std::string &CommandInterpreter::getErrorMsg(const uint msgId)
 {
     return _errors.at(msgId);
 }
 
-void commandInterpreter::printErrorMsg(const uint msgId)
+void CommandInterpreter::printErrorMsg(const uint msgId)
 {
     try {
         const std::string &my_msg(getErrorMsg(msgId));
@@ -113,7 +113,7 @@ void commandInterpreter::printErrorMsg(const uint msgId)
     }
 }
 
-void commandInterpreter::addErrorMsg(const uint id, const std::string &msg)
+void CommandInterpreter::addErrorMsg(const uint id, const std::string &msg)
 {
     auto my_pair(std::make_pair(id, msg));
 

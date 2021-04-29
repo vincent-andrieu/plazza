@@ -15,19 +15,19 @@
 #include <utility>
 #include <sstream>
 
-class commandInterpreter {
+class CommandInterpreter {
     // to be called in a loop
-    // with condition (commandInterpreter.isEnd())
-    // commandInterpreter.printPrompt()
-    // my_command = commandInterpreter.getCommand()
-    // commandInterpreter.executeCommand(my_command)
+    // with condition (CommandInterpreter.isEnd())
+    // CommandInterpreter.printPrompt()
+    // my_command = CommandInterpreter.getCommand()
+    // CommandInterpreter.executeCommand(my_command)
   public:
-    explicit commandInterpreter(std::istream &inputStream = std::cin);
-    ~commandInterpreter();
+    explicit CommandInterpreter(std::istream &inputStream = std::cin);
+    ~CommandInterpreter();
 
     void setEnd(bool isEnd);
     [[nodiscard]] bool isEnd() const;
-    // tells if commandInterpreter has received an indication to stop.
+    // tells if CommandInterpreter has received an indication to stop.
 
     void setPrompt(const std::string &prompt);
     [[nodiscard]] const std::string &getPrompt() const;

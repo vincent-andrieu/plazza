@@ -19,6 +19,7 @@
 class Stock {
   public:
     Stock(size_t restockTime);
+    ~Stock();
 
     void restock();
     bool takeIngredients(PizzaIngredient ingredient, size_t nbr);

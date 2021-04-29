@@ -8,16 +8,21 @@
 #ifndef SERIALIZER_HPP
 #define SERIALIZER_HPP
 
+#include "Plazza.hpp"
+
 class Serializer {
   public:
     Serializer();
-    Serializer(std::size_t size);
+    Serializer(size_t size);
+
+    void operator>>(std::ofstream &file) const;
+    void operator<<(std::ifstream &file) const;
 
     void pack(std::ofstream &file) const;
     void unpack(std::ifstream &file) const;
 
   private:
-    std::size_t _size;
+    size_t _size;
 };
 
 #endif

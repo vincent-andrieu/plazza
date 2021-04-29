@@ -40,6 +40,11 @@ set(MY_SRC
         ${MY_DISPLAY_DIR}DLLib/DLLib.cpp
         ${MY_DISPLAY_DIR}CoreDisplay/CoreDisplay.cpp
         ${MY_DISPLAY_DIR}Vector.cpp
+        ${MY_PLAZZA_DIR}Order/Order.cpp
+        ${MY_PLAZZA_DIR}Kitchen/Kitchen.cpp
+        ${MY_PLAZZA_DIR}Reception/Reception.cpp
+        ${MY_PLAZZA_DIR}Restaurant/Restaurant.cpp
+        ${MY_PLAZZA_DIR}Stock/Stock.cpp
         )
 
 set(MY_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
