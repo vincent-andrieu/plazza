@@ -9,9 +9,13 @@
 #include <cerrno>
 #include "Error.hpp"
 
-const string getErrnoMsg()
+const string getErrnoMsg(const string name)
 {
-    return strerror(errno);
+    const string error = strerror(errno);
+
+    if (name.empty())
+        return error;
+    return name + ": " + error;
 }
 
 ManageError::ManageError(string const &message, string const &component) : _component(component), _message(message)

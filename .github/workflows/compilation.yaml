@@ -1,0 +1,31 @@
+name: Check compilation
+
+on:
+  push:
+    branches:
+      - master
+      - dev
+
+
+jobs:
+  compilation:
+    runs-on: ubuntu-20.04
+    container: epitechcontent/epitest-docker
+    steps:
+      # Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Run
+      - name: Create Makefile
+        run: cmake .
+
+      - name: Run make
+        run: make &> /tmp/compilation
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: compilation_output
+          path: /tmp/compilation

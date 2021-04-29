@@ -29,7 +29,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
     virtual void distributeOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
     virtual void sendOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchen,
         const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
-    virtual void retreiveOrders() const = 0;
+    virtual void retreiveOrders()  = 0;
 };
 
 #endif

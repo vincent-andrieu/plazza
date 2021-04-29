@@ -10,16 +10,23 @@
 
 #include "Plazza.hpp"
 
+#define MAX_OBJECT_SIZE 32
+
+struct SendedObject {
+    long type;
+    char object[MAX_OBJECT_SIZE];
+};
+
 class Serializer {
   public:
     Serializer() = default;
     explicit Serializer(size_t size);
 
-    void operator>>(std::ofstream &file) const;
-    void operator<<(std::ifstream &file) const;
+    void operator>>(const int msqId) const;
+    void operator<<(const int msqId);
 
-    void pack(std::ofstream &file) const;
-    void unpack(std::ifstream &file) const;
+    void pack(const int msqId) const;
+    void unpack(const int msqId);
 
   private:
     size_t _size;

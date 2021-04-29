@@ -20,7 +20,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
     [[nodiscard]] virtual bool isCooking() const = 0; // while is true, loop
 
   protected:
-    [[nodiscard]] virtual Order<IProduct<ProductType, ProductSize, ProductIngredientType>> receiveOrder() const = 0; // from pipe
+    [[nodiscard]] virtual Order<IProduct<ProductType, ProductSize, ProductIngredientType>> receiveOrder() = 0; // from pipe
     virtual void addPendingOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
     virtual void sendFinishedOrders() = 0;
 };

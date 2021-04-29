@@ -30,6 +30,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void Reception<ProductType, ProductSize, ProductIngredientType>::sendOrder(
     const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) const
 {
+    (void) order;
     // TODO: Print msg & save it in log file
 }
 

@@ -74,7 +74,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::sendOrder(
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Restaurant<ProductType, ProductSize, ProductIngredientType>::retreiveOrders() const
+void Restaurant<ProductType, ProductSize, ProductIngredientType>::retreiveOrders()
 {
     for (const KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage : this->_kitchens)
         this->_retreiveOrder(kitchenManage.kitchen);
@@ -82,7 +82,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::retreiveOrders
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder(
-    const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen) const
+    const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen)
 {
     Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order;
 

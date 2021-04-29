@@ -38,6 +38,7 @@ set(MY_SRC
         ${MY_FACTORY_DIR}Factory.cpp
         ${MY_DISPLAY_DIR}DLLoader/DLLoader.cpp
         ${MY_DISPLAY_DIR}DLLib/DLLib.cpp
+        ${MY_DISPLAY_DIR}UserInput/UserInput.cpp
         ${MY_DISPLAY_DIR}CoreDisplay/CoreDisplay.cpp
         ${MY_DISPLAY_DIR}Vector.cpp
         ${MY_PLAZZA_DIR}Order/Order.cpp
@@ -58,6 +59,7 @@ set(MY_INCLUDE
 
 set(MY_DEPENDENCIES
         dl
+        ncurses
         pthread)
 
 set(MY_BINARY plazza)
