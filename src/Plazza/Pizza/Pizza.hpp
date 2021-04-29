@@ -15,10 +15,10 @@ template <typename T> class Pizza : public IProduct<T> {
   public:
     Pizza(PizzaType type, PizzaSize size, size_t timeSec, std::vector<T> ingredients);
     ~Pizza();
-    PizzaType getType() const;
-    PizzaSize getSize() const;
-    size_t getPreparationTime() const;
-    std::vector<T> getIngredientsList() const;
+    [[nodiscard]] PizzaType getType() const;
+    [[nodiscard]] PizzaSize getSize() const;
+    [[nodiscard]] size_t getPreparationTime() const;
+    const std::vector<T> &getIngredientsList() const;
 
   private:
     PizzaType _type;

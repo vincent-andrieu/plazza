@@ -10,20 +10,12 @@
 #include "Error/Error.hpp"
 #include "enumPizza.hpp"
 
-Reception::Reception()
-{
-}
-
-Reception::~Reception()
-{
-}
-
 bool Reception::doesGetPendingOrders() const
 {
     return !this->_pendingOrders.empty();
 }
 
-const Order Reception::getOrder()
+const Order &Reception::getOrder()
 {
     const Order &order = this->_pendingOrders.front();
 
@@ -36,7 +28,7 @@ void Reception::sendOrder(const Order &order) const
     // TODO: Print msg & save it in log file
 }
 
-void Reception::receiveCommands(const string commands)
+void Reception::receiveCommands(const string &commands)
 {
     stringstream ss(commands);
     string segment;
@@ -46,7 +38,7 @@ void Reception::receiveCommands(const string commands)
     }
 }
 
-void Reception::_writePizzasCommand(const string cmd)
+void Reception::_writePizzasCommand(const string &cmd)
 {
     stringstream ss(cmd);
     string word;
@@ -57,26 +49,26 @@ void Reception::_writePizzasCommand(const string cmd)
     if (words.size() != 3)
         throw ReceptionError("Invalid command arguments");
 
-    const size_t nbr = this->_getNbr(words[2]);
+    const size_t nbr = _getNbr(words[2]);
     for (size_t i = 0; i < nbr; i++)
-        this->_pendingOrders.push(Order(this->_getType(words[0]), this->_getSize(words[1])));
+        this->_pendingOrders.push(Order(_getType(words[0]), _getSize(words[1])));
 }
 
-PizzaType Reception::_getType(const string type)
+PizzaType Reception::_getType(const string &type)
 {
     if (PizzaNames.find(type) == PizzaNames.end())
-        throw ReceptionError("Unknow command type");
+        throw ReceptionError("Unknown command type");
     return PizzaNames.at(type);
 }
 
-PizzaSize Reception::_getSize(const string size)
+PizzaSize Reception::_getSize(const string &size)
 {
     if (PizzaSizeList.find(size) == PizzaSizeList.end())
-        throw ReceptionError("Unknow command size");
+        throw ReceptionError("Unknown command size");
     return PizzaSizeList.at(size);
 }
 
-size_t Reception::_getNbr(const string nbr)
+size_t Reception::_getNbr(const string &nbr)
 {
     if (nbr[0] != 'x')
         throw ReceptionError("Invalid number syntax");

@@ -15,20 +15,20 @@
 
 class Reception : IReception {
   public:
-    Reception();
-    ~Reception();
-    bool doesGetPendingOrders() const;
-    const Order getOrder();
-    void sendOrder(const Order &order) const;
+    Reception() = default;
+    ~Reception() override = default;
+    [[nodiscard]] bool doesGetPendingOrders() const override;
+    const Order &getOrder() override;
+    void sendOrder(const Order &order) const override;
 
   protected:
-    void receiveCommands(const string cmd);
+    void receiveCommands(const string &cmd) override;
 
   private:
-    void _writePizzasCommand(const string cmd);
-    PizzaType _getType(const string type);
-    PizzaSize _getSize(const string size);
-    size_t _getNbr(const string nbr);
+    void _writePizzasCommand(const string &cmd);
+    [[nodiscard]] static PizzaType _getType(const string &type);
+    [[nodiscard]] static PizzaSize _getSize(const string &size);
+    [[nodiscard]] static size_t _getNbr(const string &nbr);
 
     std::queue<Order> _pendingOrders;
 };

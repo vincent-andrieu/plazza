@@ -37,8 +37,7 @@ size_t Pizza<T>::getPreparationTime() const
     return this->_timeSec;
 }
 
-template <typename T>
-std::vector<T> Pizza<T>::getIngredientsList() const
+template <typename T> const std::vector<T> &Pizza<T>::getIngredientsList() const
 {
     return this->_ingredients;
 }
