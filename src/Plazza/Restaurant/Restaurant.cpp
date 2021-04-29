@@ -73,7 +73,7 @@ void Restaurant::retreiveOrders()
 
 void Restaurant::_retreiveOrder(Kitchen &kitchen)
 {
-    Oder order;
+    Order order;
 
     kitchen.receive(order);
     this->_reception.sendOrder(order);
