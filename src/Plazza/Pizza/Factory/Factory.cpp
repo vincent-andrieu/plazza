@@ -11,24 +11,24 @@
 #include "Pizza/PizzaType/Fantasia/Fantasia.hpp"
 #include "Pizza/PizzaType/Regina/Regina.hpp"
 
-const std::unordered_map<PizzaType,
-    std::function<std::unique_ptr<IProduct<PizzaIngredient>>(const PizzaSize size, const long multiplier)>>
+const std::unordered_map<enum PizzaType,
+    std::function<std::unique_ptr<IProduct<PizzaIngredient>>(const enum PizzaSize size, const long multiplier)>>
     Factory::_list = {
         {PizzaType::Americana,
-            [](const PizzaSize size, const long multiplier) {
-                return std::make_unique<Americana>(size, multiplier);
+            [](const enum PizzaSize size, const long multiplier) {
+                return std::make_unique<class Americana>(size, multiplier);
             }},
         {PizzaType::Margarita,
-            [](const PizzaSize size, const long multiplier) {
-                return std::make_unique<Margarita>(size, multiplier);
+            [](const enum PizzaSize size, const long multiplier) {
+                return std::make_unique<class Margarita>(size, multiplier);
             }},
         {PizzaType::Fantasia,
-            [](const PizzaSize size, const long multiplier) {
-                return std::make_unique<Fantasia>(size, multiplier);
+            [](const enum PizzaSize size, const long multiplier) {
+                return std::make_unique<class Fantasia>(size, multiplier);
             }},
         {PizzaType::Regina,
-            [](const PizzaSize size, const long multiplier) {
-                return std::make_unique<Regina>(size, multiplier);
+            [](const enum PizzaSize size, const long multiplier) {
+                return std::make_unique<class Regina>(size, multiplier);
             }},
 };
 
@@ -36,7 +36,8 @@ Factory::Factory() = default;
 
 Factory::~Factory() = default;
 
-std::unique_ptr<IProduct<PizzaIngredient>> Factory::callFactory(const PizzaType type, const PizzaSize size, const long multiplier)
+std::unique_ptr<IProduct<PizzaIngredient>> Factory::callFactory(
+    const enum PizzaType type, const enum PizzaSize size, const long multiplier)
 {
     if (_list.find(type) != _list.end())
         return _list.at(type)(size, multiplier);

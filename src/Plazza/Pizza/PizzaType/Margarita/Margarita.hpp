@@ -14,7 +14,7 @@ class Margarita : public Pizza<PizzaIngredient>
 {
     public:
         Margarita(PizzaSize size, long multiplier);
-        ~Margarita();
+        ~Margarita() override = default;
 };
 
 #endif

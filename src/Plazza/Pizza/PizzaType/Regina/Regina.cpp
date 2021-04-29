@@ -17,7 +17,3 @@ Regina::Regina(PizzaSize size, long multiplier)
 })
 {
 }
-
-Regina::~Regina()
-{
-}

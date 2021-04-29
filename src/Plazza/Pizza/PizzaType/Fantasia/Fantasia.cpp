@@ -17,7 +17,3 @@ Fantasia::Fantasia(PizzaSize size, long multiplier)
 })
 {
 }
-
-Fantasia::~Fantasia()
-{
-}

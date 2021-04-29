@@ -11,7 +11,7 @@
 #include <unordered_map>
 #include "Plazza.hpp"
 
-enum class PizzaType
+enum PizzaType
 {
     Regina = 1,
     Margarita = 2,
@@ -26,7 +26,7 @@ const std::unordered_map<string, PizzaType> PizzaNames = {
     {"Fantasia", PizzaType::Fantasia},
 };
 
-enum class PizzaSize
+enum PizzaSize
 {
     S = 1,
     M = 2,
@@ -44,7 +44,7 @@ const std::unordered_map<string, PizzaSize> PizzaSizeList = {
     {"XXL", PizzaSize::XXL},
 };
 
-enum class PizzaIngredient
+enum PizzaIngredient
 {
     DOE,
     TOMATOE,

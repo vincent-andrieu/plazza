@@ -14,7 +14,7 @@ class Regina : public Pizza<PizzaIngredient>
 {
     public:
         Regina(PizzaSize size, long multiplier);
-        ~Regina();
+        ~Regina() override = default;
 };
 
 #endif

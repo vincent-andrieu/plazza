@@ -19,11 +19,11 @@ class Factory {
   public:
     Factory();
     ~Factory();
-    static std::unique_ptr<IProduct<PizzaIngredient>> callFactory(PizzaType type, PizzaSize size, long multiplier);
+    static std::unique_ptr<IProduct<PizzaIngredient>> callFactory(enum PizzaType type, enum PizzaSize size, long multiplier);
 
   private:
-    static const std::unordered_map<PizzaType,
-        std::function<std::unique_ptr<IProduct<PizzaIngredient>>(const PizzaSize size, const long multiplier)>>
+    static const std::unordered_map<enum PizzaType,
+        std::function<std::unique_ptr<IProduct<PizzaIngredient>>(const enum PizzaSize size, const long multiplier)>>
         _list;
 };
 

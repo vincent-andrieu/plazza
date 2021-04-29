@@ -8,11 +8,7 @@
 #include "Restaurant.hpp"
 
 Restaurant::Restaurant(double bakingTime, size_t cooksPerKitchen, size_t restockTime)
-    : _isOpen(true), _bakingMultiplier(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime)
-{
-}
-
-Restaurant::~Restaurant()
+    : _bakingMultiplier(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime)
 {
 }
 

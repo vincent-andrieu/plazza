@@ -16,21 +16,21 @@
 class Restaurant : public IRestaurant {
   public:
     Restaurant(double bakingMultiplier, size_t cooksPerKitchen, size_t restockTime);
-    ~Restaurant();
+    ~Restaurant() override = default;
 
-    void lunchTime();
-    bool isOpen() const;
+    void lunchTime() override;
+    [[nodiscard]] bool isOpen() const override;
 
   protected:
-    void newKitchen(const Order &order);
-    void distributeOrder(const Order &order);
-    void sendOrder(KitchenManage &kitchen, const Order &order);
-    void retreiveOrders() const;
+    void newKitchen(const Order &order) override;
+    void distributeOrder(const Order &order) override;
+    void sendOrder(KitchenManage &kitchen, const Order &order) override;
+    void retreiveOrders() const override;
 
   private:
     void _retreiveOrder(const Kitchen &kitchen) const;
 
-    bool _isOpen;
+    bool _isOpen{true};
     double _bakingMultiplier;
     size_t _cooksPerKitchen;
     size_t _restockTime;

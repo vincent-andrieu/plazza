@@ -15,7 +15,3 @@ Margarita::Margarita(PizzaSize size, long multiplier)
 })
 {
 }
-
-Margarita::~Margarita()
-{
-}

@@ -16,7 +16,3 @@ Americana::Americana(PizzaSize size, long multiplier)
 })
 {
 }
-
-Americana::~Americana()
-{
-}
