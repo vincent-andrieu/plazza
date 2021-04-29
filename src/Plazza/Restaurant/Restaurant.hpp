@@ -27,10 +27,10 @@ class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredien
     void distributeOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void sendOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchen,
         const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
-    void retreiveOrders() const override;
+    void retreiveOrders() override;
 
   private:
-    void _retreiveOrder(const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen) const;
+    void _retreiveOrder(const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen);
 
     bool _isOpen{true};
     double _bakingMultiplier;

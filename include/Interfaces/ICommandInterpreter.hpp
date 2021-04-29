@@ -12,9 +12,9 @@
 
 class ICommandInterpreter {
     public :
-        virtual ~ICommandInterpreter() = default;
-        virtual std::string getLine() const = 0;
-        virtual void setLine(std::string line) = 0;
+      virtual ~ICommandInterpreter() = default;
+      [[nodiscard]] virtual std::string getLine() const = 0;
+      virtual void setLine(std::string line) = 0;
 };
 
 #endif

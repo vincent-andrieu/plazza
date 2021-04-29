@@ -24,9 +24,9 @@ class CoreDisplay : public ICoreDisplay<ProductType, ProductSize, ProductIngredi
     ~CoreDisplay();
     void setPrompt(std::string prompt);
     void printPrompt() const;
-    void printKitchen(std::vector<std::unique_ptr<IKitchen>> kitchenList);
-    void printDetailledKitchen(std::unique_ptr<IKitchen> kitchen);
-    std::string getLine() const;
+    void printKitchen(std::vector<std::unique_ptr<IKitchen<ProductType, ProductSize, ProductIngredientType>>> kitchenList);
+    void printDetailledKitchen(std::unique_ptr<IKitchen<ProductType, ProductSize, ProductIngredientType>> kitchen);
+    [[nodiscard]] std::string getLine() const;
     void setLine(std::string line);
     void update();
     void clear();
