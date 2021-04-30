@@ -58,6 +58,7 @@ void CoreDisplay::printKitchen(std::vector<std::shared_ptr<IKitchen>> kitchenLis
 
 void CoreDisplay::printDetailledKitchen(std::shared_ptr<IKitchen> kitchen)
 {
+    this->_loader->getEntryPoint()->putRectOutline(IDisplayModule::Color::WHITE, Coord(30, 30), Coord(30, 1));
     (void) kitchen;
 }
 
