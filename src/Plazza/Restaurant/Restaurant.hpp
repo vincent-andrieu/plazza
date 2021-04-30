@@ -37,7 +37,7 @@ class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredien
     size_t _cooksPerKitchen;
     size_t _restockTime;
     std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> _kitchens;
-    Reception<ProductType, ProductSize, ProductIngredientType> _reception;
+    Reception _reception;
 };
 
 #endif

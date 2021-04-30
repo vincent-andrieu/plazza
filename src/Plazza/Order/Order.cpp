@@ -7,11 +7,13 @@
 
 #include "Order/Order.hpp"
 
-template <typename T> Order<T>::Order(T object) : Serializer(sizeof(Order)), _object(object)
+template <typename T> Order<T>::Order(std::shared_ptr<T> object) : Serializer(sizeof(Order)), _object(object)
 {
 }
 
-template <typename T> const T &Order<T>::getOrder() const
+template <typename T> const std::shared_ptr<T> &Order<T>::getOrder() const
 {
     return _object;
 }
+
+template class Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>>;
