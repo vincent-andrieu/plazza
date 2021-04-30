@@ -48,14 +48,17 @@ all:	$(NAME)
 $(NAME):	$(OBJ)
 		@$(ECHO)
 		@g++ -o $(NAME) $(OBJ) -lpthread -ldl -lncurses	\
-		&& $(ECHO) $(BOLD) $(GREEN)"► BUILD SUCCESS !"$(DEFAULT) || ($(ECHO) $(BOLD) $(RED)"► BUILD FAILED"$(DEFAULT) && exit 1)
+		&& $(ECHO) $(BOLD) $(GREEN)"► PLAZZA BUILD SUCCESS !"$(DEFAULT) || ($(ECHO) $(BOLD) $(RED)"► PLAZZA BUILD FAILED"$(DEFAULT) && exit 1)
+		@(cd graphicals && make -s)
 
 clean:
 		@rm -f $(OBJ)
-		@($(ECHO) $(BOLD) $(GREEN)✓$(LIGHT_BLUE)" CLEAN "$(DEFAULT))
+		@($(ECHO) $(BOLD) $(GREEN)✓$(LIGHT_BLUE)" PLAZZA CLEAN "$(DEFAULT))
+		@(cd graphicals && make clean -s)
 
 fclean: clean
-		@($(ECHO) $(BOLD) $(GREEN)✓$(LIGHT_BLUE)" FCLEAN "$(DEFAULT))
+		@($(ECHO) $(BOLD) $(GREEN)✓$(LIGHT_BLUE)" PLAZZA FCLEAN "$(DEFAULT))
+		@(cd graphicals && make fclean -s)
 
 re: fclean all
 
