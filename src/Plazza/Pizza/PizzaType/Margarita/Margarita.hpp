@@ -10,10 +10,12 @@
 
 #include "Pizza/Pizza.hpp"
 
-class Margarita : public Pizza {
-  public:
-    Margarita(PizzaSize size, long multiplier);
-    ~Margarita() override = default;
-};
-
+namespace Pizzeria
+{
+    class Margarita : public Pizza {
+      public:
+        Margarita(PizzaSize size, long multiplier);
+        ~Margarita() override = default;
+    };
+} // namespace Pizzeria
 #endif

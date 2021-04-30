@@ -22,10 +22,7 @@ set(MY_PIZZATYPE_DIR ${MY_PIZZA_DIR}PizzaType/)
 set(MY_FACTORY_DIR ${MY_PIZZA_DIR}Factory/)
 
 set(MY_SRC
-        ${MY_ENCAPSULATION_DIR}ConditionalVariables/ConditionalVariables.cpp
-        ${MY_ENCAPSULATION_DIR}Mutex/Mutex.cpp
         ${MY_ENCAPSULATION_DIR}Process/Process.cpp
-        ${MY_ENCAPSULATION_DIR}Threads/Threads.cpp
         ${MY_ERROR_DIR}Error.cpp
         ${MY_SERIALIZER_DIR}Serializer.cpp
         ${MY_CMD_INTERPRETER_DIR}CommandInterpreter.cpp
@@ -59,8 +56,7 @@ set(MY_INCLUDE
 
 set(MY_DEPENDENCIES
         dl
-        ncurses
-        pthread)
+        ncurses)
 
 set(MY_BINARY plazza)
 

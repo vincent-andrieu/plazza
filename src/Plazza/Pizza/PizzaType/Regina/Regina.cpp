@@ -7,6 +7,8 @@
 
 #include "Regina.hpp"
 
+using namespace Pizzeria;
+
 Regina::Regina(PizzaSize size, long multiplier)
     : Pizza(PizzaType::Regina, size, multiplier * 2,
         {

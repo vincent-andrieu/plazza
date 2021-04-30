@@ -7,6 +7,8 @@
 
 #include "Fantasia.hpp"
 
+using namespace Pizzeria;
+
 Fantasia::Fantasia(PizzaSize size, long multiplier)
     : Pizza(PizzaType::Fantasia, size, multiplier * 4,
         {

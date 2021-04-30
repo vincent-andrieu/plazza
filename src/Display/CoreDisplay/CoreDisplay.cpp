@@ -7,6 +7,8 @@
 
 #include "CoreDisplay.hpp"
 
+using namespace Pizzeria;
+
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 CoreDisplay<ProductType, ProductSize, ProductIngredientType>::CoreDisplay(
     std::string filepath, Vector screenSize, Vector screenScale, std::size_t maxLen)
