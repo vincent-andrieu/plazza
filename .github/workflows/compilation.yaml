@@ -17,9 +17,6 @@ jobs:
         uses: actions/checkout@v2
 
       # Run
-      - name: Create Makefile
-        run: cmake .
-
       - name: Run make
         run: make &> /tmp/compilation
 
