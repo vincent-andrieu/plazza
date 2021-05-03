@@ -10,10 +10,13 @@
 
 #include <iostream>
 #include <algorithm>
+#include "enumPizza.hpp"
 #include "DLLib/DLLib.hpp"
 #include "UserInput/UserInput.hpp"
 #include "Interfaces/ICoreDisplay.hpp"
 #include "Interfaces/IDisplayModule.hpp"
+
+using namespace Pizzeria;
 
 namespace Pizzeria
 {

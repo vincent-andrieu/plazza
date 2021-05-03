@@ -76,3 +76,5 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_sendFinishedOrde
     }
     this->_finishedOrders.mutex.unlock();
 }
+
+template class Kitchen<PizzaType, PizzaSize, PizzaIngredient>;

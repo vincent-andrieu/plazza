@@ -105,3 +105,5 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::clear()
     this->_input->runInput(this->_loader->getEntryPoint());
     this->_loader->getEntryPoint()->clearScreen();
 }
+
+template class CoreDisplay<PizzaType, PizzaSize, PizzaIngredient>;

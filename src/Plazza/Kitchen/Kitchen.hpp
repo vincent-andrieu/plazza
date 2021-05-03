@@ -10,9 +10,12 @@
 
 #include <queue>
 #include <mutex>
+#include "enumPizza.hpp"
 #include "Interfaces/KitchenInterface.hpp"
 #include "Stock/Stock.hpp"
 #include "Encapsulations/Process/Process.hpp"
+
+using namespace Pizzeria;
 
 template <typename T> struct LockedQueue {
     std::queue<T> queue;
