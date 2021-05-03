@@ -9,8 +9,6 @@
 #define ORDER_HPP
 
 #include "Serializer/Serializer.hpp"
-#include "enumPizza.hpp"
-#include "Interfaces//ProductInterface.hpp"
 
 template <typename T> class Order : public Serializer {
   public:

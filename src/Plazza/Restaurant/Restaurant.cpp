@@ -71,7 +71,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_sendOrder(
     const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     kitchenManage.orders.push_back(order);
-    kitchenManage.kitchen.send(CommunicationType(ECommunicationType::ORDER));
+    kitchenManage.kitchen.send(CommunicationType(ECommunicationType::ORDER_PIZZA));
     kitchenManage.kitchen.send(order);
 }
 
@@ -79,23 +79,30 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrders()
 {
     for (const KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage : this->_kitchens)
-        this->_retreiveOrder(kitchenManage.kitchen);
+        this->_retreiveOrder(kitchenManage);
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder(
-    const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen)
+    const KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage)
 {
     CommunicationType commType;
 
-    if (!kitchen.receive(commType))
+    if (!kitchenManage.kitchen.receive(commType))
         return;
     switch (commType.getType()) {
-        case ECommunicationType::ORDER:
+        case ECommunicationType::ORDER_PIZZA:
             Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order;
 
-            kitchen.waitingReceive(order);
+            kitchenManage.kitchen.waitingReceive(order);
             this->_reception.sendOrder(order);
+
+            const auto &foundOrder = std::find(kitchenManage.orders.begin(), kitchenManage.orders.end(),
+                [order](const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &elemOrder) {
+                    return elemOrder == order;
+                });
+            if (foundOrder != kitchenManage.orders.end())
+                kitchenManage.orders.erase(foundOrder);
 
         default: break;
     };

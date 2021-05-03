@@ -17,6 +17,9 @@ class Pizza : public IProduct<PizzaType, PizzaSize, PizzaIngredient> {
     Pizza(PizzaType type, PizzaSize size, size_t timeSec, std::vector<PizzaIngredient> ingredients);
     ~Pizza() override = default;
 
+    [[nodiscard]] bool operator==(const IProduct &product) const;
+    [[nodiscard]] bool operator!=(const IProduct &product) const;
+
     [[nodiscard]] PizzaType getType() const override;
     [[nodiscard]] PizzaSize getSize() const override;
     [[nodiscard]] size_t getPreparationTime() const override;

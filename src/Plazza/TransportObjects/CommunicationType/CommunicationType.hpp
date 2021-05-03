@@ -12,7 +12,7 @@
 
 enum ECommunicationType
 {
-    ORDER,
+    ORDER_PIZZA,
     STATUS
 };
 

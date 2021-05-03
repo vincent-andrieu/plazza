@@ -14,6 +14,18 @@ Pizza::Pizza(PizzaType type, PizzaSize size, size_t timeSec, std::vector<PizzaIn
 {
 }
 
+bool Pizza::operator==(const IProduct &product) const
+{
+    return this->getType() == product.getType() && this->getSize() == product.getSize()
+        && this->getPreparationTime() == product.getPreparationTime() && this->getIngredientList() == product.getIngredientList();
+}
+
+bool Pizza::operator!=(const IProduct &product) const
+{
+    return this->getType() != product.getType() || this->getSize() != product.getSize()
+        || this->getPreparationTime() != product.getPreparationTime() || this->getIngredientList() != product.getIngredientList();
+}
+
 PizzaType Pizza::getType() const
 {
     return this->_type;

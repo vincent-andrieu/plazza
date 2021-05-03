@@ -41,7 +41,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
         return;
 
     switch (commType.getType()) {
-        case ECommunicationType::ORDER:
+        case ECommunicationType::ORDER_PIZZA:
             Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order;
 
             this->waitingReceive(order);
@@ -70,7 +70,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_sendFinishedOrde
 {
     this->_finishedOrders.mutex.lock();
     while (!this->_finishedOrders.queue.empty()) {
-        this->send(CommunicationType(ECommunicationType::ORDER));
+        this->send(CommunicationType(ECommunicationType::ORDER_PIZZA));
         this->send(this->_finishedOrders.queue.front());
         this->_finishedOrders.queue.pop();
     }

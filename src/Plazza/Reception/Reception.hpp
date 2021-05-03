@@ -10,6 +10,7 @@
 
 #include <queue>
 #include "Interfaces/ReceptionInterface.hpp"
+#include "enumPizza.hpp"
 
 #define COMMAND_DELIMITER ';'
 
