@@ -13,6 +13,8 @@
 #include "Kitchen/Kitchen.hpp"
 #include "Reception/Reception.hpp"
 
+using namespace Pizzeria;
+
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredientType> {
   public:
@@ -37,7 +39,7 @@ class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredien
     size_t _cooksPerKitchen;
     size_t _restockTime;
     std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> _kitchens;
-    Reception<ProductType, ProductSize, ProductIngredientType> _reception;
+    Reception _reception;
 };
 
 #endif

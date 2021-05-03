@@ -6,8 +6,12 @@
  */
 
 #include "Order/Order.hpp"
+#include "Interfaces/ProductInterface.hpp"
+#include "enumPizza.hpp"
 
-template <typename T> Order<T>::Order(const T object) : Serializer(sizeof(Order)), _object(object)
+using namespace Pizzeria;
+
+template <typename T> Order<T>::Order(const T &object) : Serializer(sizeof(Order)), _object(object)
 {
 }
 
@@ -15,3 +19,5 @@ template <typename T> const T &Order<T>::getOrder() const
 {
     return _object;
 }
+
+template class Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>>;

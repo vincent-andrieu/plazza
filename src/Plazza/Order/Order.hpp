@@ -12,13 +12,13 @@
 
 template <typename T> class Order : public Serializer {
   public:
-    explicit Order(const T object);
+    explicit Order(const T &object);
     ~Order() = default;
 
     const T &getOrder() const;
 
   private:
-    T _object;
+    const T &_object;
 };
 
 #endif

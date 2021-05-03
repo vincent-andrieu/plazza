@@ -10,10 +10,12 @@
 
 #include "Pizza/Pizza.hpp"
 
-class Fantasia : public Pizza {
-  public:
-    Fantasia(PizzaSize size, long multiplier);
-    ~Fantasia() override = default;
-};
-
+namespace Pizzeria
+{
+    class Fantasia : public Pizza {
+      public:
+        Fantasia(PizzaSize size, long multiplier);
+        ~Fantasia() override = default;
+    };
+} // namespace Pizzeria
 #endif

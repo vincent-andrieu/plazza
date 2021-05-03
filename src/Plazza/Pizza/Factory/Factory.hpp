@@ -22,18 +22,21 @@
 #include "Pizza/PizzaType/Fantasia/Fantasia.hpp"
 #include "Pizza/PizzaType/Regina/Regina.hpp"
 
-class Factory {
-  public:
-    Factory();
-    ~Factory();
-    static std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>> callFactory(
-        enum PizzaType type, enum PizzaSize size, long multiplier);
+namespace Pizzeria
+{
+    class Factory {
+      public:
+        Factory();
+        ~Factory();
+        static std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>> callFactory(
+            const enum PizzaType type, const enum PizzaSize size, const size_t multiplier);
 
-  private:
-    static const std::unordered_map<enum PizzaType,
-        std::function<std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>>(
-            const enum PizzaSize size, const long multiplier)>>
-        _list;
-};
+      private:
+        static const std::unordered_map<enum PizzaType,
+            std::function<std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>>(
+                const enum PizzaSize size, const size_t multiplier)>>
+            _list;
+    };
+} // namespace Pizzeria
 
 #endif

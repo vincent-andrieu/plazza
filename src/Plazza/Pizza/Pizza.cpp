@@ -9,6 +9,8 @@
 
 #include <utility>
 
+using namespace Pizzeria;
+
 Pizza::Pizza(PizzaType type, PizzaSize size, size_t timeSec, std::vector<PizzaIngredient> ingredients)
     : _type(type), _size(size), _ingredients(std::move(ingredients)), _timeSec(timeSec)
 {

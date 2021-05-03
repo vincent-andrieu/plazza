@@ -10,10 +10,12 @@
 
 #include "Pizza/Pizza.hpp"
 
-class Americana : public Pizza {
-  public:
-    Americana(PizzaSize size, long multiplier);
-    ~Americana() override = default;
-};
-
+namespace Pizzeria
+{
+    class Americana : public Pizza {
+      public:
+        Americana(PizzaSize size, long multiplier);
+        ~Americana() override = default;
+    };
+} // namespace Pizzeria
 #endif

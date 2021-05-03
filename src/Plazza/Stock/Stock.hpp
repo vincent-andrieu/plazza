@@ -9,26 +9,26 @@
 #define STOCK_HPP
 
 #include <ctime>
+#include <mutex>
 #include <unordered_map>
 #include "enumPizza.hpp"
-#include "Encapsulations/Mutex/Mutex.hpp"
 
 #define DEFAULT_STOCK 5
 #define RESTOCK_NBR   1
 
-class Stock {
+template <typename IngredientType> class Stock {
   public:
     Stock(size_t restockTime);
-    ~Stock();
+    ~Stock() = default;
 
     void restock();
-    bool takeIngredients(PizzaIngredient ingredient, size_t nbr);
+    bool takeIngredients(IngredientType ingredient, size_t nbr);
 
   private:
     size_t _restockTime;
-    std::time_t _restockClock;
-    std::unordered_map<PizzaIngredient, size_t> _stock;
-    Mutex _mutex;
+    std::time_t _restockClock; // TODO use std::chrono
+    std::unordered_map<IngredientType, size_t> _stock;
+    std::mutex _mutex;
 };
 
 #endif
