@@ -7,12 +7,13 @@
 
 SRC =   src/SfmlModule/SfmlModule.cpp		\
 		../../src/Display/Vector.cpp
+
 OBJ =   $(SRC:.cpp=.o)
 
 NAME =	arcade_sfml.so
 
 INCLUDES =	-I ../../include -I ../../include/Interfaces -I src
-CXXFLAGS =	$(INCLUDES) -Wall -Wextra -fPIC
+CXXFLAGS =	$(INCLUDES) -W -Wall -Wextra -fPIC
 LDFLAGS =	-lsfml-graphics -lsfml-window -lsfml-system
 
 
@@ -21,7 +22,7 @@ all:    $(NAME)
 $(NAME):    $(OBJ)
 		@$(ECHO)
 		@g++ -shared -o $(NAME) $(OBJ) $(LDFLAGS) \
-		&& $(ECHO) $(BOLD) $(GREEN)"► SFML BUILD SUCCESS !"$(DEFAULT) || $(ECHO) $(BOLD) $(RED)"► SFML BUILD FAILED"$(DEFAULT)
+		&& $(ECHO) $(BOLD) $(GREEN)"► SFML BUILD SUCCESS !"$(DEFAULT) || ($(ECHO) $(BOLD) $(RED)"► SFML BUILD FAILED"$(DEFAULT) && exit 1)
 		@mkdir -p ../../lib && mv $(NAME) ../../lib
 
 clean:
@@ -30,6 +31,7 @@ clean:
 
 fclean: clean
 		@($(ECHO) $(BOLD) $(GREEN)✓$(LIGHT_BLUE)" SFML FCLEAN "$(DEFAULT))
+		@rm -f ../../lib/$(NAME)
 
 re: fclean all
 

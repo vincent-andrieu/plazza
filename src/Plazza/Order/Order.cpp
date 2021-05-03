@@ -7,7 +7,7 @@
 
 #include "Order/Order.hpp"
 
-template <typename T> Order<T>::Order(T object) : Serializer(sizeof(Order)), _object(object)
+template <typename T> Order<T>::Order(const T object) : Serializer(sizeof(Order)), _object(object)
 {
 }
 

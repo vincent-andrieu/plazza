@@ -22,7 +22,7 @@ all:    $(NAME)
 $(NAME):    $(OBJ)
 		@$(ECHO)
 		@g++ -shared -o $(NAME) $(OBJ) \
-		&& $(ECHO) $(BOLD) $(GREEN)"► NCURSES BUILD SUCCESS !"$(DEFAULT) || $(ECHO) $(BOLD) $(RED)"► NCURSES BUILD FAILED"$(DEFAULT)
+		&& $(ECHO) $(BOLD) $(GREEN)"► NCURSES BUILD SUCCESS !"$(DEFAULT) || ($(ECHO) $(BOLD) $(RED)"► NCURSES BUILD FAILED"$(DEFAULT) exit 1)
 		@mkdir -p ../../lib && mv $(NAME) ../../lib
 
 clean:
@@ -31,6 +31,7 @@ clean:
 
 fclean: clean
 		@($(ECHO) $(BOLD) $(GREEN)✓$(LIGHT_BLUE)" NCURSES FCLEAN "$(DEFAULT))
+		@rm -f ../../lib/$(NAME)
 
 re: fclean all
 

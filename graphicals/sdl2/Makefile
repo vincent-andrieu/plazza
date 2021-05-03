@@ -21,13 +21,8 @@ all:    $(NAME)
 $(NAME):    $(OBJ)
 		@$(ECHO)
 		@g++ -shared -o $(NAME) $(OBJ) -lSDL2main -lSDL2 -lSDL2_ttf \
-		&& $(ECHO) $(BOLD) $(GREEN)"► SDL2 BUILD SUCCESS !"$(DEFAULT) || $(ECHO) $(BOLD) $(RED)"► SDL2 BUILD FAILED"$(DEFAULT)
+		&& $(ECHO) $(BOLD) $(GREEN)"► SDL2 BUILD SUCCESS !"$(DEFAULT) || ($(ECHO) $(BOLD) $(RED)"► SDL2 BUILD FAILED"$(DEFAULT) && exit 1)
 		@mkdir -p ../../lib && mv $(NAME) ../../lib
-
-main:	$(OBJ)
-		@$(ECHO)
-		@g++ -I include -I ../../include/Interfaces src/main.cpp -o sdl2_main $(OBJ) -lSDL2main -lSDL2 -lSDL2_ttf\
-		&& $(ECHO) $(BOLD) $(GREEN)"► SDL2 BUILD SUCCESS !"$(DEFAULT) || $(ECHO) $(BOLD) $(RED)"► SDL2 BUILD FAILED"$(DEFAULT)
 
 clean:
 		@rm -f $(OBJ)
@@ -35,6 +30,7 @@ clean:
 
 fclean: clean
 		@($(ECHO) $(BOLD) $(GREEN)✓$(LIGHT_BLUE)" SDL2 FCLEAN "$(DEFAULT))
+		@rm -f ../../lib/$(NAME)
 
 re: fclean all
 
