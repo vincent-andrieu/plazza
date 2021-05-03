@@ -6,6 +6,7 @@
  */
 
 #include "Kitchen/Kitchen.hpp"
+#include "TransportObjects/CommunicationType/CommunicationType.hpp"
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Kitchen<ProductType, ProductSize, ProductIngredientType>::Kitchen(
@@ -19,8 +20,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
 {
     while (this->isCooking()) {
-        const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order = this->receiveOrder();
-        this->addPendingOrder(order);
+        this->receiveOrder();
         this->sendFinishedOrders();
         this->_stock.restock();
     }
@@ -33,13 +33,26 @@ bool Kitchen<ProductType, ProductSize, ProductIngredientType>::isCooking() const
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-Order<IProduct<ProductType, ProductSize, ProductIngredientType>>
-Kitchen<ProductType, ProductSize, ProductIngredientType>::receiveOrder() const
+void Kitchen<ProductType, ProductSize, ProductIngredientType>::receiveOrder() const
 {
-    Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order;
+    CommunicationType commType;
 
-    this->receive(order);
-    return order;
+    this->receive(commType);
+
+    switch (commType.getType()) {
+        case ECommunicationType::ORDER:
+            Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order;
+
+            this->waitingReceive(order);
+            this->addPendingOrder(order);
+            break;
+
+        case ECommunicationType::STATUS:
+            // TODO: Send back kitchen status
+            break;
+
+        default: break;
+    };
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>

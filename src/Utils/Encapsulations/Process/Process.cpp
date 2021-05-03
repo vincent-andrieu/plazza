@@ -98,3 +98,8 @@ bool Process::receive(Serializer &object)
     }
     return false;
 }
+
+void Process::waitingReceive(Serializer &object)
+{
+    this->_communication.read(object);
+}

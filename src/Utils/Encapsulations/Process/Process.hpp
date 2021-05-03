@@ -27,6 +27,7 @@ class Process {
     void killChild() const;
     void send(const Serializer &object) const;
     bool receive(Serializer &object);
+    void waitingReceive(Serializer &object);
 
   private:
     pid_t _parentPid;

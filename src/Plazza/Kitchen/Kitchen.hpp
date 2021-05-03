@@ -28,7 +28,7 @@ class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>
     bool isCooking() const override;
 
   protected:
-    [[nodiscard]] Order<IProduct<ProductType, ProductSize, ProductIngredientType>> receiveOrder() const override;
+    void receiveOrder() const override;
     void addPendingOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void sendFinishedOrders() override;
 
