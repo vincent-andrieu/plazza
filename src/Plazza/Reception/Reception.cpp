@@ -10,32 +10,28 @@
 #include "Error/Error.hpp"
 #include "enumPizza.hpp"
 
-template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-bool Reception<ProductType, ProductSize, ProductIngredientType>::doesGetPendingOrders() const
+bool Reception::doesGetPendingOrders() const
 {
     return !this->_pendingOrders.empty();
 }
 
-template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &
-Reception<ProductType, ProductSize, ProductIngredientType>::getOrder()
+const Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &
+Reception::getOrder()
 {
-    const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order = this->_pendingOrders.front();
+    const Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order = this->_pendingOrders.front();
 
     this->_pendingOrders.pop();
     return order;
 }
 
-template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Reception<ProductType, ProductSize, ProductIngredientType>::sendOrder(
-    const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) const
+void Reception::sendOrder(
+    const Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) const
 {
     (void) order;
     // TODO: Print msg & save it in log file
 }
 
-template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Reception<ProductType, ProductSize, ProductIngredientType>::receiveCommands(const string &commands)
+void Reception::receiveCommands(const string &commands)
 {
     stringstream ss(commands);
     string segment;
@@ -45,8 +41,7 @@ void Reception<ProductType, ProductSize, ProductIngredientType>::receiveCommands
     }
 }
 
-template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Reception<ProductType, ProductSize, ProductIngredientType>::_writePizzasCommand(const string &cmd)
+void Reception::_writePizzasCommand(const string &cmd)
 {
     stringstream ss(cmd);
     string word;
@@ -58,29 +53,25 @@ void Reception<ProductType, ProductSize, ProductIngredientType>::_writePizzasCom
         throw ReceptionError("Invalid command arguments");
 
     const size_t nbr = _getNbr(words[2]);
-    for (size_t i = 0; i < nbr; i++)
-        this->_pendingOrders.push(
-            Order<IProduct<ProductType, ProductSize, ProductIngredientType>>(_getType(words[0]), _getSize(words[1])));
+    //for (size_t i = 0; i < nbr; i++)
+        //this->_pendingOrders.push(Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>>(_getType(words[0]), _getSize(words[1]))); // TODO
 }
 
-template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-PizzaType Reception<ProductType, ProductSize, ProductIngredientType>::_getType(const string &type)
+PizzaType Reception::_getType(const string &type)
 {
     if (PizzaNames.find(type) == PizzaNames.end())
         throw ReceptionError("Unknown command type");
     return PizzaNames.at(type);
 }
 
-template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-PizzaSize Reception<ProductType, ProductSize, ProductIngredientType>::_getSize(const string &size)
+PizzaSize Reception::_getSize(const string &size)
 {
     if (PizzaSizeList.find(size) == PizzaSizeList.end())
         throw ReceptionError("Unknown command size");
     return PizzaSizeList.at(size);
 }
 
-template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-size_t Reception<ProductType, ProductSize, ProductIngredientType>::_getNbr(const string &nbr)
+size_t Reception::_getNbr(const string &nbr)
 {
     if (nbr[0] != 'x')
         throw ReceptionError("Invalid number syntax");

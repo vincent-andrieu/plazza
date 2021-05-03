@@ -11,16 +11,19 @@
 #include "Serializer/Serializer.hpp"
 #include "enumPizza.hpp"
 #include "Interfaces//ProductInterface.hpp"
+#include <memory>
+
+using namespace Pizzeria;
 
 template <typename T> class Order : public Serializer {
   public:
-    explicit Order(const T object);
+    explicit Order(std::shared_ptr<T> object);
     ~Order() = default;
 
-    const T &getOrder() const;
+    const std::shared_ptr<T> &getOrder() const;
 
   private:
-    T _object;
+    std::shared_ptr<T> _object;
 };
 
 #endif
