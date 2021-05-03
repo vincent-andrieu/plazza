@@ -23,11 +23,11 @@ class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredien
     [[nodiscard]] bool isOpen() const override;
 
   protected:
-    void newKitchen(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
-    void distributeOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
-    void sendOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchen,
+    void _newKitchen(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
+    void _distributeOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
+    void _sendOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchen,
         const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
-    void retreiveOrders() override;
+    void _retreiveOrders() override;
 
   private:
     void _retreiveOrder(const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen);

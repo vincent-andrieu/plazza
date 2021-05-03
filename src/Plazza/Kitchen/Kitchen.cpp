@@ -20,8 +20,8 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
 {
     while (this->isCooking()) {
-        this->receiveOrder();
-        this->sendFinishedOrders();
+        this->_receiveOrder();
+        this->_sendFinishedOrders();
         this->_stock.restock();
     }
 }
@@ -33,18 +33,19 @@ bool Kitchen<ProductType, ProductSize, ProductIngredientType>::isCooking() const
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Kitchen<ProductType, ProductSize, ProductIngredientType>::receiveOrder() const
+void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
 {
     CommunicationType commType;
 
-    this->receive(commType);
+    if (!this->receive(commType))
+        return;
 
     switch (commType.getType()) {
         case ECommunicationType::ORDER:
             Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order;
 
             this->waitingReceive(order);
-            this->addPendingOrder(order);
+            this->_addPendingOrder(order);
             break;
 
         case ECommunicationType::STATUS:
@@ -56,7 +57,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::receiveOrder() co
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Kitchen<ProductType, ProductSize, ProductIngredientType>::addPendingOrder(
+void Kitchen<ProductType, ProductSize, ProductIngredientType>::_addPendingOrder(
     const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     this->_pendingOrders.mutex.lock();
@@ -65,10 +66,11 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::addPendingOrder(
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Kitchen<ProductType, ProductSize, ProductIngredientType>::sendFinishedOrders()
+void Kitchen<ProductType, ProductSize, ProductIngredientType>::_sendFinishedOrders()
 {
     this->_finishedOrders.mutex.lock();
     while (!this->_finishedOrders.queue.empty()) {
+        this->send(CommunicationType(ECommunicationType::ORDER));
         this->send(this->_finishedOrders.queue.front());
         this->_finishedOrders.queue.pop();
     }

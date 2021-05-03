@@ -6,6 +6,7 @@
  */
 
 #include "Restaurant.hpp"
+#include "TransportObjects/CommunicationType/CommunicationType.hpp"
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Restaurant<ProductType, ProductSize, ProductIngredientType>::Restaurant(
@@ -19,8 +20,8 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
 {
     while (this->isOpen()) {
         const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order = this->_reception.getOrder();
-        this->distributeOrder(order);
-        this->retreiveOrders();
+        this->_distributeOrder(order);
+        this->_retreiveOrders();
     }
 }
 
@@ -31,7 +32,7 @@ bool Restaurant<ProductType, ProductSize, ProductIngredientType>::isOpen() const
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Restaurant<ProductType, ProductSize, ProductIngredientType>::distributeOrder(
+void Restaurant<ProductType, ProductSize, ProductIngredientType>::_distributeOrder(
     const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     size_t selectedKitchenIndex;
@@ -44,14 +45,14 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::distributeOrde
         }
     }
     if (maxOrders < this->_cooksPerKitchen * 2) {
-        sendOrder(this->_kitchens[selectedKitchenIndex], order);
+        _sendOrder(this->_kitchens[selectedKitchenIndex], order);
     } else {
-        newKitchen(order);
+        _newKitchen(order);
     }
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Restaurant<ProductType, ProductSize, ProductIngredientType>::newKitchen(
+void Restaurant<ProductType, ProductSize, ProductIngredientType>::_newKitchen(
     const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     Kitchen<ProductType, ProductSize, ProductIngredientType> kitchen(
@@ -59,22 +60,23 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::newKitchen(
     KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchenManage = {kitchen, {}};
 
     if (kitchen.isParent())
-        this->sendOrder(kitchenManage, order);
+        this->_sendOrder(kitchenManage, order);
     else if (kitchen.isChild())
         kitchen.cook();
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Restaurant<ProductType, ProductSize, ProductIngredientType>::sendOrder(
+void Restaurant<ProductType, ProductSize, ProductIngredientType>::_sendOrder(
     KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage,
     const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     kitchenManage.orders.push_back(order);
+    kitchenManage.kitchen.send(CommunicationType(ECommunicationType::ORDER));
     kitchenManage.kitchen.send(order);
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Restaurant<ProductType, ProductSize, ProductIngredientType>::retreiveOrders()
+void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrders()
 {
     for (const KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage : this->_kitchens)
         this->_retreiveOrder(kitchenManage.kitchen);
@@ -84,8 +86,17 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder(
     const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen)
 {
-    Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order;
+    CommunicationType commType;
 
-    kitchen.receive(order);
-    this->_reception.sendOrder(order);
+    if (!kitchen.receive(commType))
+        return;
+    switch (commType.getType()) {
+        case ECommunicationType::ORDER:
+            Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order;
+
+            kitchen.waitingReceive(order);
+            this->_reception.sendOrder(order);
+
+        default: break;
+    };
 }

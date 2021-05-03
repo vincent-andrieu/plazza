@@ -25,11 +25,11 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
     [[nodiscard]] virtual bool isOpen() const = 0;
 
   protected:
-    virtual void newKitchen(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
-    virtual void distributeOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
-    virtual void sendOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchen,
+    virtual void _newKitchen(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
+    virtual void _distributeOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
+    virtual void _sendOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchen,
         const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
-    virtual void retreiveOrders()  = 0;
+    virtual void _retreiveOrders() = 0;
 };
 
 #endif

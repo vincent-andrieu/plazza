@@ -20,7 +20,7 @@ template <typename T> struct LockedQueue {
 };
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType> {
+class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>, public Process {
   public:
     Kitchen(double bakingMultiplier, size_t cooksPerKitchen, size_t restockTime);
     ~Kitchen() override = default;
@@ -28,9 +28,9 @@ class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>
     bool isCooking() const override;
 
   protected:
-    void receiveOrder() const override;
-    void addPendingOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
-    void sendFinishedOrders() override;
+    void _receiveOrder() override;
+    void _addPendingOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
+    void _sendFinishedOrders() override;
 
   private:
     Stock _stock;
