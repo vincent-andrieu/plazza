@@ -114,7 +114,8 @@ class NCursesModule : public IDisplayModule {
         {IDisplayModule::KeyList::BACK_SPACE, KEY_BACKSPACE},  // backspace
         {IDisplayModule::KeyList::KEY_SPACE, 32},              // space
         {IDisplayModule::KeyList::KEY_MOUSE_CLICK, KEY_MOUSE}, // click souris
-        {IDisplayModule::KeyList::ENTER, 10}                   // click souris
+        {IDisplayModule::KeyList::ENTER, 10},                  // enter
+        {IDisplayModule::KeyList::SEMICOLON, 59}               // ;
     };
 };
 

@@ -117,7 +117,8 @@ class SfmlModule : public IDisplayModule {
         {IDisplayModule::KeyList::BACK_SPACE, sf::Keyboard::Backspace},    // backspace
         {IDisplayModule::KeyList::KEY_SPACE, sf::Keyboard::Space},         // space
         {IDisplayModule::KeyList::KEY_MOUSE_CLICK, sf::Keyboard::Unknown}, // mouse click
-        {IDisplayModule::KeyList::ENTER, sf::Keyboard::Enter}};            // enter
+        {IDisplayModule::KeyList::ENTER, sf::Keyboard::Enter},             // enter
+        {IDisplayModule::KeyList::SEMICOLON, sf::Keyboard::Semicolon}};    // ;
 };
 
 #endif
