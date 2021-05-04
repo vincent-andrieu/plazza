@@ -43,9 +43,9 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printPrompt()
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printKitchen(
-    std::vector<std::unique_ptr<IKitchen<ProductType, ProductSize, ProductIngredientType>>> kitchenList)
+    std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> kitchenList)
 {
-    typename std::vector<std::unique_ptr<IKitchen<ProductType, ProductSize, ProductIngredientType>>>::iterator it =
+    typename std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>>::iterator it =
         kitchenList.begin();
     std::string to_display = "";
     std::size_t pos_y = 1;
@@ -53,7 +53,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printKitchen(
 
     for (; it != kitchenList.end() && max; it++, pos_y += 3, max--) {
         this->_loader->getEntryPoint()->putRectOutline(IDisplayModule::Color::YELLOW, Coord(20, 3), Coord(0, pos_y));
-        to_display = ((*it)->isCooking()) ? "Working" : "Pending";
+        to_display = (it->kitchen.isCooking()) ? "Working" : "Pending";
         this->_loader->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(1, pos_y + 1), to_display);
     }
     if (it != kitchenList.end()) {
@@ -66,7 +66,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printKitchen(
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetailledKitchen(
-    std::unique_ptr<IKitchen<ProductType, ProductSize, ProductIngredientType>> kitchen)
+    KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen)
 {
     this->_loader->getEntryPoint()->putRectOutline(IDisplayModule::Color::WHITE, Coord(30, 30), Coord(30, 1));
     (void) kitchen;
