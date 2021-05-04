@@ -77,7 +77,8 @@ namespace plazza
             ARROW_RIGHT,
             BACK_SPACE,
             KEY_SPACE,
-            KEY_MOUSE_CLICK
+            KEY_MOUSE_CLICK,
+            ENTER
         } KeyList;
 
         virtual ~IDisplayModule() = default;

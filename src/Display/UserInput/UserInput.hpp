@@ -67,7 +67,7 @@ class UserInput {
         {IDisplayModule::KeyList::KEY_9, '9'}, // 9
         {IDisplayModule::KeyList::KEY_0, '0'}, // 0
         {IDisplayModule::KeyList::KEY_SPACE, ' '}, // ' '
-        {IDisplayModule::KeyList::EXIT, '|'}, // '|'
+        {IDisplayModule::KeyList::ENTER, '\n'}, // '\n'
     };
 };
 

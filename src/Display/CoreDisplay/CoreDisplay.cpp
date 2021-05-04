@@ -84,12 +84,12 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 std::string CoreDisplay<ProductType, ProductSize, ProductIngredientType>::getLine() const
 {
     std::string input = this->_input->getInput();
-    std::size_t pos = input.find('|');
+    std::size_t pos = input.find('\n');
     std::string exec;
 
     if (pos == std::string::npos)
         return std::string("");
-    exec = input.substr(0, pos - 1);
+    exec = input.substr(0, pos);
     this->_input->setInputState(input.substr(pos + 1, input.length()));
     return exec;
 }

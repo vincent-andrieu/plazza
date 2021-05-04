@@ -19,6 +19,7 @@ Restaurant<ProductType, ProductSize, ProductIngredientType>::Restaurant(
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
 {
+    std::string input = "lol";
     std::unique_ptr<CoreDisplay<ProductType, ProductSize, ProductIngredientType>> core =
         std::make_unique<CoreDisplay<ProductType, ProductSize, ProductIngredientType>>(
             std::string(DEFAULT_LIB), Vector(1400, 900), Vector(9.95, 21.6));
@@ -29,6 +30,9 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
         core->printPrompt();
         core->printKitchen(this->_kitchens);
         // core->printDetailledKitchen();
+        input = core->getLine();
+        if (input.length())
+            core->setPrompt(input + std::string("| $> "));
         Pizza pizza;
         Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
         if (this->_reception.getOrder(order)) {
