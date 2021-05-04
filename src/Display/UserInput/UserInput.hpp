@@ -68,6 +68,7 @@ class UserInput {
         {IDisplayModule::KeyList::KEY_0, '0'}, // 0
         {IDisplayModule::KeyList::KEY_SPACE, ' '}, // ' '
         {IDisplayModule::KeyList::ENTER, '\n'}, // '\n'
+        {IDisplayModule::KeyList::SEMICOLON, ';'}, // ';'
     };
 };
 
