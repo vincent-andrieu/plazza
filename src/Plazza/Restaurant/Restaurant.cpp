@@ -79,13 +79,13 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_sendOrder(
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrders()
 {
-    for (const KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage : this->_kitchens)
+    for (KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage : this->_kitchens)
         this->_retreiveOrder(kitchenManage);
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder(
-    const KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage)
+    KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage)
 {
     CommunicationType commType;
 

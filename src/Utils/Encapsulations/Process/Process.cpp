@@ -99,7 +99,7 @@ bool Process::receive(Serializer &object) const
     return false;
 }
 
-void Process::waitingReceive(Serializer &object)
+void Process::waitingReceive(Serializer &object) const
 {
     this->_communication.read(object);
 }
