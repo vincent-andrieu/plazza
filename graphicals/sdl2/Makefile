@@ -6,7 +6,7 @@
 ##
 
 SRC =  	src/SdlModule/SdlModule.cpp			\
-		../../include/Interfaces/Vector.cpp
+		../../src/Display/Vector.cpp
 
 OBJ =   $(SRC:.cpp=.o)
 

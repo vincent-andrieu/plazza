@@ -23,7 +23,7 @@
 #define ASSETS_FILEPATH      "assets/"
 #define ASSET_FILE(filepath) (std::string(ASSETS_FILEPATH) + filepath)
 
-using namespace arcade;
+using namespace plazza;
 
 class SdlModule : public IDisplayModule {
   public:
@@ -115,13 +115,14 @@ class SdlModule : public IDisplayModule {
         {IDisplayModule::KeyList::KEY_9, SDLK_9}, // 9
         {IDisplayModule::KeyList::KEY_0, SDLK_0}, // 0
         // Special
-        {IDisplayModule::KeyList::ARROW_UP, SDLK_UP},            // arrow up
-        {IDisplayModule::KeyList::ARROW_DOWN, SDLK_DOWN},        // arrow down
-        {IDisplayModule::KeyList::ARROW_LEFT, SDLK_LEFT},        // arrow left
-        {IDisplayModule::KeyList::ARROW_RIGHT, SDLK_RIGHT},      // arrow right
-        {IDisplayModule::KeyList::BACK_SPACE, SDLK_BACKSPACE},   // backspace
-        {IDisplayModule::KeyList::KEY_SPACE, SDLK_SPACE},        // space
-        {IDisplayModule::KeyList::KEY_MOUSE_CLICK, SDLK_UNKNOWN} // click souris
+        {IDisplayModule::KeyList::ARROW_UP, SDLK_UP},             // arrow up
+        {IDisplayModule::KeyList::ARROW_DOWN, SDLK_DOWN},         // arrow down
+        {IDisplayModule::KeyList::ARROW_LEFT, SDLK_LEFT},         // arrow left
+        {IDisplayModule::KeyList::ARROW_RIGHT, SDLK_RIGHT},       // arrow right
+        {IDisplayModule::KeyList::BACK_SPACE, SDLK_BACKSPACE},    // backspace
+        {IDisplayModule::KeyList::KEY_SPACE, SDLK_SPACE},         // space
+        {IDisplayModule::KeyList::KEY_MOUSE_CLICK, SDLK_UNKNOWN}, // click souris
+        {IDisplayModule::KeyList::ENTER, SDLK_KP_ENTER}           // enter
     };
 };
 
