@@ -61,7 +61,7 @@ fclean: clean
 re: fclean all
 
 debug: CXXFLAGS += -g
-debug: re
+debug: all
 
 %.o :		%.cpp
 		@g++ -c -o $@ $^ $(CXXFLAGS) && $(ECHO) -n $(BOLD) $(GREEN)"  [OK] "$(WHITE) || $(ECHO) -n $(BOLD) $(RED)"  [KO] "$(WHITE) && $(ECHO) $(BOLD) $< | rev | cut -d'/' -f 1 | rev
