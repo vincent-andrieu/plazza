@@ -22,6 +22,8 @@ SRC =   src/main.cpp																	\
         ${MY_PLAZZA_DIR}Reception/Reception.cpp											\
         ${MY_PLAZZA_DIR}Restaurant/Restaurant.cpp										\
         ${MY_PLAZZA_DIR}Stock/Stock.cpp													\
+		${MY_PLAZZA_DIR}TransportObjects/CommunicationType/CommunicationType.cpp		\
+																						\
         																				\
 		${MY_UTILS_DIR}Error/Error.cpp													\
 		${MY_UTILS_DIR}Serializer/Serializer.cpp										\
@@ -35,6 +37,7 @@ SRC =   src/main.cpp																	\
 		${MY_DISPLAY_DIR}DLLoader/DLLoader.cpp											\
 		${MY_DISPLAY_DIR}DLLib/DLLib.cpp												\
 		${MY_DISPLAY_DIR}UserInput/UserInput.cpp										\
+		${MY_DISPLAY_DIR}ListDir/ListDir.cpp											\
 		${MY_DISPLAY_DIR}CoreDisplay/CoreDisplay.cpp									\
 		${MY_DISPLAY_DIR}Vector.cpp														\
 
@@ -66,7 +69,7 @@ fclean: clean
 re: fclean all
 
 debug: CXXFLAGS += -g
-debug: re
+debug: all
 
 %.o :		%.cpp
 		@g++ -c -o $@ $^ $(CXXFLAGS) && $(ECHO) -n $(BOLD) $(GREEN)"  [OK] "$(WHITE) || $(ECHO) -n $(BOLD) $(RED)"  [KO] "$(WHITE) && $(ECHO) $(BOLD) $< | rev | cut -d'/' -f 1 | rev

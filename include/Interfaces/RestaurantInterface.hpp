@@ -8,13 +8,13 @@
 #ifndef RESTAURANT_INTERFACE_HPP
 #define RESTAURANT_INTERFACE_HPP
 
-#include <vector>
+#include <list>
 #include "Kitchen/Kitchen.hpp"
 #include "Order/Order.hpp"
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType> struct KitchenManage {
     const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen;
-    std::vector<Order<IProduct<ProductType, ProductSize, ProductIngredientType>>> orders;
+    std::list<Order<IProduct<ProductType, ProductSize, ProductIngredientType>>> orders;
 };
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType> class IRestaurant {

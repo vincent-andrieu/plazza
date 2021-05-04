@@ -7,21 +7,39 @@
 
 #include "Restaurant.hpp"
 #include "TransportObjects/CommunicationType/CommunicationType.hpp"
+#include "Pizza/Pizza.hpp"
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Restaurant<ProductType, ProductSize, ProductIngredientType>::Restaurant(
     double bakingTime, size_t cooksPerKitchen, size_t restockTime)
-    : _bakingMultiplier(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime)
+    : _bakingMultiplier(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime), _reception(bakingTime)
 {
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
 {
+    std::string input = "lol";
+    std::unique_ptr<CoreDisplay<ProductType, ProductSize, ProductIngredientType>> core =
+        std::make_unique<CoreDisplay<ProductType, ProductSize, ProductIngredientType>>(
+            Vector(1400, 900), Vector(9.95, 21.6), 300);
+
+    core->setPrompt("$> ");
     while (this->isOpen()) {
-        const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order = this->_reception.getOrder();
-        this->_distributeOrder(order);
+        core->clear();
+        core->printPrompt();
+        core->printKitchen(this->_kitchens);
+        // core->printDetailledKitchen();
+        input = core->getLine();
+        if (input.length())
+            this->_reception.receiveCommands(input);
+        Pizza pizza;
+        Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
+        if (this->_reception.getOrder(order)) {
+            this->_distributeOrder(order);
+        }
         this->_retreiveOrders();
+        core->update();
     }
 }
 
@@ -45,9 +63,9 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_distributeOrd
         }
     }
     if (maxOrders < this->_cooksPerKitchen * 2) {
-        _sendOrder(this->_kitchens[selectedKitchenIndex], order);
+        this->_sendOrder(this->_kitchens[selectedKitchenIndex], order);
     } else {
-        _newKitchen(order);
+        this->_newKitchen(order);
     }
 }
 
@@ -78,32 +96,33 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_sendOrder(
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrders()
 {
-    for (const KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage : this->_kitchens)
+    for (KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage : this->_kitchens)
         this->_retreiveOrder(kitchenManage);
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder(
-    const KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage)
+    KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage)
 {
     CommunicationType commType;
 
-    if (!kitchenManage.kitchen.receive(commType))
+    if (kitchenManage.kitchen.receive(commType) == false)
         return;
     switch (commType.getType()) {
-        case ECommunicationType::ORDER_PIZZA:
-            Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order;
+        case ECommunicationType::ORDER_PIZZA: {
+            Pizza pizza = Pizza();
+            Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
 
             kitchenManage.kitchen.waitingReceive(order);
             this->_reception.sendOrder(order);
 
-            const auto &foundOrder = std::find(kitchenManage.orders.begin(), kitchenManage.orders.end(),
-                [order](const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &elemOrder) {
-                    return elemOrder == order;
-                });
-            if (foundOrder != kitchenManage.orders.end())
-                kitchenManage.orders.erase(foundOrder);
+            kitchenManage.orders.remove_if([order](Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &elemOrder) {
+                return order.getOrder() == elemOrder.getOrder();
+            });
+        } break;
 
         default: break;
     };
 }
+
+template class Restaurant<PizzaType, PizzaSize, PizzaIngredient>;

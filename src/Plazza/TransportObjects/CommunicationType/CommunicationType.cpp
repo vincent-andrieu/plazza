@@ -5,7 +5,7 @@
  * CommunicationType.cpp - Created: 03/05/2021
  */
 
-#include "CommunicationType/CommunicationType.hpp"
+#include "TransportObjects/CommunicationType/CommunicationType.hpp"
 
 CommunicationType::CommunicationType()
 {

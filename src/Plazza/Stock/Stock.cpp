@@ -7,24 +7,20 @@
 
 #include "Stock/Stock.hpp"
 
-Stock::Stock(size_t restockTime) : _restockTime(restockTime)
+template <typename IngredientType> Stock<IngredientType>::Stock(size_t restockTime) : _restockTime(restockTime)
 {
-    for (const PizzaIngredient ingredient : pizzaIngredientList)
-        this->_stock[ingredient] = DEFAULT_STOCK;
+    for (const std::pair<IngredientType, size_t> &ingredient : _stock)
+        this->_stock[ingredient.first] = DEFAULT_STOCK;
 
     time(&this->_restockClock);
 }
 
-Stock::~Stock()
+template <typename IngredientType> void Stock<IngredientType>::restock()
 {
-}
-
-void Stock::restock()
-{
-    if (difftime(time(NULL), this->_restockClock) >= this->_restockTime) {
+    if (difftime(time(nullptr), this->_restockClock) >= this->_restockTime) {
         this->_mutex.lock();
-        for (const PizzaIngredient ingredient : pizzaIngredientList)
-            this->_stock[ingredient] += RESTOCK_NBR;
+        for (const std::pair<IngredientType, size_t> &ingredient : _stock)
+            this->_stock[ingredient.first] += RESTOCK_NBR;
 
         time(&this->_restockClock);
         this->_mutex.unlock();
@@ -38,7 +34,7 @@ void Stock::restock()
  * @param nbr
  * @return bool
  */
-bool Stock::takeIngredients(PizzaIngredient ingredient, size_t nbr)
+template <typename IngredientType> bool Stock<IngredientType>::takeIngredients(IngredientType ingredient, size_t nbr)
 {
     this->_mutex.lock();
     if (this->_stock[ingredient] < nbr)
@@ -48,3 +44,5 @@ bool Stock::takeIngredients(PizzaIngredient ingredient, size_t nbr)
     this->_mutex.unlock();
     return true;
 }
+
+template class Stock<PizzaIngredient>;

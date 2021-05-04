@@ -90,7 +90,7 @@ void Process::send(const Serializer &object) const
     this->_communication.write(object);
 }
 
-bool Process::receive(Serializer &object)
+bool Process::receive(Serializer &object) const
 {
     if (this->_communication.getQueueSize() > 0) {
         this->_communication.read(object);
@@ -99,7 +99,7 @@ bool Process::receive(Serializer &object)
     return false;
 }
 
-void Process::waitingReceive(Serializer &object)
+void Process::waitingReceive(Serializer &object) const
 {
     this->_communication.read(object);
 }

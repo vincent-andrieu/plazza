@@ -5,10 +5,8 @@
 ** SdlModule
 */
 
+#include <iostream>
 #include "SdlModule/SdlModule.hpp"
-#include "iostream"
-
-using namespace arcade;
 
 static const SDL_Color BACKGROUND_COLOR = {0, 0, 0, 255};
 

@@ -10,32 +10,44 @@
 
 #include <iostream>
 #include <algorithm>
+#include "enumPizza.hpp"
 #include "DLLib/DLLib.hpp"
+#include "ListDir/ListDir.hpp"
 #include "UserInput/UserInput.hpp"
 #include "Interfaces/ICoreDisplay.hpp"
 #include "Interfaces/IDisplayModule.hpp"
+#include "Interfaces/RestaurantInterface.hpp"
 
-using namespace plazza;
+using namespace Pizzeria;
 
-template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-class CoreDisplay : public ICoreDisplay<ProductType, ProductSize, ProductIngredientType> {
-  public:
-    CoreDisplay(std::string filepath, Vector screenSize, Vector screenScale, std::size_t maxLen = 30);
-    ~CoreDisplay();
-    void setPrompt(std::string prompt);
-    void printPrompt() const;
-    void printKitchen(std::vector<std::unique_ptr<IKitchen<ProductType, ProductSize, ProductIngredientType>>> kitchenList);
-    void printDetailledKitchen(std::unique_ptr<IKitchen<ProductType, ProductSize, ProductIngredientType>> kitchen);
-    [[nodiscard]] std::string getLine() const;
-    void setLine(std::string line);
-    void update();
-    void clear();
+namespace Pizzeria
+{
+    template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+    class CoreDisplay : public ICoreDisplay<ProductType, ProductSize, ProductIngredientType> {
+      public:
+        CoreDisplay(Vector screenSize, Vector screenScale, std::size_t maxLen = 30);
+        ~CoreDisplay();
+        void setPrompt(std::string prompt);
+        void printPrompt();
+        void printKitchen(std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> kitchenList);
+        void printDetailledKitchen(KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen);
+        [[nodiscard]] std::string getLine() const;
+        void setLine(std::string line);
+        void update();
+        void clear();
 
-  private:
-    std::string _prompt;
-    std::size_t _maxLen;
-    std::unique_ptr<DLLib<IDisplayModule>> _loader;
-    std::unique_ptr<UserInput> _input;
-};
+      private:
+        void libraryDisplaySwitch();
+
+      private:
+        std::string _prompt;
+        std::size_t _maxLen;
+        std::unique_ptr<UserInput> _input;
+        std::unordered_map<size_t, std::unique_ptr<DLLib<IDisplayModule>>> _dirName;
+        size_t _pos;
+        Vector _screenSize;
+        Vector _screenScale;
+    };
+} // namespace Pizzeria
 
 #endif

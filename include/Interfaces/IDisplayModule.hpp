@@ -20,9 +20,20 @@ namespace plazza
 
     class IDisplayModule {
       public:
-        typedef enum class Color_s { BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE } Color;
+        typedef enum class Color_s
+        {
+            BLACK,
+            RED,
+            GREEN,
+            YELLOW,
+            BLUE,
+            MAGENTA,
+            CYAN,
+            WHITE
+        } Color;
 
-        typedef enum class EKeyList {
+        typedef enum class EKeyList
+        {
             // GUI
             NEXT_GAME,
             PREV_GAME,
@@ -77,7 +88,9 @@ namespace plazza
             ARROW_RIGHT,
             BACK_SPACE,
             KEY_SPACE,
-            KEY_MOUSE_CLICK
+            KEY_MOUSE_CLICK,
+            ENTER,
+            SEMICOLON
         } KeyList;
 
         virtual ~IDisplayModule() = default;

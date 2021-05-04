@@ -12,6 +12,11 @@
 #include "Order/Order.hpp"
 #include "Kitchen/Kitchen.hpp"
 #include "Reception/Reception.hpp"
+#include "CoreDisplay/CoreDisplay.hpp"
+
+#include <memory>
+
+using namespace Pizzeria;
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredientType> {
@@ -30,14 +35,14 @@ class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredien
     void _retreiveOrders() override;
 
   private:
-    void _retreiveOrder(const KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage);
+    void _retreiveOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage);
 
     bool _isOpen{true};
     double _bakingMultiplier;
     size_t _cooksPerKitchen;
     size_t _restockTime;
     std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> _kitchens;
-    Reception<ProductType, ProductSize, ProductIngredientType> _reception;
+    Reception _reception;
 };
 
 #endif

@@ -107,13 +107,15 @@ class NCursesModule : public IDisplayModule {
         {IDisplayModule::KeyList::KEY_9, 57}, // 9
         {IDisplayModule::KeyList::KEY_0, 48}, // 0
         // Special
-        {IDisplayModule::KeyList::ARROW_UP, KEY_UP},          // arrow up
-        {IDisplayModule::KeyList::ARROW_DOWN, KEY_DOWN},      // arrow down
-        {IDisplayModule::KeyList::ARROW_LEFT, KEY_LEFT},      // arrow left
-        {IDisplayModule::KeyList::ARROW_RIGHT, KEY_RIGHT},    // arrow right
-        {IDisplayModule::KeyList::BACK_SPACE, KEY_BACKSPACE}, // backspace
-        {IDisplayModule::KeyList::KEY_SPACE, 32},             // space
-        {IDisplayModule::KeyList::KEY_MOUSE_CLICK, KEY_MOUSE} // click souris (ne fonctionne pas pour l'instant)
+        {IDisplayModule::KeyList::ARROW_UP, KEY_UP},           // arrow up
+        {IDisplayModule::KeyList::ARROW_DOWN, KEY_DOWN},       // arrow down
+        {IDisplayModule::KeyList::ARROW_LEFT, KEY_LEFT},       // arrow left
+        {IDisplayModule::KeyList::ARROW_RIGHT, KEY_RIGHT},     // arrow right
+        {IDisplayModule::KeyList::BACK_SPACE, KEY_BACKSPACE},  // backspace
+        {IDisplayModule::KeyList::KEY_SPACE, 32},              // space
+        {IDisplayModule::KeyList::KEY_MOUSE_CLICK, KEY_MOUSE}, // click souris
+        {IDisplayModule::KeyList::ENTER, 10},                  // enter
+        {IDisplayModule::KeyList::SEMICOLON, 59}               // ;
     };
 };
 

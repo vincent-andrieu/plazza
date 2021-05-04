@@ -15,7 +15,7 @@ DLLib<T>::DLLib(std::string filepath) : _loader(std::make_unique<DLLoader<T>>(fi
 template<typename T>
 DLLib<T>::~DLLib()
 {
-    this->_loader.release();
+    delete this->_loader.release();
 }
 
 template<typename T>

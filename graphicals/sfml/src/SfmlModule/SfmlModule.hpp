@@ -110,13 +110,15 @@ class SfmlModule : public IDisplayModule {
         {IDisplayModule::KeyList::KEY_9, sf::Keyboard::Num9}, // 9
         {IDisplayModule::KeyList::KEY_0, sf::Keyboard::Num0}, // 0
         // Special
-        {IDisplayModule::KeyList::ARROW_UP, sf::Keyboard::Up},          // arrow up
-        {IDisplayModule::KeyList::ARROW_DOWN, sf::Keyboard::Down},      // arrow down
-        {IDisplayModule::KeyList::ARROW_LEFT, sf::Keyboard::Left},      // arrow left
-        {IDisplayModule::KeyList::ARROW_RIGHT, sf::Keyboard::Right},    // arrow right
-        {IDisplayModule::KeyList::BACK_SPACE, sf::Keyboard::Backspace}, // backspace
-        {IDisplayModule::KeyList::KEY_SPACE, sf::Keyboard::Space},      // space
-        {IDisplayModule::KeyList::KEY_MOUSE_CLICK, sf::Keyboard::Unknown}};
+        {IDisplayModule::KeyList::ARROW_UP, sf::Keyboard::Up},             // arrow up
+        {IDisplayModule::KeyList::ARROW_DOWN, sf::Keyboard::Down},         // arrow down
+        {IDisplayModule::KeyList::ARROW_LEFT, sf::Keyboard::Left},         // arrow left
+        {IDisplayModule::KeyList::ARROW_RIGHT, sf::Keyboard::Right},       // arrow right
+        {IDisplayModule::KeyList::BACK_SPACE, sf::Keyboard::Backspace},    // backspace
+        {IDisplayModule::KeyList::KEY_SPACE, sf::Keyboard::Space},         // space
+        {IDisplayModule::KeyList::KEY_MOUSE_CLICK, sf::Keyboard::Unknown}, // mouse click
+        {IDisplayModule::KeyList::ENTER, sf::Keyboard::Enter},             // enter
+        {IDisplayModule::KeyList::SEMICOLON, sf::Keyboard::Semicolon}};    // ;
 };
 
 #endif

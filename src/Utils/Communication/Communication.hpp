@@ -29,7 +29,7 @@ class Communication {
     Communication &operator=(const Communication &communication) = default;
 
     void write(const Serializer &object) const;
-    void read(Serializer &object);
+    void read(Serializer &object) const;
     msgqnum_t getQueueSize(int msqId = -1) const;
 
   private:
