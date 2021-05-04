@@ -12,10 +12,16 @@ using namespace Pizzeria;
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 CoreDisplay<ProductType, ProductSize, ProductIngredientType>::CoreDisplay(
     std::string filepath, Vector screenSize, Vector screenScale, std::size_t maxLen)
-    : _maxLen(maxLen), _loader(std::make_unique<DLLib<IDisplayModule>>(filepath)), _input(std::make_unique<UserInput>())
+    : _maxLen(maxLen), _loader(std::make_unique<DLLib<IDisplayModule>>(filepath)), _input(std::make_unique<UserInput>()), _dirName(), _pos(0), _screenSize(screenSize), _screenScale(screenScale)
 {
+    listDir lib("./lib/", "arcade_.+\\.so");
+    std::vector<std::string> nameList = lib.getDirContent();
+    std::vector<std::string>::iterator it = nameList.begin();
+
     this->_loader->setEntryPoint("entryPoint");
     this->_loader->getEntryPoint()->open(screenSize, screenScale);
+    for (size_t i = 0; it != nameList.end(); it++, i++)
+        this->_dirName[i] = std::string("./lib/") + *it;
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -103,6 +109,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::setLine(std::
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::update()
 {
+    this->libraryDisplaySwitch();
     this->_loader->getEntryPoint()->displayScreen();
     this->_loader->getEntryPoint()->refreshScreen();
 }
@@ -112,6 +119,23 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::clear()
 {
     this->_input->runInput(this->_loader->getEntryPoint());
     this->_loader->getEntryPoint()->clearScreen();
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::libraryDisplaySwitch()
+{
+    if (this->_loader->getEntryPoint()->isKeyPress(IDisplayModule::KeyList::ARROW_LEFT)) {
+        this->_pos = (this->_pos > 0) ? this->_pos - 1 : this->_dirName.size() - 1;
+    } else if (this->_loader->getEntryPoint()->isKeyPress(IDisplayModule::KeyList::ARROW_RIGHT)) {
+        this->_pos = (this->_pos < this->_dirName.size() - 1) ? this->_pos + 1 : 0;
+    } else {
+        return;
+    }
+    this->_loader->getEntryPoint()->close();
+    delete this->_loader.release();
+    this->_loader = std::make_unique<DLLib<IDisplayModule>>(this->_dirName[this->_pos]);
+    this->_loader->setEntryPoint("entryPoint");
+    this->_loader->getEntryPoint()->open(this->_screenSize, this->_screenScale);
 }
 
 template class CoreDisplay<PizzaType, PizzaSize, PizzaIngredient>;
