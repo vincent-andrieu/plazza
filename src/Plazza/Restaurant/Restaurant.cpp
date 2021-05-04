@@ -32,7 +32,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
         // core->printDetailledKitchen();
         input = core->getLine();
         if (input.length())
-            core->setPrompt(input + std::string("| $> "));
+            this->_reception.receiveCommands(input);
         Pizza pizza;
         Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
         if (this->_reception.getOrder(order)) {

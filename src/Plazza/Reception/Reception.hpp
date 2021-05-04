@@ -23,8 +23,6 @@ namespace Pizzeria
         [[nodiscard]] bool doesGetPendingOrders() const override;
         [[nodiscard]] bool getOrder(Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) override;
         void sendOrder(const Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) const override;
-
-      protected:
         void receiveCommands(const string &cmd) override;
 
       private:
