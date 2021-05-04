@@ -28,7 +28,7 @@ namespace Pizzeria
         CoreDisplay(std::string filepath, Vector screenSize, Vector screenScale, std::size_t maxLen = 30);
         ~CoreDisplay();
         void setPrompt(std::string prompt);
-        void printPrompt() const;
+        void printPrompt();
         void printKitchen(std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> kitchenList);
         void printDetailledKitchen(KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen);
         [[nodiscard]] std::string getLine() const;
@@ -42,9 +42,9 @@ namespace Pizzeria
       private:
         std::string _prompt;
         std::size_t _maxLen;
-        std::unique_ptr<DLLib<IDisplayModule>> _loader;
+        //std::unique_ptr<DLLib<IDisplayModule>> _loader;
         std::unique_ptr<UserInput> _input;
-        std::unordered_map<size_t, std::string> _dirName;
+        std::unordered_map<size_t, std::unique_ptr<DLLib<IDisplayModule>>> _dirName;
         size_t _pos;
         Vector _screenSize;
         Vector _screenScale;

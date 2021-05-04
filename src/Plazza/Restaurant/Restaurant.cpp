@@ -22,7 +22,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
     std::string input = "lol";
     std::unique_ptr<CoreDisplay<ProductType, ProductSize, ProductIngredientType>> core =
         std::make_unique<CoreDisplay<ProductType, ProductSize, ProductIngredientType>>(
-            std::string(DEFAULT_LIB), Vector(1400, 900), Vector(9.95, 21.6));
+            std::string(DEFAULT_LIB), Vector(1400, 900), Vector(9.95, 21.6), 300);
 
     core->setPrompt("$> ");
     while (this->isOpen()) {
