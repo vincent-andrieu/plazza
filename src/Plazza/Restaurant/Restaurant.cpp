@@ -92,7 +92,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
     if (kitchenManage.kitchen.receive(commType) == false)
         return;
     switch (commType.getType()) {
-        case ECommunicationType::ORDER_PIZZA:
+        case ECommunicationType::ORDER_PIZZA: {
             const Pizza pizza = Pizza();
             Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
 
@@ -101,10 +101,11 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
 
             const auto &foundOrder = std::find(kitchenManage.orders.begin(), kitchenManage.orders.end(),
                 [order](const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &elemOrder) {
-                    return elemOrder == order;
+                    return elemOrder.getOrder() == order.getOrder();
                 });
             if (foundOrder != kitchenManage.orders.end())
                 kitchenManage.orders.erase(foundOrder);
+        }
 
         default: break;
     };
