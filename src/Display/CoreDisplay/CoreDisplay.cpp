@@ -11,15 +11,13 @@ using namespace Pizzeria;
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 CoreDisplay<ProductType, ProductSize, ProductIngredientType>::CoreDisplay(
-    std::string filepath, Vector screenSize, Vector screenScale, std::size_t maxLen)
-    : _maxLen(maxLen), /*_loader(std::make_unique<DLLib<IDisplayModule>>(filepath)), */_input(std::make_unique<UserInput>()), _dirName(), _pos(0), _screenSize(screenSize), _screenScale(screenScale)
+    Vector screenSize, Vector screenScale, std::size_t maxLen)
+    : _maxLen(maxLen), _input(std::make_unique<UserInput>()), _dirName(), _pos(0), _screenSize(screenSize), _screenScale(screenScale)
 {
     listDir lib("./lib/", "arcade_.+\\.so");
     std::vector<std::string> nameList = lib.getDirContent();
     std::vector<std::string>::iterator it = nameList.begin();
 
-    //this->_loader->setEntryPoint("entryPoint");
-    //this->_loader->getEntryPoint()->open(screenSize, screenScale);
     for (size_t i = 0; it != nameList.end(); it++, i++) {
         this->_dirName[i] = std::make_unique<DLLib<IDisplayModule>>(std::string("./lib/") + *it);
         this->_dirName[i]->setEntryPoint("entryPoint");
@@ -31,7 +29,6 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 CoreDisplay<ProductType, ProductSize, ProductIngredientType>::~CoreDisplay()
 {
     this->_dirName[this->_pos]->getEntryPoint()->close();
-    //this->_loader.reset();
     this->_input.reset();
     this->_dirName.clear();
 }

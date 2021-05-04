@@ -25,7 +25,7 @@ namespace Pizzeria
     template <typename ProductType, typename ProductSize, typename ProductIngredientType>
     class CoreDisplay : public ICoreDisplay<ProductType, ProductSize, ProductIngredientType> {
       public:
-        CoreDisplay(std::string filepath, Vector screenSize, Vector screenScale, std::size_t maxLen = 30);
+        CoreDisplay(Vector screenSize, Vector screenScale, std::size_t maxLen = 30);
         ~CoreDisplay();
         void setPrompt(std::string prompt);
         void printPrompt();
@@ -42,7 +42,6 @@ namespace Pizzeria
       private:
         std::string _prompt;
         std::size_t _maxLen;
-        //std::unique_ptr<DLLib<IDisplayModule>> _loader;
         std::unique_ptr<UserInput> _input;
         std::unordered_map<size_t, std::unique_ptr<DLLib<IDisplayModule>>> _dirName;
         size_t _pos;
