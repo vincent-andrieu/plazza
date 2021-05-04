@@ -7,11 +7,12 @@
 
 #include "Restaurant.hpp"
 #include "TransportObjects/CommunicationType/CommunicationType.hpp"
+#include "Pizza/Pizza.hpp"
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Restaurant<ProductType, ProductSize, ProductIngredientType>::Restaurant(
     double bakingTime, size_t cooksPerKitchen, size_t restockTime)
-    : _bakingMultiplier(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime)
+    : _bakingMultiplier(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime), _reception(bakingTime)
 {
 }
 
@@ -45,9 +46,9 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_distributeOrd
         }
     }
     if (maxOrders < this->_cooksPerKitchen * 2) {
-        _sendOrder(this->_kitchens[selectedKitchenIndex], order);
+        this->_sendOrder(this->_kitchens[selectedKitchenIndex], order);
     } else {
-        _newKitchen(order);
+        this->_newKitchen(order);
     }
 }
 
@@ -88,11 +89,12 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
 {
     CommunicationType commType;
 
-    if (!kitchenManage.kitchen.receive(commType))
+    if (kitchenManage.kitchen.receive(commType) == false)
         return;
     switch (commType.getType()) {
         case ECommunicationType::ORDER_PIZZA:
-            Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order;
+            const Pizza pizza = Pizza();
+            Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
 
             kitchenManage.kitchen.waitingReceive(order);
             this->_reception.sendOrder(order);
@@ -107,3 +109,5 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
         default: break;
     };
 }
+
+template class Restaurant<PizzaType, PizzaSize, PizzaIngredient>;
