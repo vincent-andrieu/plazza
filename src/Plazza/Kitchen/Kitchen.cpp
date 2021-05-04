@@ -80,4 +80,16 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_sendFinishedOrde
     this->_finishedOrders.mutex.unlock();
 }
 
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+size_t Kitchen<ProductType, ProductSize, ProductIngredientType>::getNbCooks() const
+{
+    return this->_cooksPerKitchen;
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+double Kitchen<ProductType, ProductSize, ProductIngredientType>::getBakingMultiplier() const
+{
+    return this->_bakingMultiplier;
+}
+
 template class Kitchen<PizzaType, PizzaSize, PizzaIngredient>;

@@ -68,8 +68,16 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetailledKitchen(
     KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen)
 {
-    this->_loader->getEntryPoint()->putRectOutline(IDisplayModule::Color::WHITE, Coord(30, 30), Coord(30, 1));
-    (void) kitchen;
+    std::string to_display = "";
+    std::size_t pos_y = 1;
+
+    this->_loader->getEntryPoint()->putRectOutline(IDisplayModule::Color::WHITE, Coord(30, 30), Coord(30, pos_y++));
+    to_display = (kitchen.kitchen.isCooking()) ? "Working" : "Pending";
+    this->_loader->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(31, pos_y++), std::string("Status: ") + to_display);
+    to_display = std::to_string(kitchen.kitchen.getNbCooks());
+    this->_loader->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(31, pos_y++), std::string("Cookers: ") + to_display);
+    to_display = std::to_string(kitchen.kitchen.getBakingMultiplier());
+    this->_loader->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(31, pos_y++), std::string("Multiplier: ") + to_display);
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>

@@ -29,6 +29,8 @@ class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>
     ~Kitchen() override = default;
     void cook() override;
     [[nodiscard]] bool isCooking() const override;
+    [[nodiscard]] size_t getNbCooks() const override;
+    [[nodiscard]] double getBakingMultiplier() const override;
 
   protected:
     void _receiveOrder() override;
