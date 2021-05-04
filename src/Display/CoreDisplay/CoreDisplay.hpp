@@ -12,6 +12,7 @@
 #include <algorithm>
 #include "enumPizza.hpp"
 #include "DLLib/DLLib.hpp"
+#include "ListDir/ListDir.hpp"
 #include "UserInput/UserInput.hpp"
 #include "Interfaces/ICoreDisplay.hpp"
 #include "Interfaces/IDisplayModule.hpp"
@@ -36,10 +37,17 @@ namespace Pizzeria
         void clear();
 
       private:
+        void libraryDisplaySwitch();
+
+      private:
         std::string _prompt;
         std::size_t _maxLen;
         std::unique_ptr<DLLib<IDisplayModule>> _loader;
         std::unique_ptr<UserInput> _input;
+        std::unordered_map<size_t, std::string> _dirName;
+        size_t _pos;
+        Vector _screenSize;
+        Vector _screenScale;
     };
 } // namespace Pizzeria
 

@@ -30,6 +30,7 @@ SRC =   src/main.cpp																	\
 		${MY_DISPLAY_DIR}DLLoader/DLLoader.cpp											\
 		${MY_DISPLAY_DIR}DLLib/DLLib.cpp												\
 		${MY_DISPLAY_DIR}UserInput/UserInput.cpp										\
+		${MY_DISPLAY_DIR}ListDir/ListDir.cpp											\
 		${MY_DISPLAY_DIR}CoreDisplay/CoreDisplay.cpp									\
 		${MY_DISPLAY_DIR}Vector.cpp														\
 
