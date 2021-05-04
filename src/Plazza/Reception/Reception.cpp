@@ -23,12 +23,14 @@ bool Reception::doesGetPendingOrders() const
     return !this->_pendingOrders.empty();
 }
 
-const Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &Reception::getOrder()
+bool Reception::getOrder(Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order)
 {
-    const Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order = this->_pendingOrders.front();
+    if (this->_pendingOrders.empty())
+        return false;
+    order.setOrder(this->_pendingOrders.front().getOrder());
 
     this->_pendingOrders.pop();
-    return order;
+    return true;
 }
 
 void Reception::sendOrder(const Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) const

@@ -21,7 +21,7 @@ namespace Pizzeria
         Reception(double multiplier);
         ~Reception() override = default;
         [[nodiscard]] bool doesGetPendingOrders() const override;
-        const Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &getOrder() override;
+        [[nodiscard]] bool getOrder(Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) override;
         void sendOrder(const Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) const override;
 
       protected:

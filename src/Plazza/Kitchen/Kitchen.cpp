@@ -43,7 +43,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
 
     switch (commType.getType()) {
         case ECommunicationType::ORDER_PIZZA: {
-            const Pizza pizza = Pizza();
+            Pizza pizza = Pizza();
             Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
 
             this->waitingReceive(order);
