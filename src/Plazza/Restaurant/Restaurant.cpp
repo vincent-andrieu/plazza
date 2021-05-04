@@ -99,20 +99,11 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
             kitchenManage.kitchen.waitingReceive(order);
             this->_reception.sendOrder(order);
 
-            for (size_t i = 0; i < kitchenManage.orders.size(); i++) {
-                if (kitchenManage.orders[i].getOrder() == order.getOrder()) {
-                    // if (kitchenManage.orders[i].getOrder().getType() == order.getOrder().getType()) {
-                    kitchenManage.orders.erase(kitchenManage.orders.begin() + i);
-                    break;
-                }
-            }
-            // const auto &foundOrder = std::find(kitchenManage.orders.begin(), kitchenManage.orders.end(),
-            //     [order](const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &elemOrder) {
-            //         return order.getOrder().getType() == elemOrder.getOrder().getType();
-            //     });
-            // if (foundOrder != kitchenManage.orders.end())
-            //     kitchenManage.orders.erase(foundOrder);
+            kitchenManage.orders.remove_if([order](Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &elemOrder) {
+                    return order.getOrder() == elemOrder.getOrder();
+                });
         }
+        break;
 
         default: break;
     };
