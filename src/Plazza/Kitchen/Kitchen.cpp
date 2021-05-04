@@ -7,6 +7,7 @@
 
 #include "Kitchen/Kitchen.hpp"
 #include "TransportObjects/CommunicationType/CommunicationType.hpp"
+#include "Pizza/Pizza.hpp"
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Kitchen<ProductType, ProductSize, ProductIngredientType>::Kitchen(
@@ -41,16 +42,18 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
         return;
 
     switch (commType.getType()) {
-        case ECommunicationType::ORDER_PIZZA:
-            Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order;
+        case ECommunicationType::ORDER_PIZZA: {
+            const Pizza pizza = Pizza();
+            Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
 
             this->waitingReceive(order);
             this->_addPendingOrder(order);
             break;
+        }
 
-        case ECommunicationType::STATUS:
+            // case ECommunicationType::STATUS:
             // TODO: Send back kitchen status
-            break;
+            // break;
 
         default: break;
     };

@@ -16,6 +16,8 @@
 #define DEFAULT_STOCK 5
 #define RESTOCK_NBR   1
 
+using namespace Pizzeria;
+
 template <typename IngredientType> class Stock {
   public:
     Stock(size_t restockTime);

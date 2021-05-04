@@ -16,6 +16,7 @@ namespace Pizzeria
 {
     class Pizza : public IProduct<PizzaType, PizzaSize, PizzaIngredient> {
       public:
+        Pizza() = default;
         Pizza(PizzaType type, PizzaSize size, size_t timeSec, std::vector<PizzaIngredient> ingredients);
         ~Pizza() override = default;
 
