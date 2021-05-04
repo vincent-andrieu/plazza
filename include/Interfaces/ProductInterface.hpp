@@ -14,6 +14,9 @@ template <typename Type, typename Size, typename IngredientType> class IProduct 
   public:
     virtual ~IProduct() = default;
 
+    [[nodiscard]] virtual bool operator==(const IProduct &product) const = 0;
+    [[nodiscard]] virtual bool operator!=(const IProduct &product) const = 0;
+
     [[nodiscard]] virtual Type getType() const = 0;
     virtual void setType(Type type) = 0;
 

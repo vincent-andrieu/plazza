@@ -16,11 +16,12 @@ namespace Pizzeria
 {
     class Pizza : public AProduct<PizzaType, PizzaSize, PizzaIngredient> {
       public:
+        Pizza() = default;
         Pizza(PizzaType type, PizzaSize size, size_t timeSec, const std::vector<PizzaIngredient> &ingredients);
         ~Pizza() override = default;
 
-        [[nodiscard]] bool operator==(const IProduct &product) const;
-        [[nodiscard]] bool operator!=(const IProduct &product) const;
+        [[nodiscard]] bool operator==(const IProduct &product) const override;
+        [[nodiscard]] bool operator!=(const IProduct &product) const override;
     };
 } // namespace Pizzeria
 

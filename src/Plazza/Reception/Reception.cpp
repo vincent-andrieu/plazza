@@ -5,12 +5,11 @@
  * Reception.cpp - Created: 27/04/2021
  */
 
-#include <algorithm>
 #include "Reception/Reception.hpp"
 #include "Error/Error.hpp"
 #include "enumPizza.hpp"
 #include "Order/Order.hpp"
-#include "Pizza/Factory/Factory.hpp"
+#include "Product/Pizza/Factory/Factory.hpp"
 
 using namespace Pizzeria;
 
@@ -60,7 +59,7 @@ void Reception::_writePizzasCommand(const string &cmd)
     if (words.size() != 3)
         throw ReceptionError("Invalid command arguments");
 
-    const size_t nbr = this->_getNbr(words[2]);
+    const size_t nbr = _getNbr(words[2]);
     for (size_t i = 0; i < nbr; i++) {
         const std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &product =
             Factory::callFactory(this->_getType(words[0]), this->_getSize(words[1]), this->_bakingMultiplier);

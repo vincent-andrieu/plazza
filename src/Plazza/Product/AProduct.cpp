@@ -5,7 +5,8 @@
 ** Implementation of abstract product
 */
 
-#include "AProduct.hpp"
+#include "Product/AProduct.hpp"
+#include "Product/Pizza/Pizza.hpp"
 
 template <typename Type, typename Size, typename IngredientType>
 [[nodiscard]] Type AProduct<Type, Size, IngredientType>::getType() const
@@ -63,3 +64,5 @@ template <typename Type, typename Size, typename IngredientType> void AProduct<T
 {
     _finished = true;
 }
+
+template class AProduct<Pizzeria::PizzaType, Pizzeria::PizzaSize, Pizzeria::PizzaIngredient>;

@@ -9,7 +9,7 @@
 #define COOK_INTERFACE_HPP
 
 #include <queue>
-#include "Pizza/Pizza.hpp"
+#include "Product/Pizza/Pizza.hpp"
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType> class ICook {
   public:

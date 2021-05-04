@@ -7,7 +7,9 @@
 
 #include "Kitchen/Kitchen.hpp"
 #include "TransportObjects/CommunicationType/CommunicationType.hpp"
-#include "Pizza/Pizza.hpp"
+#include "Product/Pizza/Pizza.hpp"
+
+using namespace Pizzeria;
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Kitchen<ProductType, ProductSize, ProductIngredientType>::Kitchen(

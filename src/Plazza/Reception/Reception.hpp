@@ -9,6 +9,8 @@
 #define RECEPTION_HPP
 
 #include <queue>
+#include <algorithm>
+#include <memory>
 #include "Interfaces/ReceptionInterface.hpp"
 #include "enumPizza.hpp"
 

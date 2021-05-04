@@ -9,12 +9,10 @@
 
 using namespace Pizzeria;
 
-using namespace Pizzeria;
-
 const std::unordered_map<enum PizzaType,
     std::function<std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>>(
-        const enum PizzaSize size, const size_t multiplier)>>
-    Factory::_list = {
+        const enum PizzaSize size, const long multiplier)>>
+    Factory::_list{
         {PizzaType::Americana,
             [](const enum PizzaSize size, const size_t multiplier) {
                 return std::make_unique<class Americana>(size, multiplier);
@@ -34,7 +32,7 @@ const std::unordered_map<enum PizzaType,
 };
 
 std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>> Factory::callFactory(
-    const enum PizzaType type, const enum PizzaSize size, const size_t multiplier)
+    enum PizzaType type, enum PizzaSize size, long multiplier)
 {
     if (_list.find(type) != _list.end())
         return _list.at(type)(size, multiplier);

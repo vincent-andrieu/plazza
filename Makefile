@@ -29,9 +29,6 @@ SRC =   src/main.cpp																	\
 		${MY_UTILS_DIR}Serializer/Serializer.cpp										\
 		${MY_UTILS_DIR}Communication/Communication.cpp									\
 		${MY_UTILS_DIR}Encapsulations/Process/Process.cpp								\
-		${MY_UTILS_DIR}Encapsulations/Threads/Threads.cpp								\
-		${MY_UTILS_DIR}Encapsulations/Mutex/Mutex.cpp									\
-		${MY_UTILS_DIR}Encapsulations/ConditionalVariables/ConditionalVariables.cpp		\
 		${MY_UTILS_DIR}CommandInterpreter/CommandInterpreter.cpp						\
 																						\
 		${MY_DISPLAY_DIR}DLLoader/DLLoader.cpp											\
