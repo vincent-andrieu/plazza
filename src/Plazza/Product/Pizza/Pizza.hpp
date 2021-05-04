@@ -12,13 +12,16 @@
 #include "Product/AProduct.hpp"
 #include "enumPizza.hpp"
 
-class Pizza : public AProduct<PizzaType, PizzaSize, PizzaIngredient> {
-  public:
-    Pizza(PizzaType type, PizzaSize size, size_t timeSec, const std::vector<PizzaIngredient> &ingredients);
-    ~Pizza() override = default;
+namespace Pizzeria
+{
+    class Pizza : public AProduct<PizzaType, PizzaSize, PizzaIngredient> {
+      public:
+        Pizza(PizzaType type, PizzaSize size, size_t timeSec, const std::vector<PizzaIngredient> &ingredients);
+        ~Pizza() override = default;
 
-    [[nodiscard]] bool operator==(const IProduct &product) const;
-    [[nodiscard]] bool operator!=(const IProduct &product) const;
-};
+        [[nodiscard]] bool operator==(const IProduct &product) const;
+        [[nodiscard]] bool operator!=(const IProduct &product) const;
+    };
+} // namespace Pizzeria
 
 #endif

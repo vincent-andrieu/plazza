@@ -7,7 +7,7 @@
 
 #include "Product/Pizza/Pizza.hpp"
 
-#include <utility>
+using namespace Pizzeria;
 
 Pizza::Pizza(const PizzaType type, const PizzaSize size, const size_t timeSec, const std::vector<PizzaIngredient> &ingredients)
 {

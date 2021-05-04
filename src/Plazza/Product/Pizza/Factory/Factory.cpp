@@ -7,6 +7,8 @@
 
 #include "Product/Pizza/Factory/Factory.hpp"
 
+using namespace Pizzeria;
+
 const std::unordered_map<enum PizzaType,
     std::function<std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>>(
         const enum PizzaSize size, const long multiplier)>>
@@ -28,10 +30,6 @@ const std::unordered_map<enum PizzaType,
                 return std::make_unique<class Regina>(size, multiplier);
             }},
 };
-
-Factory::Factory() = default;
-
-Factory::~Factory() = default;
 
 std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>> Factory::callFactory(
     const enum PizzaType type, const enum PizzaSize size, const long multiplier)

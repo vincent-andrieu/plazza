@@ -12,7 +12,6 @@ MY_DISPLAY_DIR = src/Display/
 SRC =   src/main.cpp																	\
 		${MY_PLAZZA_DIR}Product/AProduct.cpp											\
 		${MY_PLAZZA_DIR}Product/Pizza/Pizza.cpp											\
-		${MY_PLAZZA_DIR}Product/Pizza/Pizza.cpp											\
 		${MY_PLAZZA_DIR}Product/Pizza/Factory/Factory.cpp								\
 		${MY_PLAZZA_DIR}Product/Pizza/PizzaType/Americana/Americana.cpp					\
 		${MY_PLAZZA_DIR}Product/Pizza/PizzaType/Fantasia/Fantasia.cpp					\
