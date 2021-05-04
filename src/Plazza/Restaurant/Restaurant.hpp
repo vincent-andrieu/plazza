@@ -12,6 +12,9 @@
 #include "Order/Order.hpp"
 #include "Kitchen/Kitchen.hpp"
 #include "Reception/Reception.hpp"
+#include "CoreDisplay/CoreDisplay.hpp"
+
+#include <memory>
 
 using namespace Pizzeria;
 

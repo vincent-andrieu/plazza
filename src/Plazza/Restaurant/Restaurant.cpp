@@ -19,10 +19,18 @@ Restaurant<ProductType, ProductSize, ProductIngredientType>::Restaurant(
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
 {
+    std::unique_ptr<CoreDisplay<ProductType, ProductSize, ProductIngredientType>> core = std::make_unique<CoreDisplay<ProductType, ProductSize, ProductIngredientType>>(std::string(DEFAULT_LIB), Vector(1400, 900), Vector(9.95, 21.6));
+
+    core->setPrompt("$> ");
     while (this->isOpen()) {
+        core->clear();
+        core->printPrompt();
+        //core->printKitchen(this->_kitchens);
+        //core->printDetailledKitchen();
         const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order = this->_reception.getOrder();
         this->_distributeOrder(order);
         this->_retreiveOrders();
+        core->update();
     }
 }
 

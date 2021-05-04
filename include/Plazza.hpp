@@ -11,6 +11,7 @@
 #include <iostream>
 #include <sstream>
 
+#define DEFAULT_LIB "./lib/arcade_ncurses.so"
 #define EXIT_SUCCESS 0
 #define EXIT_ERROR   84
 
