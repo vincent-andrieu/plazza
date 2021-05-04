@@ -51,7 +51,7 @@ void Communication::write(const Serializer &object) const
     object >> msqId;
 }
 
-void Communication::read(Serializer &object)
+void Communication::read(Serializer &object) const
 {
     int msqId = msgget(this->_key, IPC_PERMISSION | IPC_CREAT);
 
