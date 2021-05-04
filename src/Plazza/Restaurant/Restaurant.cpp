@@ -25,7 +25,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
     while (this->isOpen()) {
         core->clear();
         core->printPrompt();
-        //core->printKitchen(this->_kitchens);
+        core->printKitchen(this->_kitchens);
         //core->printDetailledKitchen();
         const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order = this->_reception.getOrder();
         this->_distributeOrder(order);

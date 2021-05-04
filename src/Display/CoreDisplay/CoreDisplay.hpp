@@ -15,6 +15,7 @@
 #include "UserInput/UserInput.hpp"
 #include "Interfaces/ICoreDisplay.hpp"
 #include "Interfaces/IDisplayModule.hpp"
+#include "Interfaces/RestaurantInterface.hpp"
 
 using namespace Pizzeria;
 
@@ -27,8 +28,8 @@ namespace Pizzeria
         ~CoreDisplay();
         void setPrompt(std::string prompt);
         void printPrompt() const;
-        void printKitchen(std::vector<std::unique_ptr<IKitchen<ProductType, ProductSize, ProductIngredientType>>> kitchenList);
-        void printDetailledKitchen(std::unique_ptr<IKitchen<ProductType, ProductSize, ProductIngredientType>> kitchen);
+        void printKitchen(std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> kitchenList);
+        void printDetailledKitchen(KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen);
         [[nodiscard]] std::string getLine() const;
         void setLine(std::string line);
         void update();

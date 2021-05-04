@@ -12,6 +12,7 @@
 #include <vector>
 #include "KitchenInterface.hpp"
 #include "ICommandInterpreter.hpp"
+#include "RestaurantInterface.hpp"
 
 namespace Pizzeria
 {
@@ -22,9 +23,9 @@ namespace Pizzeria
         virtual void setPrompt(std::string prompt) = 0;
         virtual void printPrompt() const = 0;
         virtual void printKitchen(
-            std::vector<std::unique_ptr<IKitchen<ProductType, ProductSize, ProductIngredientType>>> kitchenList) = 0;
+            std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> kitchenList) = 0;
         virtual void printDetailledKitchen(
-            std::unique_ptr<IKitchen<ProductType, ProductSize, ProductIngredientType>> kitchen) = 0;
+            KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen) = 0;
         [[nodiscard]] std::string getLine() const override = 0;
         void setLine(std::string line) override = 0;
         virtual void update() = 0;
