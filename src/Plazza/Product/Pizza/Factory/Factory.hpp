@@ -17,10 +17,10 @@
 
 #include "enumPizza.hpp"
 
-#include "Pizza/PizzaType/Americana/Americana.hpp"
-#include "Pizza/PizzaType/Margarita/Margarita.hpp"
-#include "Pizza/PizzaType/Fantasia/Fantasia.hpp"
-#include "Pizza/PizzaType/Regina/Regina.hpp"
+#include "Product/Pizza/PizzaType/Americana/Americana.hpp"
+#include "Product/Pizza/PizzaType/Margarita/Margarita.hpp"
+#include "Product/Pizza/PizzaType/Fantasia/Fantasia.hpp"
+#include "Product/Pizza/PizzaType/Regina/Regina.hpp"
 
 class Factory {
   public:

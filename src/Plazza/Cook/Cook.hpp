@@ -12,7 +12,7 @@
 
 class Cook : ICook {
   public:
-    ~ICook();
+    ~Cook();
     bool cook(Pizza);
     Pizza getCookingPizza() const;
     Pizza getPendingPizza() const;

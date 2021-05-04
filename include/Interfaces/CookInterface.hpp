@@ -11,13 +11,29 @@
 #include <queue>
 #include "Pizza/Pizza.hpp"
 
-class ICook {
+template <typename ProductType, typename ProductSize, typename ProductIngredientType> class ICook {
   public:
     virtual ~ICook() = default;
-    virtual bool cook(Pizza pizza) = 0; // {if has 2 pizzas, return false, if not, put pizza in pending}
-    virtual Pizza getCookingPizza() const = 0;
-    virtual Pizza getPendingPizza() const = 0;
-    virtual std::queue<Pizza> getFinishedPizzas() const = 0;
+    /**
+     * @brief Check if the cook is cooking
+     * @return True if cooking, false otherwise
+     */
+    virtual [[nodiscard]] bool isCooking() = 0;
+
+    virtual void cook(ProductType type, ProductSize size, std::vector<ProductIngredientType> ingredients) = 0;
+    /**
+     * @brief check if has finished cooking
+     * @throw If not cooking or finished cooking
+     * @return True if finished cooking, false otherwise
+     */
+    virtual [[nodiscard]] bool hasFinishedCooking() = 0;
+
+    /**
+     * @brief Retrieve cooked product
+     * @throw If nothing cooked
+     * @return Cooked product
+     */
+    virtual IProduct<ProductType, ProductSize, ProductIngredientType> getCookedProduct() const = 0;
 };
 
 #endif

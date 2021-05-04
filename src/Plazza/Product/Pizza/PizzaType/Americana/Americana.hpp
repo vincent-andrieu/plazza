@@ -8,9 +8,9 @@
 #ifndef PIZZA_AMERICANA_HPP
 #define PIZZA_AMERICANA_HPP
 
-#include "Pizza/Pizza.hpp"
+#include "Product/Pizza/Pizza.hpp"
 
-class Americana : public Pizza {
+class Americana final : public Pizza {
   public:
     Americana(PizzaSize size, long multiplier);
     ~Americana() override = default;

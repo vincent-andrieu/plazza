@@ -8,7 +8,7 @@
 #ifndef PIZZA_REGINA_HPP
 #define PIZZA_REGINA_HPP
 
-#include "Pizza/Pizza.hpp"
+#include "Product/Pizza/Pizza.hpp"
 
 class Regina : public Pizza {
   public:

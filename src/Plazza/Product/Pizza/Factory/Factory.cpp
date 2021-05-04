@@ -5,7 +5,7 @@
  * Factory.cpp
  */
 
-#include "Pizza/Factory/Factory.hpp"
+#include "Product/Pizza/Factory/Factory.hpp"
 
 const std::unordered_map<enum PizzaType,
     std::function<std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>>(

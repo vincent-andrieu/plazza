@@ -10,17 +10,20 @@ MY_UTILS_DIR = src/Utils/
 MY_DISPLAY_DIR = src/Display/
 
 SRC =   src/main.cpp																	\
-		${MY_PLAZZA_DIR}Pizza/Pizza.cpp													\
-		${MY_PLAZZA_DIR}Pizza/Factory/Factory.cpp										\
-		${MY_PLAZZA_DIR}Pizza/PizzaType/Americana/Americana.cpp							\
-		${MY_PLAZZA_DIR}Pizza/PizzaType/Fantasia/Fantasia.cpp							\
-		${MY_PLAZZA_DIR}Pizza/PizzaType/Margarita/Margarita.cpp							\
-		${MY_PLAZZA_DIR}Pizza/PizzaType/Regina/Regina.cpp								\
+		${MY_PLAZZA_DIR}Product/AProduct.cpp											\
+		${MY_PLAZZA_DIR}Product/Pizza/Pizza.cpp											\
+		${MY_PLAZZA_DIR}Product/Pizza/Pizza.cpp											\
+		${MY_PLAZZA_DIR}Product/Pizza/Factory/Factory.cpp								\
+		${MY_PLAZZA_DIR}Product/Pizza/PizzaType/Americana/Americana.cpp					\
+		${MY_PLAZZA_DIR}Product/Pizza/PizzaType/Fantasia/Fantasia.cpp					\
+		${MY_PLAZZA_DIR}Product/Pizza/PizzaType/Margarita/Margarita.cpp					\
+		${MY_PLAZZA_DIR}Product/Pizza/PizzaType/Regina/Regina.cpp						\
         ${MY_PLAZZA_DIR}Order/Order.cpp													\
         ${MY_PLAZZA_DIR}Kitchen/Kitchen.cpp												\
         ${MY_PLAZZA_DIR}Reception/Reception.cpp											\
         ${MY_PLAZZA_DIR}Restaurant/Restaurant.cpp										\
         ${MY_PLAZZA_DIR}Stock/Stock.cpp													\
+        																				\
 		${MY_UTILS_DIR}Error/Error.cpp													\
 		${MY_UTILS_DIR}Serializer/Serializer.cpp										\
 		${MY_UTILS_DIR}Communication/Communication.cpp									\
@@ -29,6 +32,7 @@ SRC =   src/main.cpp																	\
 		${MY_UTILS_DIR}Encapsulations/Mutex/Mutex.cpp									\
 		${MY_UTILS_DIR}Encapsulations/ConditionalVariables/ConditionalVariables.cpp		\
 		${MY_UTILS_DIR}CommandInterpreter/CommandInterpreter.cpp						\
+																						\
 		${MY_DISPLAY_DIR}DLLoader/DLLoader.cpp											\
 		${MY_DISPLAY_DIR}DLLib/DLLib.cpp												\
 		${MY_DISPLAY_DIR}UserInput/UserInput.cpp										\

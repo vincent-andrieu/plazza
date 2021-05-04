@@ -8,7 +8,7 @@
 #ifndef PIZZA_MARGARITA_HPP
 #define PIZZA_MARGARITA_HPP
 
-#include "Pizza/Pizza.hpp"
+#include "Product/Pizza/Pizza.hpp"
 
 class Margarita : public Pizza {
   public:
