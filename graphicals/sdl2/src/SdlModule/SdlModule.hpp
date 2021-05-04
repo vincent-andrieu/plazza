@@ -66,7 +66,7 @@ class SdlModule : public IDisplayModule {
         {IDisplayModule::Color::MAGENTA, SDL_Color{255, 0, 255, 255}}, {IDisplayModule::Color::CYAN, SDL_Color{0, 255, 255, 255}},
         {IDisplayModule::Color::WHITE, SDL_Color{255, 255, 255, 255}}};
 
-    std::unordered_map<IDisplayModule::KeyList, SDL_KeyCode> _keyList = {
+    std::unordered_map<IDisplayModule::KeyList, SDL_Keycode> _keyList = {
         // GUI
         {IDisplayModule::KeyList::NEXT_GAME, SDLK_1},            // &
         {IDisplayModule::KeyList::PREV_GAME, SDLK_2},            // é
