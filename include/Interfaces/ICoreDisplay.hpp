@@ -30,6 +30,7 @@ namespace Pizzeria
         void setLine(std::string line) override = 0;
         virtual void update() = 0;
         virtual void clear() = 0;
+        virtual bool isRunning() = 0;
     };
 } // namespace Pizzeria
 #endif

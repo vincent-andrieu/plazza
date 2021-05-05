@@ -137,4 +137,10 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::libraryDispla
     this->_dirName[this->_pos]->getEntryPoint()->open(this->_screenSize, this->_screenScale);
 }
 
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+bool CoreDisplay<ProductType, ProductSize, ProductIngredientType>::isRunning()
+{
+    return this->_dirName[this->_pos]->getEntryPoint()->isOpen();
+}
+
 template class CoreDisplay<PizzaType, PizzaSize, PizzaIngredient>;

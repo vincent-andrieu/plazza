@@ -27,7 +27,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
             Vector(1400, 900), Vector(9.95, 21.6), 300);
 
     core->setPrompt("$> ");
-    while (this->isOpen()) {
+    while (this->isOpen() && core->isRunning()) {
         core->clear();
         core->printPrompt();
         core->printKitchen(this->_kitchens);

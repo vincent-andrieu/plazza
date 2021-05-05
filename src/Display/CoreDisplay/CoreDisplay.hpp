@@ -33,6 +33,7 @@ namespace Pizzeria
         void printDetailledKitchen(KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen);
         [[nodiscard]] std::string getLine() const;
         void setLine(std::string line);
+        bool isRunning();
         void update();
         void clear();
 
