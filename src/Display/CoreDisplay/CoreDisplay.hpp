@@ -32,15 +32,18 @@ namespace Pizzeria
         void setError(std::string error);
         void printError();
         void printKitchen(std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> kitchenList);
-        void printDetailledKitchen(KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen);
         [[nodiscard]] std::string getLine() const;
         void setLine(std::string line);
         bool isRunning();
         void update();
         void clear();
 
+      protected:
+        void printDetailledKitchen(KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen);
+
       private:
         void libraryDisplaySwitch();
+        void kitchenSwitch();
 
       private:
         std::string _error;
@@ -49,6 +52,7 @@ namespace Pizzeria
         std::unique_ptr<UserInput> _input;
         std::unordered_map<size_t, std::unique_ptr<DLLib<IDisplayModule>>> _dirName;
         size_t _pos;
+        size_t _kitechToPrint;
         Vector _screenSize;
         Vector _screenScale;
     };

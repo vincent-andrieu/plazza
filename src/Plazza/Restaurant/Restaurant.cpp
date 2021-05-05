@@ -31,7 +31,6 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
         core->clear();
         core->printPrompt();
         core->printKitchen(this->_kitchens);
-        // core->printDetailledKitchen();
         input = core->getLine();
         if (input.length()) {
             try {

@@ -26,13 +26,15 @@ namespace Pizzeria
         virtual void setError(std::string error) = 0;
         virtual void printKitchen(
             std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> kitchenList) = 0;
-        virtual void printDetailledKitchen(
-            KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen) = 0;
         [[nodiscard]] std::string getLine() const override = 0;
         void setLine(std::string line) override = 0;
         virtual void update() = 0;
         virtual void clear() = 0;
         virtual bool isRunning() = 0;
+
+    protected:
+        virtual void printDetailledKitchen(
+            KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen) = 0;
     };
 } // namespace Pizzeria
 #endif
