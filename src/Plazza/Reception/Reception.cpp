@@ -40,8 +40,10 @@ void Reception::sendOrder(const Order<IProduct<PizzaType, PizzaSize, PizzaIngred
     std::unordered_map<std::string, PizzaType>::const_iterator type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [type](const auto &params) {return params.second == type;});
     std::string to_write = "";
 
-    if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
+    if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end()) {
+        this->_logger->writeLog("Data not correctly defined");
         return;
+    }
     to_write = std::string("Size: ") + size_it->first + std::string(" Type: ") + type_it->first + std::string("\n");
     this->_logger->writeLog(to_write);
 }
