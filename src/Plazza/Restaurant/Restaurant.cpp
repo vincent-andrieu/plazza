@@ -44,8 +44,6 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
         }
         core->printError();
         while (!currentOrderQueue.empty()) {
-            std::cerr << "2 type: " << currentOrderQueue.front().getOrder().getType()
-                      << ", size: " << currentOrderQueue.front().getOrder().getSize() << std::endl;
             this->_distributeOrder(currentOrderQueue.front());
             currentOrderQueue.pop();
         }

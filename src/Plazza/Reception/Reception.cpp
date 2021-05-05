@@ -52,7 +52,6 @@ void Reception::_writePizzasCommand(
         const AProduct<PizzaType, PizzaSize, PizzaIngredient> product =
             Factory::callFactory(this->_getType(words[0]), this->_getSize(words[1]), this->_bakingMultiplier);
 
-        std::cerr << "1 type: " << product.getType() << ", size: " << product.getSize() << std::endl;
         orderList.push(Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>(product));
     }
 }
