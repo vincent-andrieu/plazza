@@ -18,11 +18,15 @@ namespace Pizzeria
         Regina = 1,
         Margarita = 2,
         Americana = 4,
-        Fantasia = 8,
+        Fantasia = 8
     };
 
-    const std::unordered_map<string, PizzaType> PizzaNames = {{"Regina", PizzaType::Regina}, {"Margarita", PizzaType::Margarita},
-        {"Americana", PizzaType::Americana}, {"Fantasia", PizzaType::Fantasia}};
+    const std::unordered_map<string, PizzaType> PizzaNames = {
+        {"REGINA", PizzaType::Regina},
+        {"MARGARITA", PizzaType::Margarita},
+        {"AMERICANA", PizzaType::Americana},
+        {"FANTASIA", PizzaType::Fantasia},
+    };
 
     enum PizzaSize
     {
@@ -35,7 +39,12 @@ namespace Pizzeria
     typedef PizzaSize FoodSize;
 
     const std::unordered_map<string, PizzaSize> PizzaSizeList = {
-        {"S", PizzaSize::S}, {"M", PizzaSize::M}, {"L", PizzaSize::L}, {"XL", PizzaSize::XL}, {"XXL", PizzaSize::XXL}};
+        {"S", PizzaSize::S},
+        {"M", PizzaSize::M},
+        {"L", PizzaSize::L},
+        {"XL", PizzaSize::XL},
+        {"XXL", PizzaSize::XXL},
+    };
 
     enum PizzaIngredient
     {
@@ -50,9 +59,17 @@ namespace Pizzeria
         CHIEF_LOVE
     };
 
-    const PizzaIngredient pizzaIngredientList[] = {PizzaIngredient::DOE, PizzaIngredient::TOMATOE, PizzaIngredient::GRUYERE,
-        PizzaIngredient::HAM, PizzaIngredient::MUSHROOMS, PizzaIngredient::STEAK, PizzaIngredient::EGGPLANT,
-        PizzaIngredient::GOAT_CHEESE, PizzaIngredient::CHIEF_LOVE};
+    const PizzaIngredient pizzaIngredientList[] = {
+        PizzaIngredient::DOE,
+        PizzaIngredient::TOMATOE,
+        PizzaIngredient::GRUYERE,
+        PizzaIngredient::HAM,
+        PizzaIngredient::MUSHROOMS,
+        PizzaIngredient::STEAK,
+        PizzaIngredient::EGGPLANT,
+        PizzaIngredient::GOAT_CHEESE,
+        PizzaIngredient::CHIEF_LOVE,
+    };
 } // namespace Pizzeria
 
 #endif
