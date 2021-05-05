@@ -21,6 +21,8 @@ CoreDisplay<ProductType, ProductSize, ProductIngredientType>::CoreDisplay(
     for (size_t i = 0; it != nameList.end(); it++, i++) {
         this->_dirName[i] = std::make_unique<DLLib<IDisplayModule>>(std::string("./lib/") + *it);
         this->_dirName[i]->setEntryPoint("entryPoint");
+        if (!it->compare(PRIORITORY_LIB))
+            this->_pos = i;
     }
     this->_dirName[this->_pos]->getEntryPoint()->open(this->_screenSize, this->_screenScale);
 }
