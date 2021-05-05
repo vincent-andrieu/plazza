@@ -46,7 +46,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
     switch (commType.getType()) {
         case ECommunicationType::ORDER_PIZZA: {
             Pizza pizza = Pizza();
-            Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
+            Order<AProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
 
             this->waitingReceive(order);
             this->_addPendingOrder(order);
@@ -63,7 +63,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Kitchen<ProductType, ProductSize, ProductIngredientType>::_addPendingOrder(
-    const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order)
+    const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     this->_pendingOrders.mutex.lock();
     this->_pendingOrders.queue.push(order);

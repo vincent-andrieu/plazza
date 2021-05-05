@@ -5,6 +5,7 @@
  * Reception.cpp - Created: 27/04/2021
  */
 
+#include <algorithm>
 #include "Reception/Reception.hpp"
 #include "Error/Error.hpp"
 #include "enumPizza.hpp"
@@ -17,38 +18,25 @@ Reception::Reception(double multiplier) : _bakingMultiplier(multiplier)
 {
 }
 
-bool Reception::doesGetPendingOrders() const
-{
-    return !this->_pendingOrders.empty();
-}
-
-bool Reception::getOrder(Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order)
-{
-    if (this->_pendingOrders.empty())
-        return false;
-    order.setOrder(this->_pendingOrders.front().getOrder());
-
-    this->_pendingOrders.pop();
-    return true;
-}
-
-void Reception::sendOrder(const Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) const
+void Reception::sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) const
 {
     (void) order;
     // TODO: Print msg & save it in log file
 }
 
-void Reception::receiveCommands(const string &commands)
+void Reception::receiveCommands(
+    const string &commands, std::queue<std::unique_ptr<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>>> &orderList)
 {
     stringstream ss(commands);
     string segment;
 
     while (std::getline(ss, segment, COMMAND_DELIMITER)) {
-        this->_writePizzasCommand(segment);
+        this->_writePizzasCommand(segment, orderList);
     }
 }
 
-void Reception::_writePizzasCommand(const string &cmd)
+void Reception::_writePizzasCommand(
+    const string &cmd, std::queue<std::unique_ptr<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>>> &orderList)
 {
     stringstream ss(cmd);
     string word;
@@ -61,9 +49,12 @@ void Reception::_writePizzasCommand(const string &cmd)
 
     const size_t nbr = _getNbr(words[2]);
     for (size_t i = 0; i < nbr; i++) {
-        AProduct<PizzaType, PizzaSize, PizzaIngredient> product =
+        const AProduct<PizzaType, PizzaSize, PizzaIngredient> product =
             Factory::callFactory(this->_getType(words[0]), this->_getSize(words[1]), this->_bakingMultiplier);
-        this->_pendingOrders.push(Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>>(product));
+
+        std::cerr << "1 type: " << product.getType() << ", size: " << product.getSize() << std::endl;
+        orderList.push(std::make_unique<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>>(
+            Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>(product)));
     }
 }
 
