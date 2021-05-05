@@ -29,6 +29,8 @@ namespace Pizzeria
         ~CoreDisplay();
         void setPrompt(std::string prompt);
         void printPrompt();
+        void setError(std::string error);
+        void printError();
         void printKitchen(std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> kitchenList);
         void printDetailledKitchen(KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen);
         [[nodiscard]] std::string getLine() const;
@@ -41,6 +43,7 @@ namespace Pizzeria
         void libraryDisplaySwitch();
 
       private:
+        std::string _error;
         std::string _prompt;
         std::size_t _maxLen;
         std::unique_ptr<UserInput> _input;

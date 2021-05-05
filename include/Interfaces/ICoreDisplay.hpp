@@ -22,6 +22,8 @@ namespace Pizzeria
         virtual ~ICoreDisplay() = default;
         virtual void setPrompt(std::string prompt) = 0;
         virtual void printPrompt() = 0;
+        virtual void printError() = 0;
+        virtual void setError(std::string error) = 0;
         virtual void printKitchen(
             std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> kitchenList) = 0;
         virtual void printDetailledKitchen(

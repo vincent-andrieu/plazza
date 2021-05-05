@@ -33,8 +33,15 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
         core->printKitchen(this->_kitchens);
         // core->printDetailledKitchen();
         input = core->getLine();
-        if (input.length())
-            this->_reception.receiveCommands(input);
+        if (input.length()) {
+            try {
+                this->_reception.receiveCommands(input);
+                core->setError("");
+            } catch (const ReceptionError &e) {
+                core->setError(std::string(e.getComponent()) + std::string(": ") + std::string(e.what()));
+            }
+        }
+        core->printError();
         Pizza pizza;
         Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
         if (this->_reception.getOrder(order)) {
