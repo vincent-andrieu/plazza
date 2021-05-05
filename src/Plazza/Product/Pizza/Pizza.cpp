@@ -16,15 +16,3 @@ Pizza::Pizza(const PizzaType type, const PizzaSize size, const size_t timeSec, c
     setIngredients(ingredients);
     setPreparationTime(timeSec);
 }
-
-bool Pizza::operator==(const IProduct &product) const
-{
-    return this->getType() == product.getType() && this->getSize() == product.getSize()
-        && this->getPreparationTime() == product.getPreparationTime() && this->getIngredients() == product.getIngredients();
-}
-
-bool Pizza::operator!=(const IProduct &product) const
-{
-    return this->getType() != product.getType() || this->getSize() != product.getSize()
-        || this->getPreparationTime() != product.getPreparationTime() || this->getIngredients() != product.getIngredients();
-}

@@ -9,6 +9,20 @@
 #include "Product/Pizza/Pizza.hpp"
 
 template <typename Type, typename Size, typename IngredientType>
+bool AProduct<Type, Size, IngredientType>::operator==(const IProduct<Type, Size, IngredientType> &product) const
+{
+    return this->getType() == product.getType() && this->getSize() == product.getSize()
+        && this->getPreparationTime() == product.getPreparationTime() && this->getIngredients() == product.getIngredients();
+}
+
+template <typename Type, typename Size, typename IngredientType>
+bool AProduct<Type, Size, IngredientType>::operator!=(const IProduct<Type, Size, IngredientType> &product) const
+{
+    return this->getType() != product.getType() || this->getSize() != product.getSize()
+        || this->getPreparationTime() != product.getPreparationTime() || this->getIngredients() != product.getIngredients();
+}
+
+template <typename Type, typename Size, typename IngredientType>
 [[nodiscard]] Type AProduct<Type, Size, IngredientType>::getType() const
 {
     return _type;

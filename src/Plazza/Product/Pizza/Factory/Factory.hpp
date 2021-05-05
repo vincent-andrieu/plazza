@@ -13,7 +13,7 @@
 #include <functional>
 #include <unordered_map>
 #include "Error/Error.hpp"
-#include "Interfaces/ProductInterface.hpp"
+#include "Product/AProduct.hpp"
 
 #include "enumPizza.hpp"
 
@@ -28,14 +28,8 @@ namespace Pizzeria
       public:
         Factory() = default;
         ~Factory() = default;
-        static std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>> callFactory(
-            enum PizzaType type, enum PizzaSize size, long multiplier);
-
-      private:
-        static const std::unordered_map<enum PizzaType,
-            std::function<std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>>(
-                const enum PizzaSize size, const long multiplier)>>
-            _list;
+        static AProduct<PizzaType, PizzaSize, PizzaIngredient> callFactory(
+            const PizzaType type, const PizzaSize size, const size_t multiplier);
     };
 } // namespace Pizzeria
 

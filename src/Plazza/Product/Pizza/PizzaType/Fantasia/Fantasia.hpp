@@ -12,10 +12,10 @@
 
 namespace Pizzeria
 {
-    class Fantasia : public Pizza {
+    class FantasiaPizza : public Pizza {
       public:
-        Fantasia(PizzaSize size, long multiplier);
-        ~Fantasia() override = default;
+        FantasiaPizza(PizzaSize size, long multiplier);
+        ~FantasiaPizza() override = default;
     };
 } // namespace Pizzeria
 

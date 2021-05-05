@@ -9,33 +9,32 @@
 
 using namespace Pizzeria;
 
-const std::unordered_map<enum PizzaType,
-    std::function<std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>>(
-        const enum PizzaSize size, const long multiplier)>>
-    Factory::_list{
+const std::unordered_map<PizzaType,
+    std::function<AProduct<PizzaType, PizzaSize, PizzaIngredient>(const PizzaSize size, const size_t multiplier)>>
+    PizzaList{
         {PizzaType::Americana,
-            [](const enum PizzaSize size, const size_t multiplier) {
-                return std::make_unique<class Americana>(size, multiplier);
+            [](const PizzaSize size, const size_t multiplier) {
+                return AmericanaPizza(size, multiplier);
             }},
         {PizzaType::Margarita,
-            [](const enum PizzaSize size, const size_t multiplier) {
-                return std::make_unique<class Margarita>(size, multiplier);
+            [](const PizzaSize size, const size_t multiplier) {
+                return MargaritaPizza(size, multiplier);
             }},
         {PizzaType::Fantasia,
-            [](const enum PizzaSize size, const size_t multiplier) {
-                return std::make_unique<class Fantasia>(size, multiplier);
+            [](const PizzaSize size, const size_t multiplier) {
+                return FantasiaPizza(size, multiplier);
             }},
         {PizzaType::Regina,
-            [](const enum PizzaSize size, const size_t multiplier) {
-                return std::make_unique<class Regina>(size, multiplier);
+            [](const PizzaSize size, const size_t multiplier) {
+                return ReginaPizza(size, multiplier);
             }},
-};
+    };
 
-std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>> Factory::callFactory(
-    enum PizzaType type, enum PizzaSize size, long multiplier)
+AProduct<PizzaType, PizzaSize, PizzaIngredient> Factory::callFactory(
+    const PizzaType type, const PizzaSize size, const size_t multiplier)
 {
-    if (_list.find(type) != _list.end())
-        return _list.at(type)(size, multiplier);
+    if (PizzaList.find(type) != PizzaList.end())
+        return PizzaList.at(type)(size, multiplier);
     else
-        throw FactoryError("No match", "Factory");
+        throw FactoryError("No match");
 }

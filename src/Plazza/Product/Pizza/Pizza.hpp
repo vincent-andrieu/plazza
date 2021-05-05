@@ -19,9 +19,6 @@ namespace Pizzeria
         Pizza() = default;
         Pizza(PizzaType type, PizzaSize size, size_t timeSec, const std::vector<PizzaIngredient> &ingredients);
         ~Pizza() override = default;
-
-        [[nodiscard]] bool operator==(const IProduct &product) const override;
-        [[nodiscard]] bool operator!=(const IProduct &product) const override;
     };
 } // namespace Pizzeria
 
