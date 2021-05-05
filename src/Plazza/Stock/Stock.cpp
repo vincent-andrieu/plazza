@@ -17,7 +17,7 @@ Stock<IngredientType>::Stock(double restockTime, const std::vector<IngredientTyp
     : _restockTime(restockTime)
 {
     for (const auto &stackableIngredient : stackableIngredients) {
-        _stock.template emplace(std::make_pair(stackableIngredient, RESTOCK_NBR));
+        _stock.template emplace(std::make_pair(stackableIngredient, DEFAULT_STOCK));
     }
 }
 
@@ -26,7 +26,7 @@ template <typename IngredientType> void Stock<IngredientType>::addIngredient(con
     try {
         _stock.at(ingredient);
     } catch (const std::out_of_range &my_exception) {
-        _stock.emplace(std::make_pair(ingredient, RESTOCK_NBR));
+        _stock.emplace(std::make_pair(ingredient, DEFAULT_STOCK));
     }
 }
 
