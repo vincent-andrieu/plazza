@@ -69,7 +69,10 @@ void Reception::_writePizzasCommand(const string &cmd)
 
 PizzaType Reception::_getType(const string &type)
 {
-    if (PizzaNames.find(type) == PizzaNames.end())
+    string upper_type(type);
+
+    std::transform(upper_type.begin(), upper_type.end(), upper_type.begin(), ::toupper);
+    if (PizzaNames.find(upper_type) == PizzaNames.end())
         throw ReceptionError("Unknown command type");
     return PizzaNames.at(type);
 }
@@ -83,10 +86,10 @@ PizzaSize Reception::_getSize(const string &size)
 
 size_t Reception::_getNbr(const string &nbr)
 {
-    if (nbr[0] != 'x')
+    if (std::tolower(nbr[0]) != 'x')
         throw ReceptionError("Invalid number syntax");
 
-    stringstream ss(nbr.substr(1, nbr.size() - 2));
+    stringstream ss(nbr.substr(1, nbr.size() - 1));
     size_t result;
 
     if (ss >> result)
