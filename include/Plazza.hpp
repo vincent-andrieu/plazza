@@ -11,9 +11,9 @@
 #include <iostream>
 #include <sstream>
 
-#define PRIORITORY_LIB "arcade_sfml.so"
-#define EXIT_SUCCESS 0
-#define EXIT_ERROR   84
+#define PRIORITORY_LIB "arcade_ncurse.so"
+#define EXIT_SUCCESS   0
+#define EXIT_ERROR     84
 
 typedef std::string string;
 typedef std::size_t size_t;
