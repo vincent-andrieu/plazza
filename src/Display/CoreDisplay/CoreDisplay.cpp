@@ -181,4 +181,4 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::kitchenSwitch
     }
 }
 
-template class CoreDisplay<PizzaType, PizzaSize, PizzaIngredient>;
+template class Pizzeria::CoreDisplay<PizzaType, PizzaSize, PizzaIngredient>;
