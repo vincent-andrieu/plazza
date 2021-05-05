@@ -34,7 +34,7 @@ class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>
 
   protected:
     void _receiveOrder() override;
-    void _addPendingOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
+    void _addPendingOrder(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void _sendFinishedOrders() override;
 
   private:
@@ -42,8 +42,8 @@ class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>
     bool _isCooking{true};
     double _bakingMultiplier;
     size_t _cooksPerKitchen;
-    LockedQueue<Order<IProduct<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
-    LockedQueue<Order<IProduct<ProductType, ProductSize, ProductIngredientType>>> _finishedOrders;
+    LockedQueue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
+    LockedQueue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> _finishedOrders;
 };
 
 #endif

@@ -5,6 +5,7 @@
  * Reception.cpp - Created: 27/04/2021
  */
 
+#include <algorithm>
 #include "Reception/Reception.hpp"
 #include "Error/Error.hpp"
 #include "enumPizza.hpp"
@@ -17,48 +18,41 @@ Reception::Reception(double multiplier) : _bakingMultiplier(multiplier), _logger
 {
 }
 
-bool Reception::doesGetPendingOrders() const
-{
-    return !this->_pendingOrders.empty();
-}
-
-bool Reception::getOrder(Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order)
-{
-    if (this->_pendingOrders.empty())
-        return false;
-    order.setOrder(this->_pendingOrders.front().getOrder());
-
-    this->_pendingOrders.pop();
-    return true;
-}
-
-void Reception::sendOrder(const Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order)
+void Reception::sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) const
 {
     PizzaSize size = order.getOrder().getSize();
     PizzaType type = order.getOrder().getType();
-    std::unordered_map<std::string, PizzaSize>::const_iterator size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [size](const auto &params) {return params.second == size;});
-    std::unordered_map<std::string, PizzaType>::const_iterator type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [type](const auto &params) {return params.second == type;});
-    std::string to_write = "";
+    std::unordered_map<string, PizzaSize>::const_iterator size_it =
+        std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [size](const auto &params) {
+            return params.second == size;
+        });
+    std::unordered_map<string, PizzaType>::const_iterator type_it =
+        std::find_if(PizzaNames.begin(), PizzaNames.end(), [type](const auto &params) {
+            return params.second == type;
+        });
+    string to_write = "";
 
     if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end()) {
         this->_logger->writeLog("Data not correctly defined");
         return;
     }
-    to_write = std::string("Size: ") + size_it->first + std::string(" Type: ") + type_it->first + std::string("\n");
+    to_write = string("Size: ") + size_it->first + string(" Type: ") + type_it->first + string("\n");
     this->_logger->writeLog(to_write);
 }
 
-void Reception::receiveCommands(const string &commands)
+void Reception::receiveCommands(
+    const string &commands, std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> &orderList)
 {
     stringstream ss(commands);
     string segment;
 
     while (std::getline(ss, segment, COMMAND_DELIMITER)) {
-        this->_writePizzasCommand(segment);
+        this->_writePizzasCommand(segment, orderList);
     }
 }
 
-void Reception::_writePizzasCommand(const string &cmd)
+void Reception::_writePizzasCommand(
+    const string &cmd, std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> &orderList)
 {
     stringstream ss(cmd);
     string word;
@@ -71,9 +65,10 @@ void Reception::_writePizzasCommand(const string &cmd)
 
     const size_t nbr = _getNbr(words[2]);
     for (size_t i = 0; i < nbr; i++) {
-        AProduct<PizzaType, PizzaSize, PizzaIngredient> product =
+        const AProduct<PizzaType, PizzaSize, PizzaIngredient> product =
             Factory::callFactory(this->_getType(words[0]), this->_getSize(words[1]), this->_bakingMultiplier);
-        this->_pendingOrders.push(Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>>(product));
+
+        orderList.push(Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>(product));
     }
 }
 

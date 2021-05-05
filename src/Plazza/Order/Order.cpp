@@ -6,23 +6,18 @@
  */
 
 #include "Order/Order.hpp"
-#include "Interfaces/ProductInterface.hpp"
+#include "Product/AProduct.hpp"
 #include "enumPizza.hpp"
 
 using namespace Pizzeria;
 
-template <typename T> Order<T>::Order(T &object) : Serializer(sizeof(Order)), _object(object)
+template <typename T> Order<T>::Order(const T &object) : Serializer(sizeof(Order)), _object(object)
 {
 }
 
-template <typename T> T &Order<T>::getOrder() const
+template <typename T> const T &Order<T>::getOrder() const
 {
     return _object;
 }
 
-template <typename T> void Order<T>::setOrder(T &object)
-{
-    this->_object = object;
-}
-
-template class Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>>;
+template class Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>;

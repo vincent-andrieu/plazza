@@ -25,6 +25,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
     std::unique_ptr<CoreDisplay<ProductType, ProductSize, ProductIngredientType>> core =
         std::make_unique<CoreDisplay<ProductType, ProductSize, ProductIngredientType>>(
             Vector(1400, 900), Vector(9.95, 21.6), 300);
+    std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> currentOrderQueue;
 
     core->setPrompt("$> ");
     while (this->isOpen() && core->isRunning()) {
@@ -34,18 +35,18 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
         input = core->getLine();
         if (input.length()) {
             try {
-                this->_reception.receiveCommands(input);
+                this->_reception.receiveCommands(input, currentOrderQueue);
                 core->setError("");
             } catch (const ReceptionError &e) {
-                core->setError(string(e.getComponent()) + ": " + string(e.what()));
+                core->setError(e.getComponent() + ": " + e.what());
             }
         }
         core->printError();
-        Pizza pizza;
-        Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
-        if (this->_reception.getOrder(order)) {
-            this->_distributeOrder(order);
+        while (!currentOrderQueue.empty()) {
+            this->_distributeOrder(currentOrderQueue.front());
+            currentOrderQueue.pop();
         }
+        // }
         this->_retreiveOrders();
         core->update();
     }
@@ -59,7 +60,7 @@ bool Restaurant<ProductType, ProductSize, ProductIngredientType>::isOpen() const
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_distributeOrder(
-    const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order)
+    const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     size_t selectedKitchenIndex;
     size_t maxOrders = this->_cooksPerKitchen * 2;
@@ -79,7 +80,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_distributeOrd
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_newKitchen(
-    const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order)
+    const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     Kitchen<ProductType, ProductSize, ProductIngredientType> kitchen(
         this->_bakingMultiplier, this->_cooksPerKitchen, this->_restockTime);
@@ -94,7 +95,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_newKitchen(
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_sendOrder(
     KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage,
-    const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order)
+    const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     kitchenManage.orders.push_back(order);
     kitchenManage.kitchen.send(CommunicationType(ECommunicationType::ORDER_PIZZA));
@@ -119,12 +120,12 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
     switch (commType.getType()) {
         case ECommunicationType::ORDER_PIZZA: {
             Pizza pizza = Pizza();
-            Order<IProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
+            Order<AProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
 
             kitchenManage.kitchen.waitingReceive(order);
             this->_reception.sendOrder(order);
 
-            kitchenManage.orders.remove_if([order](Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &elemOrder) {
+            kitchenManage.orders.remove_if([order](Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &elemOrder) {
                 return order.getOrder() == elemOrder.getOrder();
             });
         } break;

@@ -12,16 +12,15 @@
 #include "CommandInterpreter/CommandInterpreter.hpp"
 #include "Order/Order.hpp"
 #include "Plazza.hpp"
-#include "Interfaces/ProductInterface.hpp"
+#include "Product/AProduct.hpp"
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 class IReception : public CommandInterpreter {
   public:
     virtual ~IReception() = default;
-    [[nodiscard]] virtual bool doesGetPendingOrders() const = 0;
-    [[nodiscard]] virtual bool getOrder(Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
-    virtual void sendOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
-    virtual void receiveCommands(const string &cmd) = 0;
+    virtual void sendOrder(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) const = 0;
+    virtual void receiveCommands(
+        const string &cmd, std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> &orderList) = 0;
 };
 
 #endif
