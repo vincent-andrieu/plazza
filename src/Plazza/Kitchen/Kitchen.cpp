@@ -13,15 +13,16 @@ using namespace Pizzeria;
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Kitchen<ProductType, ProductSize, ProductIngredientType>::Kitchen(
-    double bakingMultiplier, size_t cooksPerKitchen, size_t restockTime)
+    double bakingMultiplier, size_t cooksPerKitchen, double restockTime)
     : _stock(restockTime), _bakingMultiplier(bakingMultiplier), _cooksPerKitchen(cooksPerKitchen)
 {
-    // TODO: Create threads per cooks
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
 {
+    // TODO: Create threads per cooks
+
     while (this->isCooking()) {
         this->_receiveOrder();
         this->_sendFinishedOrders();

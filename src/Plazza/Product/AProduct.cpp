@@ -45,13 +45,13 @@ template <typename Type, typename Size, typename IngredientType> void AProduct<T
 }
 
 template <typename Type, typename Size, typename IngredientType>
-[[nodiscard]] size_t AProduct<Type, Size, IngredientType>::getPreparationTime() const
+[[nodiscard]] double AProduct<Type, Size, IngredientType>::getPreparationTime() const
 {
     return _preparationTime;
 }
 
 template <typename Type, typename Size, typename IngredientType>
-void AProduct<Type, Size, IngredientType>::setPreparationTime(size_t preparationTime)
+void AProduct<Type, Size, IngredientType>::setPreparationTime(double preparationTime)
 {
     _preparationTime = preparationTime;
 }

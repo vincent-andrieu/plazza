@@ -7,9 +7,9 @@
 
 #include "Stock/Stock.hpp"
 
-template <typename IngredientType> Stock<IngredientType>::Stock(size_t restockTime) : _restockTime(restockTime)
+template <typename IngredientType> Stock<IngredientType>::Stock(double restockTime) : _restockTime(restockTime)
 {
-    for (const std::pair<IngredientType, size_t> &ingredient : _stock)
+    for (const auto &ingredient : _stock)
         this->_stock[ingredient.first] = DEFAULT_STOCK;
 
     time(&this->_restockClock);
@@ -19,7 +19,7 @@ template <typename IngredientType> void Stock<IngredientType>::restock()
 {
     if (difftime(time(nullptr), this->_restockClock) >= this->_restockTime) {
         this->_mutex.lock();
-        for (const std::pair<IngredientType, size_t> &ingredient : _stock)
+        for (const auto &ingredient : _stock)
             this->_stock[ingredient.first] += RESTOCK_NBR;
 
         time(&this->_restockClock);

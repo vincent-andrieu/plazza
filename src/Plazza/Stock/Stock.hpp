@@ -16,20 +16,18 @@
 #define DEFAULT_STOCK 5
 #define RESTOCK_NBR   1
 
-using namespace Pizzeria;
-
 template <typename IngredientType> class Stock {
   public:
-    Stock(size_t restockTime);
+    explicit Stock(double restockTime);
     ~Stock() = default;
 
     void restock();
-    bool takeIngredients(IngredientType ingredient, size_t nbr);
+    bool takeIngredients(IngredientType ingredient, double nbr);
 
   private:
-    size_t _restockTime;
+    double _restockTime;
     std::time_t _restockClock; // TODO use std::chrono
-    std::unordered_map<IngredientType, size_t> _stock;
+    std::unordered_map<IngredientType, double> _stock;
     std::mutex _mutex;
 };
 

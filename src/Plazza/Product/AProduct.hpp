@@ -24,8 +24,8 @@ template <typename Type, typename Size, typename IngredientType> class AProduct 
     [[nodiscard]] Size getSize() const override;
     void setSize(Size size) override;
 
-    [[nodiscard]] size_t getPreparationTime() const override;
-    void setPreparationTime(size_t preparationTime) override;
+    [[nodiscard]] double getPreparationTime() const override;
+    void setPreparationTime(double preparationTime) override;
 
     [[nodiscard]] const std::vector<IngredientType> &getIngredients() const override;
     void setIngredients(const std::vector<IngredientType> &ingredients) override;
@@ -36,7 +36,7 @@ template <typename Type, typename Size, typename IngredientType> class AProduct 
   private:
     Type _type;
     Size _size;
-    size_t _preparationTime{};
+    double _preparationTime{};
     std::vector<IngredientType> _ingredients;
     bool _finished = false;
 };

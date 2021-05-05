@@ -22,7 +22,7 @@ using namespace Pizzeria;
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredientType> {
   public:
-    Restaurant(double bakingMultiplier, size_t cooksPerKitchen, size_t restockTime);
+    Restaurant(double bakingMultiplier, size_t cooksPerKitchen, double restockTime);
     ~Restaurant() override = default;
 
     void lunchTime() override;
@@ -41,7 +41,7 @@ class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredien
     bool _isOpen{true};
     double _bakingMultiplier;
     size_t _cooksPerKitchen;
-    size_t _restockTime;
+    double _restockTime;
     std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> _kitchens;
     Reception _reception;
 };

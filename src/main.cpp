@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 
     double bakingMultiplier = atof(argv[1]);
     size_t cooksPerKitchen;
-    size_t restockTime;
+    double restockTime;
 
     stringstream(argv[2]) >> cooksPerKitchen;
     stringstream(argv[3]) >> restockTime;

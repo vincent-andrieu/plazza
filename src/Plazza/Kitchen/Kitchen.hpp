@@ -14,7 +14,6 @@
 #include "Stock/Stock.hpp"
 #include "Encapsulations/Process/Process.hpp"
 
-
 template <typename T> struct LockedQueue {
     std::queue<T> queue;
     std::mutex mutex;
@@ -23,7 +22,7 @@ template <typename T> struct LockedQueue {
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>, public Process {
   public:
-    Kitchen(double bakingMultiplier, size_t cooksPerKitchen, size_t restockTime);
+    Kitchen(double bakingMultiplier, size_t cooksPerKitchen, double restockTime);
     ~Kitchen() override = default;
     void cook() override;
     [[nodiscard]] bool isCooking() const override;
