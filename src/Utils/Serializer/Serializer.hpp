@@ -29,7 +29,7 @@ class Serializer {
     void unpack(const int msqId);
 
   private:
-    size_t _size;
+    size_t _size = 0;
 };
 
 #endif
