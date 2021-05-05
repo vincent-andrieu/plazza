@@ -1,6 +1,7 @@
 plazza
 unit_tests
 lib/
+log_plazza
 
 build
 cmake-build-debug
