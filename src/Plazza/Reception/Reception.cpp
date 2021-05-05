@@ -13,7 +13,7 @@
 
 using namespace Pizzeria;
 
-Reception::Reception(double multiplier) : _bakingMultiplier(multiplier)
+Reception::Reception(double multiplier) : _bakingMultiplier(multiplier), _logger(std::make_unique<Logger>("./log_plazza"))
 {
 }
 
@@ -32,10 +32,18 @@ bool Reception::getOrder(Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> 
     return true;
 }
 
-void Reception::sendOrder(const Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) const
+void Reception::sendOrder(const Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order)
 {
-    (void) order;
-    // TODO: Print msg & save it in log file
+    PizzaSize size = order.getOrder().getSize();
+    PizzaType type = order.getOrder().getType();
+    std::unordered_map<std::string, PizzaSize>::const_iterator size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [size](const auto &params) {return params.second == size;});
+    std::unordered_map<std::string, PizzaType>::const_iterator type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [type](const auto &params) {return params.second == type;});
+    std::string to_write = "";
+
+    if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
+        return;
+    to_write = std::string("Size: ") + size_it->first + std::string(" Type: ") + type_it->first + std::string("\n");
+    this->_logger->writeLog(to_write);
 }
 
 void Reception::receiveCommands(const string &commands)

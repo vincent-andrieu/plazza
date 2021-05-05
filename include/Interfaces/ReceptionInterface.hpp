@@ -19,7 +19,7 @@ class IReception : public CommandInterpreter {
     virtual ~IReception() = default;
     [[nodiscard]] virtual bool doesGetPendingOrders() const = 0;
     [[nodiscard]] virtual bool getOrder(Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
-    virtual void sendOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) const = 0;
+    virtual void sendOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
     virtual void receiveCommands(const string &cmd) = 0;
 };
 

@@ -9,12 +9,15 @@
 #define RECEPTION_HPP
 
 #include <queue>
-#include <algorithm>
 #include <memory>
-#include "Interfaces/ReceptionInterface.hpp"
+#include <algorithm>
 #include "enumPizza.hpp"
+#include "Logger/Logger.hpp"
+#include "Interfaces/ReceptionInterface.hpp"
 
 #define COMMAND_DELIMITER ';'
+
+using namespace Pizzeria;
 
 namespace Pizzeria
 {
@@ -24,7 +27,7 @@ namespace Pizzeria
         ~Reception() override = default;
         [[nodiscard]] bool doesGetPendingOrders() const override;
         [[nodiscard]] bool getOrder(Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) override;
-        void sendOrder(const Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) const override;
+        void sendOrder(const Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) override;
         void receiveCommands(const string &cmd) override;
 
       private:
@@ -35,6 +38,7 @@ namespace Pizzeria
 
         std::queue<Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>>> _pendingOrders;
         double _bakingMultiplier;
+        std::unique_ptr<Logger> _logger;
     };
 } // namespace Pizzeria
 
