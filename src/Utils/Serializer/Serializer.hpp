@@ -13,8 +13,8 @@
 #define MAX_OBJECT_SIZE 128
 
 struct SendedObject {
-    long type;
-    char object[MAX_OBJECT_SIZE];
+    long mtype;
+    char mtext[MAX_OBJECT_SIZE];
 };
 
 class Serializer {
