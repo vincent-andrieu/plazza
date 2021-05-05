@@ -16,7 +16,7 @@
 #include <unordered_map>
 #include "IDisplayModule.hpp"
 
-#define WIN_TITLE            "Arcade"
+#define WIN_TITLE            "Plazza"
 #define OUTLINE_WIDTH        1
 #define TEXT_SIZE            20.1
 #define RADIUS_COEF          4
