@@ -7,7 +7,7 @@
 
 #include "TransportObjects/CommunicationType/CommunicationType.hpp"
 
-CommunicationType::CommunicationType()
+CommunicationType::CommunicationType() : _type(ECommunicationType::UNDEFINED)
 {
 }
 
