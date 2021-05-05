@@ -11,7 +11,7 @@
 
 using namespace Pizzeria;
 
-template <typename T> Order<T>::Order(const T object) : Serializer(sizeof(Order)), _object(object)
+template <typename T> Order<T>::Order(const T &object) : Serializer(sizeof(Order)), _object(object)
 {
 }
 
