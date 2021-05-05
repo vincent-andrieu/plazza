@@ -21,12 +21,12 @@ namespace Pizzeria
         Reception(double multiplier);
         ~Reception() override = default;
         void sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) const override;
-        void receiveCommands(const string &cmd,
-            std::queue<std::unique_ptr<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>>> &orderList) override;
+        void receiveCommands(
+            const string &cmd, std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> &orderList) override;
 
       private:
         void _writePizzasCommand(
-            const string &cmd, std::queue<std::unique_ptr<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>>> &orderList);
+            const string &cmd, std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> &orderList);
         [[nodiscard]] static PizzaType _getType(const string &type);
         [[nodiscard]] static PizzaSize _getSize(const string &size);
         [[nodiscard]] static size_t _getNbr(const string &nbr);

@@ -25,7 +25,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
     std::unique_ptr<CoreDisplay<ProductType, ProductSize, ProductIngredientType>> core =
         std::make_unique<CoreDisplay<ProductType, ProductSize, ProductIngredientType>>(
             Vector(1400, 900), Vector(9.95, 21.6), 300);
-    std::queue<std::unique_ptr<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>>> currentOrderQueue;
+    std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> currentOrderQueue;
 
     core->setPrompt("$> ");
     while (this->isOpen() && core->isRunning()) {
@@ -44,9 +44,9 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
         }
         core->printError();
         while (!currentOrderQueue.empty()) {
-            std::cerr << "2 type: " << currentOrderQueue.front()->getOrder().getType()
-                      << ", size: " << currentOrderQueue.front()->getOrder().getSize() << std::endl;
-            this->_distributeOrder(*currentOrderQueue.front().get());
+            std::cerr << "2 type: " << currentOrderQueue.front().getOrder().getType()
+                      << ", size: " << currentOrderQueue.front().getOrder().getSize() << std::endl;
+            this->_distributeOrder(currentOrderQueue.front());
             currentOrderQueue.pop();
         }
         // }

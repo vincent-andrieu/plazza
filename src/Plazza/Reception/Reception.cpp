@@ -25,7 +25,7 @@ void Reception::sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngred
 }
 
 void Reception::receiveCommands(
-    const string &commands, std::queue<std::unique_ptr<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>>> &orderList)
+    const string &commands, std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> &orderList)
 {
     stringstream ss(commands);
     string segment;
@@ -36,7 +36,7 @@ void Reception::receiveCommands(
 }
 
 void Reception::_writePizzasCommand(
-    const string &cmd, std::queue<std::unique_ptr<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>>> &orderList)
+    const string &cmd, std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> &orderList)
 {
     stringstream ss(cmd);
     string word;
@@ -53,8 +53,7 @@ void Reception::_writePizzasCommand(
             Factory::callFactory(this->_getType(words[0]), this->_getSize(words[1]), this->_bakingMultiplier);
 
         std::cerr << "1 type: " << product.getType() << ", size: " << product.getSize() << std::endl;
-        orderList.push(std::make_unique<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>>(
-            Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>(product)));
+        orderList.push(Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>(product));
     }
 }
 
