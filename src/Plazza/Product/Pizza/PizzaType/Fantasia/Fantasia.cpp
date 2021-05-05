@@ -9,7 +9,7 @@
 
 using namespace Pizzeria;
 
-Fantasia::Fantasia(PizzaSize size, long multiplier)
+FantasiaPizza::FantasiaPizza(PizzaSize size, long multiplier)
     : Pizza(PizzaType::Fantasia, size, multiplier * 4,
         {
             PizzaIngredient::DOE,

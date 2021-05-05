@@ -71,9 +71,9 @@ void Reception::_writePizzasCommand(const string &cmd)
 
     const size_t nbr = _getNbr(words[2]);
     for (size_t i = 0; i < nbr; i++) {
-        const std::unique_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &product =
+        AProduct<PizzaType, PizzaSize, PizzaIngredient> product =
             Factory::callFactory(this->_getType(words[0]), this->_getSize(words[1]), this->_bakingMultiplier);
-        this->_pendingOrders.push(Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>>(*product.get()));
+        this->_pendingOrders.push(Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>>(product));
     }
 }
 

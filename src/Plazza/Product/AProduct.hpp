@@ -13,7 +13,10 @@
 
 template <typename Type, typename Size, typename IngredientType> class AProduct : public IProduct<Type, Size, IngredientType> {
   public:
-    virtual ~AProduct() = default;
+    ~AProduct() = default;
+
+    [[nodiscard]] bool operator==(const IProduct<Type, Size, IngredientType> &product) const override;
+    [[nodiscard]] bool operator!=(const IProduct<Type, Size, IngredientType> &product) const override;
 
     [[nodiscard]] Type getType() const override;
     void setType(Type type) override;
