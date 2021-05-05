@@ -76,7 +76,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
     KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen)
 {
     std::string to_display = "";
-    std::size_t pos_y = 1;
+    std::size_t pos_y = 4;
 
     this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(IDisplayModule::Color::WHITE, Coord(30, 30), Coord(30, pos_y++));
     to_display = (kitchen.kitchen.isCooking()) ? "Working" : "Pending";
@@ -141,6 +141,26 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 bool CoreDisplay<ProductType, ProductSize, ProductIngredientType>::isRunning()
 {
     return this->_dirName[this->_pos]->getEntryPoint()->isOpen();
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::setError(std::string error)
+{
+    if (error.length() > 50)
+        error = error.substr(0, 24) + std::string(" ...");
+    this->_error = error;
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printError()
+{
+    size_t pos_y = 1;
+    size_t pos_x = 30;
+
+    if (this->_error.length()) {
+        this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(IDisplayModule::Color::RED, Coord(52, 3), Coord(pos_x, pos_y));
+        this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::WHITE, Coord(pos_x + 1, pos_y + 1), this->_error);
+    }
 }
 
 template class CoreDisplay<PizzaType, PizzaSize, PizzaIngredient>;
