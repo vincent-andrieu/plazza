@@ -21,7 +21,7 @@ Restaurant<ProductType, ProductSize, ProductIngredientType>::Restaurant(
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
 {
-    std::string input = "lol";
+    string input = "lol";
     std::unique_ptr<CoreDisplay<ProductType, ProductSize, ProductIngredientType>> core =
         std::make_unique<CoreDisplay<ProductType, ProductSize, ProductIngredientType>>(
             Vector(1400, 900), Vector(9.95, 21.6), 300);
@@ -38,7 +38,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
                 this->_reception.receiveCommands(input);
                 core->setError("");
             } catch (const ReceptionError &e) {
-                core->setError(std::string(e.getComponent()) + std::string(": ") + std::string(e.what()));
+                core->setError(string(e.getComponent()) + ": " + string(e.what()));
             }
         }
         core->printError();
