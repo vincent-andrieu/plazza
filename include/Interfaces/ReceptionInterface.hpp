@@ -8,6 +8,7 @@
 #ifndef RECEPTION_INTERFACE_HPP
 #define RECEPTION_INTERFACE_HPP
 
+#include <memory>
 #include "CommandInterpreter/CommandInterpreter.hpp"
 #include "Order/Order.hpp"
 #include "Plazza.hpp"
