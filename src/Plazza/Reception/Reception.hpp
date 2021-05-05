@@ -34,7 +34,6 @@ namespace Pizzeria
         [[nodiscard]] static PizzaSize _getSize(const string &size);
         [[nodiscard]] static size_t _getNbr(const string &nbr);
 
-        // std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> _pendingOrders;
         double _bakingMultiplier;
         std::unique_ptr<Logger> _logger;
     };
