@@ -56,16 +56,17 @@ $(NAME):	$(OBJ)
 		@$(ECHO)
 		@clang++ -o $(NAME) $(OBJ) $(LXXFLAGS)\
 		&& $(ECHO) $(BOLD) $(GREEN)"► PLAZZA BUILD SUCCESS !"$(DEFAULT) || ($(ECHO) $(BOLD) $(RED)"► PLAZZA BUILD FAILED"$(DEFAULT) && exit 1)
-		@(cd graphicals && make -s)
+		@(make -s -C graphicals)
 
 clean:
 		@rm -f $(OBJ)
 		@($(ECHO) $(BOLD) $(GREEN)✓$(LIGHT_BLUE)" PLAZZA CLEAN "$(DEFAULT))
-		@(cd graphicals && make clean -s)
+		@(make clean -s -C graphicals)
 
 fclean: clean
 		@($(ECHO) $(BOLD) $(GREEN)✓$(LIGHT_BLUE)" PLAZZA FCLEAN "$(DEFAULT))
-		@(cd graphicals && make fclean -s)
+		@rm -rf $(NAME)
+		@(make fclean -s -C graphicals)
 
 re: fclean all
 
