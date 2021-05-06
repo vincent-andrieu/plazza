@@ -13,7 +13,7 @@
 
 typedef std::string string;
 
-const string getErrnoMsg(const string name = "");
+const string getErrnoMsg(const string &name = "");
 
 class ManageError : public std::exception {
   public:
@@ -43,11 +43,6 @@ class MutexError : public ManageError {
     MutexError(string const &message = "Standard", string const &component = "Mutex");
 };
 
-class ConditionalVariablesError : public ManageError {
-  public:
-    ConditionalVariablesError(string const &message = "Standard", string const &component = "ConditionalVariables");
-};
-
 class CommunicationError : public ManageError {
   public:
     CommunicationError(string const &message = "Standard", string const &component = "Serializer");
@@ -66,6 +61,11 @@ class FactoryError : public ManageError {
 class ReceptionError : public ManageError {
   public:
     ReceptionError(string const &message = "Standard", string const &component = "Reception");
+};
+
+class CookError : public ManageError {
+  public:
+    CookError(string const &message = "Standard", string const &component = "Cook");
 };
 
 #endif
