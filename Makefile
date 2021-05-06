@@ -32,6 +32,7 @@ SRC =   src/main.cpp																	\
 		${MY_UTILS_DIR}Communication/Communication.cpp									\
 		${MY_UTILS_DIR}Encapsulations/Process/Process.cpp								\
 		${MY_UTILS_DIR}CommandInterpreter/CommandInterpreter.cpp						\
+		${MY_UTILS_DIR}ExecutingInput/ExecutingInput.cpp								\
 																						\
 		${MY_DISPLAY_DIR}DLLoader/DLLoader.cpp											\
 		${MY_DISPLAY_DIR}DLLib/DLLib.cpp												\
