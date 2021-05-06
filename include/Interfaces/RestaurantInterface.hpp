@@ -12,10 +12,12 @@
 #include "Kitchen/Kitchen.hpp"
 #include "Order/Order.hpp"
 #include "Product/AProduct.hpp"
+#include "Kitchen/KitchenStatus/KitchenStatus.hpp"
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType> struct KitchenManage {
     const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen;
     std::list<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> orders;
+    KitchenStatus<ProductType, ProductSize, ProductIngredientType> kitchenStatus;
 };
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType> class IRestaurant {

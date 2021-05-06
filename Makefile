@@ -19,6 +19,7 @@ SRC =   src/main.cpp																	\
 		${MY_PLAZZA_DIR}Product/Pizza/PizzaType/Regina/Regina.cpp						\
         ${MY_PLAZZA_DIR}Order/Order.cpp													\
         ${MY_PLAZZA_DIR}Kitchen/Kitchen.cpp												\
+        ${MY_PLAZZA_DIR}Kitchen/KitchenStatus/KitchenStatus.cpp							\
         ${MY_PLAZZA_DIR}Reception/Reception.cpp											\
         ${MY_PLAZZA_DIR}Restaurant/Restaurant.cpp										\
         ${MY_PLAZZA_DIR}Stock/Stock.cpp													\

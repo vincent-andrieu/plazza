@@ -81,7 +81,8 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_newKitchen(
 {
     Kitchen<ProductType, ProductSize, ProductIngredientType> kitchen(
         this->_bakingMultiplier, this->_cooksPerKitchen, this->_restockTime);
-    KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchenManage = {kitchen, {}};
+    KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchenManage = {
+        kitchen, {}, KitchenStatus<ProductType, ProductSize, ProductIngredientType>()};
 
     if (kitchen.isParent()) {
         this->_sendOrder(kitchenManage, order);
@@ -127,6 +128,10 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
                 return order.getOrder() == elemOrder.getOrder();
             });
         } break;
+
+        case ECommunicationType::STATUS: {
+            kitchenManage.kitchen.waitingReceive(kitchenManage.kitchenStatus);
+        }
 
         default: break;
     };
