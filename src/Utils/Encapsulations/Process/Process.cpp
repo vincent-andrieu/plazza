@@ -5,7 +5,7 @@
  * Process.cpp - Created: 21/04/2021
  */
 
-#include <signal.h>
+#include <csignal>
 #include <sys/wait.h>
 #include "Error/Error.hpp"
 #include "Encapsulations/Process/Process.hpp"

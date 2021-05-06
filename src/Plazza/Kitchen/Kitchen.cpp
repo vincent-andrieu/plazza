@@ -59,12 +59,12 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
         }
 
         case ECommunicationType::STATUS: {
-            this->_pendingOrders.mutex.lock();
-            this->_finishedOrders.mutex.lock();
+            this->_pendingOrders.lock();
+            this->_finishedOrders.lock();
             this->send(KitchenStatus<ProductType, ProductSize, ProductIngredientType>(
-                this->_pendingOrders.queue, this->_finishedOrders.queue, this->_stock.getStockList()));
-            this->_pendingOrders.mutex.unlock();
-            this->_finishedOrders.mutex.unlock();
+                this->_pendingOrders, this->_finishedOrders, this->_stock.getStockList()));
+            this->_pendingOrders.unlock();
+            this->_finishedOrders.unlock();
             break;
         }
 
@@ -106,7 +106,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_destroyManage()
     std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
     size_t elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(now - this->_lastAct).count() / 1000;
 
-    if (this->_pendingOrders.queue.size() || this->_finishedOrders.queue.size()) {
+    if (this->_pendingOrders.size() || this->_finishedOrders.size()) {
         this->_lastAct = std::chrono::system_clock::now();
         return;
     } else if (elapsedTime >= 5)

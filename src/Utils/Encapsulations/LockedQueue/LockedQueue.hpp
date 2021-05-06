@@ -44,9 +44,24 @@ template <typename T> class LockedQueue : public std::queue<T> {
         std::lock_guard<std::mutex> my_lock(_mutex);
         return std::queue<T>::back();
     };
-    [[nodiscard]] bool empty() const
+    [[nodiscard]] bool empty()
     {
+        std::lock_guard<std::mutex> my_lock(_mutex);
         return std::queue<T>::empty();
+    };
+
+    [[nodiscard]] size_t size()
+    {
+        std::lock_guard<std::mutex> my_lock(_mutex);
+        return std::queue<T>::size();
+    };
+    void lock()
+    {
+        _mutex.lock();
+    };
+    void unlock()
+    {
+        _mutex.unlock();
     };
 
   private:
