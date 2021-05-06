@@ -25,7 +25,7 @@ namespace Pizzeria
         Reception(double multiplier, std::function<void()> statusFunc, std::function<void()> quitFunc);
         ~Reception() override = default;
         void sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) override;
-        void sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, PizzaIngredient> &kitchenStatus);
+        void sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, PizzaIngredient> &kitchenStatus) override;
         void receiveCommands(
             const string &cmd, std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> &orderList) override;
 

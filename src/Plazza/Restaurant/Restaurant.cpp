@@ -14,8 +14,6 @@ using namespace Pizzeria;
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Restaurant<ProductType, ProductSize, ProductIngredientType>::Restaurant(
     double bakingTime, size_t cooksPerKitchen, double restockTime)
-    : _bakingMultiplier(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime), _reception(bakingTime)
-    double bakingTime, size_t cooksPerKitchen, size_t restockTime)
     : _bakingMultiplier(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime),
       _reception(
           bakingTime,

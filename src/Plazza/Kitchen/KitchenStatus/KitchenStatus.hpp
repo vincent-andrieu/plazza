@@ -19,7 +19,7 @@ using namespace Pizzeria;
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType> class KitchenStatus : public Serializer {
   public:
-    KitchenStatus() = default;
+    KitchenStatus() : Serializer(sizeof(KitchenStatus<ProductType, ProductSize, ProductIngredientType>)){};
     KitchenStatus(const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> pendingOrders,
         const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> finishedOrders,
         const std::unordered_map<ProductIngredientType, size_t> stock);
