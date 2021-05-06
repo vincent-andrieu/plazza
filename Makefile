@@ -18,6 +18,7 @@ SRC =   src/main.cpp																	\
 		${MY_PLAZZA_DIR}Product/Pizza/PizzaType/Margarita/Margarita.cpp					\
 		${MY_PLAZZA_DIR}Product/Pizza/PizzaType/Regina/Regina.cpp						\
         ${MY_PLAZZA_DIR}Order/Order.cpp													\
+        ${MY_PLAZZA_DIR}Cook/Cook.cpp		        									\
         ${MY_PLAZZA_DIR}Kitchen/Kitchen.cpp												\
         ${MY_PLAZZA_DIR}Reception/Reception.cpp											\
         ${MY_PLAZZA_DIR}Restaurant/Restaurant.cpp										\
@@ -29,9 +30,11 @@ SRC =   src/main.cpp																	\
 		${MY_UTILS_DIR}Logger/Logger.cpp												\
 		${MY_UTILS_DIR}Serializer/Serializer.cpp										\
 		${MY_UTILS_DIR}Communication/Communication.cpp									\
-		${MY_UTILS_DIR}Encapsulations/Process/Process.cpp								\
 		${MY_UTILS_DIR}CommandInterpreter/CommandInterpreter.cpp						\
-		${MY_UTILS_DIR}Clock/Clock.cpp						\
+		${MY_UTILS_DIR}Clock/Clock.cpp													\
+																						\
+		${MY_UTILS_DIR}Encapsulations/Process/Process.cpp								\
+		${MY_UTILS_DIR}Encapsulations/LockedQueue/LockedQueue.cpp						\
 																						\
 		${MY_DISPLAY_DIR}DLLoader/DLLoader.cpp											\
 		${MY_DISPLAY_DIR}DLLib/DLLib.cpp												\
@@ -46,13 +49,13 @@ NAME =	plazza
 
 INCLUDES =	-I include -I src/Plazza -I src/Utils -I src/Display
 CXXFLAGS =	$(INCLUDES) -W -Wall -Wextra
-
+LXXFLAGS =	-ldl
 
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
 		@$(ECHO)
-		@g++ -o $(NAME) $(OBJ) -lpthread -ldl -lncurses	\
+		@clang++ -o $(NAME) $(OBJ) $(LXXFLAGS)\
 		&& $(ECHO) $(BOLD) $(GREEN)"► PLAZZA BUILD SUCCESS !"$(DEFAULT) || ($(ECHO) $(BOLD) $(RED)"► PLAZZA BUILD FAILED"$(DEFAULT) && exit 1)
 		@(cd graphicals && make -s)
 
@@ -71,7 +74,7 @@ debug: CXXFLAGS += -g
 debug: all
 
 %.o :		%.cpp
-		@g++ -c -o $@ $^ $(CXXFLAGS) && $(ECHO) -n $(BOLD) $(GREEN)"  [OK] "$(WHITE) || $(ECHO) -n $(BOLD) $(RED)"  [KO] "$(WHITE) && $(ECHO) $(BOLD) $< | rev | cut -d'/' -f 1 | rev
+		@clang++ -c -o $@ $^ $(CXXFLAGS) && $(ECHO) -n $(BOLD) $(GREEN)"  [OK]"$(WHITE) || $(ECHO) -n $(BOLD) $(RED)"  [KO] "$(WHITE) && $(ECHO) $(BOLD) $< | rev | cut -d'/' -f 1 | rev
 
 .PHONY: all clean fclean re debug
 

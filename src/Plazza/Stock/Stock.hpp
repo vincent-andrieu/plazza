@@ -35,7 +35,7 @@ template <typename IngredientType> class Stock {
      * @brief Check weither or not it is time to restock
      * @return True if it is time to restock, false otherwise
      */
-    bool isRestockTime();
+    [[nodiscard]] bool isRestockTime() const;
 
     /**
      * @brief Fill the stock with one more item per type of ingredient
@@ -49,7 +49,7 @@ template <typename IngredientType> class Stock {
      * @param nbr The number of ingredients to be taken
      * @return bool True the ingredient was taken, false otherwise
      */
-    bool takeIngredients(IngredientType ingredient, size_t nbr);
+    [[nodiscard]] bool takeIngredients(IngredientType ingredient, size_t nbr);
 
   private:
     double _restockTime;

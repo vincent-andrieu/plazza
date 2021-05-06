@@ -30,7 +30,7 @@ template <typename IngredientType> void Stock<IngredientType>::addIngredient(con
     }
 }
 
-template <typename IngredientType> bool Stock<IngredientType>::isRestockTime()
+template <typename IngredientType> bool Stock<IngredientType>::isRestockTime() const
 {
     return (_restockClock.getElapsedTimeDouble() > _restockTime);
 }
