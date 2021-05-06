@@ -15,6 +15,12 @@ template <typename T> Order<T>::Order(T &object) : Serializer(sizeof(Order)), _o
 {
 }
 
+template <typename T> Order<T> &Order<T>::operator=(const Order<T> &rhs)
+{
+    setOrder(rhs.getOrder());
+    return *this;
+}
+
 template <typename T> T &Order<T>::getOrder() const
 {
     return _object;
