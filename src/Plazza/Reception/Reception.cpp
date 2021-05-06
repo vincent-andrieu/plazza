@@ -14,9 +14,11 @@
 
 using namespace Pizzeria;
 
-Reception::Reception(double multiplier, std::function<void()> statusFunc) : _bakingMultiplier(multiplier), _logger(LOG_FILE_PATH)
+Reception::Reception(double multiplier, std::function<void()> statusFunc, std::function<void()> quitFunc)
+    : _bakingMultiplier(multiplier), _logger(LOG_FILE_PATH)
 {
     this->_otherCommand.setFunctionCall("STATUS", statusFunc);
+    this->_otherCommand.setFunctionCall("QUIT", quitFunc);
 }
 
 void Reception::sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> &order)
@@ -57,11 +59,11 @@ void Reception::sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, Pizz
         const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> tmp = finish.front();
         finish.pop();
         size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [tmp](const auto &params) {
-                            return params.second == tmp.getOrder().getSize();
-                        });
+            return params.second == tmp.getOrder().getSize();
+        });
         type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [tmp](const auto &params) {
-                            return params.second == tmp.getOrder().getType();
-                        });
+            return params.second == tmp.getOrder().getType();
+        });
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
             to_write = "data wrong";
         else
@@ -74,11 +76,11 @@ void Reception::sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, Pizz
         const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> tmp = pending.front();
         pending.pop();
         size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [tmp](const auto &params) {
-                            return params.second == tmp.getOrder().getSize();
-                        });
+            return params.second == tmp.getOrder().getSize();
+        });
         type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [tmp](const auto &params) {
-                            return params.second == tmp.getOrder().getType();
-                        });
+            return params.second == tmp.getOrder().getType();
+        });
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
             to_write = "data wrong";
         else

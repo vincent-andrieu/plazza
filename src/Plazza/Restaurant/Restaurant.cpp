@@ -15,9 +15,14 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 Restaurant<ProductType, ProductSize, ProductIngredientType>::Restaurant(
     double bakingTime, size_t cooksPerKitchen, size_t restockTime)
     : _bakingMultiplier(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime),
-      _reception(bakingTime, [this]() {
-          return this->askKitchensStatus();
-      })
+      _reception(
+          bakingTime,
+          [this]() {
+              return this->askKitchensStatus();
+          },
+          [this]() {
+              this->close();
+          })
 {
 }
 
@@ -56,6 +61,12 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 bool Restaurant<ProductType, ProductSize, ProductIngredientType>::isOpen() const
 {
     return this->_isOpen;
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Restaurant<ProductType, ProductSize, ProductIngredientType>::close()
+{
+    this->_isOpen = false;
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>

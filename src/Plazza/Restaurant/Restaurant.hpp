@@ -15,8 +15,6 @@
 #include "Reception/Reception.hpp"
 #include "CoreDisplay/CoreDisplay.hpp"
 
-#include <memory>
-
 using namespace Pizzeria;
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -27,6 +25,7 @@ class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredien
 
     void lunchTime() override;
     [[nodiscard]] bool isOpen() const override;
+    void close() override;
     void askKitchensStatus() const override;
 
   protected:
