@@ -37,7 +37,7 @@ void Communication::operator<<(const Serializer &object) const
     this->write(object);
 }
 
-void Communication::operator>>(Serializer &object)
+void Communication::operator>>(Serializer &object) const
 {
     this->read(object);
 }
