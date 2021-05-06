@@ -63,7 +63,8 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printKitchen(
 
     for (; it != kitchenList.end() && max; it++, pos_y += 3, max--) {
         this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(IDisplayModule::Color::YELLOW, Coord(20, 3), Coord(0, pos_y));
-        to_display = (it->kitchen.isCooking()) ? "Working" : "Pending";
+        //to_display = (it->kitchen.isCooking()) ? "Working" : "Pending";
+        to_display = "not dev";
         this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(1, pos_y + 1), to_display);
     }
     if (it != kitchenList.end()) {
@@ -84,16 +85,59 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetailledKitchen(
     KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen)
 {
-    std::string to_display = "";
+    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> finish(kitchen.kitchenStatus.getFinishedOrders());
+    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> pending(kitchen.kitchenStatus.getPendingOrders());
+    std::unordered_map<ProductIngredientType, size_t> stock(kitchen.kitchenStatus.getStock());
+    std::unordered_map<string, PizzaSize>::const_iterator size_it;
+    std::unordered_map<string, PizzaType>::const_iterator type_it;
+    std::string to_write = "";
     std::size_t pos_y = 4;
+    std::size_t pos_x = 30;
 
-    this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(IDisplayModule::Color::WHITE, Coord(30, 30), Coord(30, pos_y++));
-    to_display = (kitchen.kitchen.isCooking()) ? "Working" : "Pending";
-    this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(31, pos_y++), std::string("Status: ") + to_display);
-    to_display = std::to_string(kitchen.kitchen.getNbCooks());
-    this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(31, pos_y++), std::string("Cookers: ") + to_display);
-    to_display = std::to_string(kitchen.kitchen.getBakingMultiplier());
-    this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(31, pos_y++), std::string("Multiplier: ") + to_display);
+    this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(IDisplayModule::Color::WHITE, Coord(30, 30), Coord(pos_x, pos_y++));
+    this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("finish order:"));
+    while (finish.size()) {
+        const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> tmp = finish.front();
+        finish.pop();
+        size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [tmp](const auto &params) {
+                            return params.second == tmp.getOrder().getSize();
+                        });
+        type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [tmp](const auto &params) {
+                            return params.second == tmp.getOrder().getType();
+                        });
+        if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
+            to_write = "data wrong";
+        else
+            to_write = std::string("type: ") + type_it->first + std::string(" size: ") + size_it->first;
+        this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::GREEN, Coord(pos_x + 1, pos_y++), to_write);
+    }
+
+    pos_y = 5;
+    pos_x += 10;
+    this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("pending order:"));
+    while (pending.size()) {
+        const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> tmp = pending.front();
+        pending.pop();
+        size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [tmp](const auto &params) {
+                            return params.second == tmp.getOrder().getSize();
+                        });
+        type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [tmp](const auto &params) {
+                            return params.second == tmp.getOrder().getType();
+                        });
+        if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
+            to_write = "data wrong";
+        else
+            to_write = std::string("type: ") + type_it->first + std::string(" size: ") + size_it->first;
+        this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::GREEN, Coord(pos_x + 1, pos_y++), to_write);
+    }
+
+    pos_y = 5;
+    pos_x += 10;
+    this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("stock:"));
+    for (auto &q : stock) {
+        to_write = PizzaIngredientListName.at(q.first) + std::string(": ") + std::to_string(q.second);
+        this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::GREEN, Coord(pos_x + 1, pos_y++), to_write);
+    }
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
