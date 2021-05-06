@@ -29,7 +29,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
     while (this->isOpen() && core.isRunning()) {
         core.clear();
         core.printPrompt();
-        core.printKitchen(this->_kitchens);
+        // core.printKitchen(this->_kitchens);
         input = core.getLine();
         if (input.length()) {
             try {
@@ -44,7 +44,6 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
             this->_distributeOrder(currentOrderQueue.front());
             currentOrderQueue.pop();
         }
-        // }
         this->_retreiveOrders();
         core.update();
     }
@@ -85,8 +84,8 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_newKitchen(
     KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchenManage = {kitchen, {}};
 
     if (kitchen.isParent()) {
-        // this->_kitchens.push_back(kitchenManage);
         this->_sendOrder(kitchenManage, order);
+        this->_kitchens.push_back(kitchenManage);
     } else if (kitchen.isChild())
         kitchen.cook();
 }
