@@ -15,7 +15,7 @@
 struct SendedObject {
     long mtype;
     char mtext[MAX_OBJECT_SIZE];
-};
+} __attribute((packed));
 
 class Serializer {
   public:
