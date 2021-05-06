@@ -37,7 +37,7 @@ class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredien
     void _retreiveOrders() override;
 
   private:
-    void _retreiveOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage);
+    bool _retreiveOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage);
 
     bool _isOpen{true};
     double _bakingMultiplier;

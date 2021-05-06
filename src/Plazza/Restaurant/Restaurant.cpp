@@ -115,15 +115,19 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::askKitchensSta
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrders()
 {
-    for (size_t i = 0; i < this->_kitchens.size(); i++) {
-        this->_retreiveOrder(this->_kitchens[i]);
+    for (size_t i = 0; i < this->_kitchens.size();) {
+        if (this->_retreiveOrder(this->_kitchens[i]))
+            this->_kitchens.erase(this->_kitchens.begin() + i);
+        else
+            i++
     }
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder(
+bool Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder(
     KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage)
 {
+    bool status = false;
     CommunicationType commType;
 
     if (kitchenManage.kitchen.receive(commType) == false)
@@ -148,9 +152,11 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
 
         case ECommunicationType::KILL_CHILD: {
             kitchenManage.kitchen.killChild();
+            status = true;
         } break;
         default: break;
     };
+    return status;
 }
 
 template class Restaurant<PizzaType, PizzaSize, PizzaIngredient>;
