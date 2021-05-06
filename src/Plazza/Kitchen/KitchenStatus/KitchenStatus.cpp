@@ -36,3 +36,5 @@ KitchenStatus<ProductType, ProductSize, ProductIngredientType>::getStock() const
 {
     return this->_stock;
 }
+
+template class KitchenStatus<PizzaType, PizzaSize, PizzaIngredient>;

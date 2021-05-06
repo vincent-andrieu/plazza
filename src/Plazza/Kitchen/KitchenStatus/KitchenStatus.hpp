@@ -13,6 +13,9 @@
 #include "Plazza.hpp"
 #include "Order/Order.hpp"
 #include "Product/AProduct.hpp"
+#include "enumPizza.hpp"
+
+using namespace Pizzeria;
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType> class KitchenStatus : public Serializer {
   public:

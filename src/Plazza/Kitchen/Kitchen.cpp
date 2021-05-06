@@ -8,6 +8,7 @@
 #include "Kitchen/Kitchen.hpp"
 #include "TransportObjects/CommunicationType/CommunicationType.hpp"
 #include "Product/Pizza/Pizza.hpp"
+#include "Kitchen/KitchenStatus/KitchenStatus.hpp"
 
 using namespace Pizzeria;
 
@@ -53,9 +54,15 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
             break;
         }
 
-            // case ECommunicationType::STATUS:
-            // TODO: Send back kitchen status
-            // break;
+        case ECommunicationType::STATUS: {
+            this->_pendingOrders.mutex.lock();
+            this->_finishedOrders.mutex.lock();
+            this->send(KitchenStatus<ProductType, ProductSize, ProductIngredientType>(
+                this->_pendingOrders.queue, this->_finishedOrders.queue, this->_stock.getStockList()));
+            this->_pendingOrders.mutex.unlock();
+            this->_finishedOrders.mutex.unlock();
+            break;
+        }
 
         default: break;
     };
