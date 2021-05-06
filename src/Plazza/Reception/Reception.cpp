@@ -14,8 +14,9 @@
 
 using namespace Pizzeria;
 
-Reception::Reception(double multiplier) : _bakingMultiplier(multiplier), _logger(std::make_unique<Logger>("./log_plazza"))
+Reception::Reception(double multiplier) : _bakingMultiplier(multiplier), _logger(std::make_unique<Logger>("./log_plazza")), _otherCommand(std::make_unique<ExecutingInput>())
 {
+    //this->_otherCommand->setFunctionCall("STATUS", test);
 }
 
 void Reception::sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) const
@@ -60,8 +61,16 @@ void Reception::_writePizzasCommand(
 
     while (ss >> word)
         words.push_back(word);
-    if (words.size() != 3)
-        throw ReceptionError("Invalid command arguments");
+    if (words.size() != 3) {
+        if (words.size() == 1) {
+            if (!this->_otherCommand->callFunction(words[0]))
+                throw ReceptionError("Invalid command arguments");
+            else
+                return;
+        } else {
+            throw ReceptionError("Invalid command arguments");
+        }
+    }
 
     const size_t nbr = _getNbr(words[2]);
     for (size_t i = 0; i < nbr; i++) {

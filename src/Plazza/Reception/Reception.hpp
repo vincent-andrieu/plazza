@@ -9,9 +9,11 @@
 #define RECEPTION_HPP
 
 #include <queue>
+#include <memory>
 #include "enumPizza.hpp"
 #include "Logger/Logger.hpp"
 #include "Interfaces/ReceptionInterface.hpp"
+#include "ExecutingInput/ExecutingInput.hpp"
 
 #define COMMAND_DELIMITER ';'
 
@@ -36,6 +38,7 @@ namespace Pizzeria
 
         double _bakingMultiplier;
         std::unique_ptr<Logger> _logger;
+        std::unique_ptr<ExecutingInput> _otherCommand;
     };
 } // namespace Pizzeria
 
