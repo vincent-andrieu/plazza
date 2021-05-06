@@ -52,9 +52,9 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printPrompt()
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printKitchen(
-    std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> kitchenList)
+    std::list<KitchenManage<ProductType, ProductSize, ProductIngredientType>> kitchenList)
 {
-    typename std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>>::iterator it =
+    typename std::list<KitchenManage<ProductType, ProductSize, ProductIngredientType>>::iterator it =
         kitchenList.begin();
     std::string to_display = "";
     std::size_t pos_y = 1;
@@ -74,10 +74,12 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printKitchen(
     to_display = std::string("There are ") + std::to_string(kitchenList.size()) + std::string(" kitchens.");
     this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(0, pos_y + 1), to_display);
     len = kitchenList.size();
+    it = kitchenList.begin();
     if (len) {
         if (len >= this->_kitechToPrint)
             this->_kitechToPrint = len - 1;
-        this->printDetailledKitchen(kitchenList[this->_kitechToPrint]);
+        std::advance(it, this->_kitechToPrint);
+        this->printDetailledKitchen(*it);
     }
 }
 
@@ -91,8 +93,8 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
     std::unordered_map<string, PizzaSize>::const_iterator size_it;
     std::unordered_map<string, PizzaType>::const_iterator type_it;
     std::string to_write = "";
-    std::size_t pos_y = 4;
     std::size_t pos_x = 30;
+    std::size_t pos_y = 4;
 
     this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(IDisplayModule::Color::WHITE, Coord(30, 30), Coord(pos_x, pos_y++));
     this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("finish order:"));

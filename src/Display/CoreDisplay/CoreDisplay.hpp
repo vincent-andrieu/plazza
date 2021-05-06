@@ -31,7 +31,7 @@ namespace Pizzeria
         void printPrompt();
         void setError(std::string error);
         void printError();
-        void printKitchen(std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> kitchenList);
+        void printKitchen(std::list<KitchenManage<ProductType, ProductSize, ProductIngredientType>> kitchenList);
         [[nodiscard]] std::string getLine() const;
         void setLine(std::string line);
         bool isRunning();
