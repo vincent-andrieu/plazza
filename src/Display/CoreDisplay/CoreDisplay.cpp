@@ -6,6 +6,7 @@
  */
 
 #include "CoreDisplay.hpp"
+#include "Logger/Logger.hpp"
 
 using namespace Pizzeria;
 
@@ -87,6 +88,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetailledKitchen(
     KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen)
 {
+    //Logger log("./last_display");
     std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> finish(kitchen.kitchenStatus.getFinishedOrders());
     std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> pending(kitchen.kitchenStatus.getPendingOrders());
     std::unordered_map<ProductIngredientType, size_t> stock(kitchen.kitchenStatus.getStock());
@@ -96,8 +98,9 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
     std::size_t pos_x = 30;
     std::size_t pos_y = 4;
 
-    this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(IDisplayModule::Color::WHITE, Coord(30, 30), Coord(pos_x, pos_y++));
+    this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(IDisplayModule::Color::WHITE, Coord(60, 30), Coord(pos_x, pos_y++));
     this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("finish order:"));
+    //log.writeLog(std::string("finish size: ") + std::to_string(finish.size()));
     while (finish.size()) {
         const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> tmp = finish.front();
         finish.pop();
@@ -115,8 +118,9 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
     }
 
     pos_y = 5;
-    pos_x += 10;
+    pos_x += 20;
     this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("pending order:"));
+    //log.writeLog(std::string("pending size: ") + std::to_string(pending.size()));
     while (pending.size()) {
         const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> tmp = pending.front();
         pending.pop();
@@ -134,8 +138,9 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
     }
 
     pos_y = 5;
-    pos_x += 10;
+    pos_x += 20;
     this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("stock:"));
+    //log.writeLog(std::string("stock size: ") + std::to_string(stock.size()));
     for (auto &q : stock) {
         to_write = PizzaIngredientListName.at(q.first) + std::string(": ") + std::to_string(q.second);
         this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::GREEN, Coord(pos_x + 1, pos_y++), to_write);
