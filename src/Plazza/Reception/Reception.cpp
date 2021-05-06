@@ -43,7 +43,54 @@ void Reception::sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngred
 
 void Reception::sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, PizzaIngredient> &kitchenStatus)
 {
-    // this->_logger.writeLog();
+    std::string tab = "\t";
+    std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> finish(kitchenStatus.getFinishedOrders());
+    std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> pending(kitchenStatus.getPendingOrders());
+    std::unordered_map<PizzaIngredient, size_t> stock(kitchenStatus.getStock());
+    std::unordered_map<string, PizzaSize>::const_iterator size_it;
+    std::unordered_map<string, PizzaType>::const_iterator type_it;
+    std::string to_write = "";
+
+    this->_logger.writeLog("kitchen status:");
+    this->_logger.writeLog(tab + std::string("finish order:"));
+    while (finish.size()) {
+        const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> tmp = finish.front();
+        finish.pop();
+        size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [tmp](const auto &params) {
+                            return params.second == tmp.getOrder().getSize();
+                        });
+        type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [tmp](const auto &params) {
+                            return params.second == tmp.getOrder().getType();
+                        });
+        if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
+            to_write = "data wrong";
+        else
+            to_write = std::string("type: ") + type_it->first + std::string(" size: ") + size_it->first;
+        this->_logger.writeLog(tab + tab + to_write);
+    }
+
+    this->_logger.writeLog(tab + std::string("pending order:"));
+    while (pending.size()) {
+        const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> tmp = pending.front();
+        pending.pop();
+        size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [tmp](const auto &params) {
+                            return params.second == tmp.getOrder().getSize();
+                        });
+        type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [tmp](const auto &params) {
+                            return params.second == tmp.getOrder().getType();
+                        });
+        if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
+            to_write = "data wrong";
+        else
+            to_write = std::string("type: ") + type_it->first + std::string(" size: ") + size_it->first;
+        this->_logger.writeLog(tab + tab + to_write);
+    }
+
+    this->_logger.writeLog(tab + std::string("stock:"));
+    for (auto &q : stock) {
+        to_write = PizzaIngredientListName.at(q.first) + std::string(": ") + std::to_string(q.second);
+        this->_logger.writeLog(tab + tab + to_write);
+    }
 }
 
 void Reception::receiveCommands(
