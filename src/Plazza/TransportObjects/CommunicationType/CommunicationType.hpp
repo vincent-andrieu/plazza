@@ -14,7 +14,8 @@ enum ECommunicationType
 {
     UNDEFINED,
     ORDER_PIZZA,
-    STATUS
+    STATUS,
+    KILL_CHILD
 };
 
 class CommunicationType : public Serializer {

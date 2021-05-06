@@ -115,8 +115,9 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::askKitchensSta
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrders()
 {
-    for (KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage : this->_kitchens)
-        this->_retreiveOrder(kitchenManage);
+    for (size_t i = 0; i < this->_kitchens.size(); i++) {
+        this->_retreiveOrder(this->_kitchens[i]);
+    }
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -145,6 +146,9 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
             this->_reception.sendKitchenStatus(kitchenManage.kitchenStatus);
         } break;
 
+        case ECommunicationType::KILL_CHILD: {
+            kitchenManage.kitchen.killChild();
+        } break;
         default: break;
     };
 }
