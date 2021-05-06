@@ -32,7 +32,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
     while (this->isOpen() && core.isRunning()) {
         core.clear();
         core.printPrompt();
-        // core.printKitchen(this->_kitchens);
+        core.printKitchen(this->_kitchens);
         input = core.getLine();
         if (input.length()) {
             try {
