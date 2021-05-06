@@ -20,6 +20,7 @@ SRC =   src/main.cpp																	\
         ${MY_PLAZZA_DIR}Order/Order.cpp													\
         ${MY_PLAZZA_DIR}Cook/Cook.cpp		        									\
         ${MY_PLAZZA_DIR}Kitchen/Kitchen.cpp												\
+        ${MY_PLAZZA_DIR}Kitchen/KitchenStatus/KitchenStatus.cpp							\
         ${MY_PLAZZA_DIR}Reception/Reception.cpp											\
         ${MY_PLAZZA_DIR}Restaurant/Restaurant.cpp										\
         ${MY_PLAZZA_DIR}Stock/Stock.cpp													\
@@ -32,8 +33,8 @@ SRC =   src/main.cpp																	\
 		${MY_UTILS_DIR}Communication/Communication.cpp									\
 		${MY_UTILS_DIR}CommandInterpreter/CommandInterpreter.cpp						\
 		${MY_UTILS_DIR}Clock/Clock.cpp													\
-																						\
 		${MY_UTILS_DIR}Encapsulations/Process/Process.cpp								\
+		${MY_UTILS_DIR}ExecutingInput/ExecutingInput.cpp								\
 																						\
 		${MY_DISPLAY_DIR}DLLoader/DLLoader.cpp											\
 		${MY_DISPLAY_DIR}DLLib/DLLib.cpp												\

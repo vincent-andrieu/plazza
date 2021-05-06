@@ -7,11 +7,11 @@
 
 #include "TransportObjects/CommunicationType/CommunicationType.hpp"
 
-CommunicationType::CommunicationType()
+CommunicationType::CommunicationType() : Serializer(sizeof(CommunicationType))
 {
 }
 
-CommunicationType::CommunicationType(ECommunicationType type) : _type(type)
+CommunicationType::CommunicationType(ECommunicationType type) : Serializer(sizeof(CommunicationType)), _type(type)
 {
 }
 

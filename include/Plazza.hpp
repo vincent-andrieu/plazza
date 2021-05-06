@@ -10,13 +10,16 @@
 
 #include <iostream>
 #include <sstream>
+#include <memory>
 
-#define DEFAULT_LIB "./lib/arcade_ncurses.so"
-#define EXIT_SUCCESS 0
-#define EXIT_ERROR   84
+#define PRIORITORY_LIB "arcade_ncurse.so"
+#define LOG_FILE_PATH  "./log_plazza"
+#define EXIT_SUCCESS   0
+#define EXIT_ERROR     84
 
 typedef std::string string;
 typedef std::size_t size_t;
 typedef std::stringstream stringstream;
+#define charette_ptr(T) std::shared_ptr<T>
 
 #endif

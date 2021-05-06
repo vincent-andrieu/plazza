@@ -13,6 +13,7 @@
 #include <unordered_map>
 #include <vector>
 #include "Clock/Clock.hpp"
+#include "Plazza.hpp"
 
 #define DEFAULT_STOCK 5
 #define RESTOCK_NBR   1
@@ -52,6 +53,7 @@ template <typename IngredientType> class Stock {
      * @return bool True the ingredient was taken, false otherwise
      */
     [[nodiscard]] bool takeIngredients(IngredientType ingredient, size_t nbr);
+    const std::unordered_map<IngredientType, size_t> getStockList();
 
   private:
     double _restockTime;

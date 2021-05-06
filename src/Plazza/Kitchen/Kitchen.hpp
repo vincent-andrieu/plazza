@@ -10,6 +10,8 @@
 
 #include <queue>
 #include <mutex>
+#include <chrono>
+#include "enumPizza.hpp"
 #include "Interfaces/KitchenInterface.hpp"
 #include "Stock/Stock.hpp"
 #include "Encapsulations/Process/Process.hpp"
@@ -27,16 +29,20 @@ class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>
 
   protected:
     void _receiveOrder() override;
-    void _addPendingOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
+    void _addPendingOrder(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void _sendFinishedOrders() override;
 
   private:
+    void _destroyManage();
+
+  private:
+    std::chrono::time_point<std::chrono::system_clock> _lastAct;
     Stock<ProductIngredientType> _stock;
     bool _isCooking{true};
     double _bakingMultiplier;
     size_t _cooksPerKitchen;
-    LockedQueue<Order<IProduct<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
-    LockedQueue<Order<IProduct<ProductType, ProductSize, ProductIngredientType>>> _finishedOrders;
+    LockedQueue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
+    LockedQueue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> _finishedOrders;
 };
 
 #endif

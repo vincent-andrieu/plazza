@@ -9,11 +9,10 @@
 #define RECEPTION_HPP
 
 #include <queue>
-#include <algorithm>
-#include <memory>
 #include "enumPizza.hpp"
 #include "Logger/Logger.hpp"
 #include "Interfaces/ReceptionInterface.hpp"
+#include "ExecutingInput/ExecutingInput.hpp"
 
 #define COMMAND_DELIMITER ';'
 
@@ -23,22 +22,23 @@ namespace Pizzeria
 {
     class Reception : IReception<PizzaType, PizzaSize, PizzaIngredient> {
       public:
-        Reception(double multiplier);
+        Reception(double multiplier, std::function<void()> statusFunc, std::function<void()> quitFunc);
         ~Reception() override = default;
-        [[nodiscard]] bool doesGetPendingOrders() const override;
-        [[nodiscard]] bool getOrder(Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) override;
-        void sendOrder(const Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) override;
-        void receiveCommands(const string &cmd) override;
+        void sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) override;
+        void sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, PizzaIngredient> &kitchenStatus);
+        void receiveCommands(
+            const string &cmd, std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> &orderList) override;
 
       private:
-        void _writePizzasCommand(const string &cmd);
+        void _writePizzasCommand(
+            const string &cmd, std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> &orderList);
         [[nodiscard]] static PizzaType _getType(const string &type);
         [[nodiscard]] static PizzaSize _getSize(const string &size);
         [[nodiscard]] static size_t _getNbr(const string &nbr);
 
-        std::queue<Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>>> _pendingOrders;
         double _bakingMultiplier;
-        std::unique_ptr<Logger> _logger;
+        Logger _logger;
+        ExecutingInput _otherCommand;
     };
 } // namespace Pizzeria
 

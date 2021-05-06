@@ -12,8 +12,10 @@
 
 enum ECommunicationType
 {
+    UNDEFINED,
     ORDER_PIZZA,
-    STATUS
+    STATUS,
+    KILL_CHILD
 };
 
 class CommunicationType : public Serializer {
@@ -25,7 +27,7 @@ class CommunicationType : public Serializer {
     ECommunicationType getType() const;
 
   private:
-    ECommunicationType _type;
+    ECommunicationType _type = ECommunicationType::UNDEFINED;
 };
 
 #endif

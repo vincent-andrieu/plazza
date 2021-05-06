@@ -9,7 +9,7 @@
 #define ICOREDISPLAY_HPP
 
 #include <memory>
-#include <vector>
+#include <list>
 #include "KitchenInterface.hpp"
 #include "ICommandInterpreter.hpp"
 #include "RestaurantInterface.hpp"
@@ -25,7 +25,7 @@ namespace Pizzeria
         virtual void printError() = 0;
         virtual void setError(std::string error) = 0;
         virtual void printKitchen(
-            std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> kitchenList) = 0;
+            std::list<KitchenManage<ProductType, ProductSize, ProductIngredientType>> kitchenList) = 0;
         [[nodiscard]] std::string getLine() const override = 0;
         void setLine(std::string line) override = 0;
         virtual void update() = 0;

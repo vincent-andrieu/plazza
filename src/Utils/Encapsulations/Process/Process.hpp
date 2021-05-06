@@ -23,7 +23,7 @@ class Process {
 
     [[nodiscard]] bool isParent() const;
     [[nodiscard]] bool isChild() const;
-    [[nodiscard]] int waitChild() const;
+    int waitChild() const;
     void killChild() const;
     void send(const Serializer &object) const;
     [[nodiscard]] bool receive(Serializer &object) const;
@@ -34,7 +34,8 @@ class Process {
     bool _isParent;
     pid_t _childPid;
     bool _isChild;
-    Communication _communication;
+    Communication _parentCommunication;
+    Communication _childCommunication;
 };
 
 #endif

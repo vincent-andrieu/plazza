@@ -13,16 +13,17 @@
 #include <memory>
 #include <fstream>
 #include <iostream>
+#include "Plazza.hpp"
 
 class Logger {
   public:
-    Logger(std::string filepath);
+    Logger(string filepath);
     ~Logger();
-    void writeLog(std::string log);
+    void writeLog(string log);
 
   private:
-    std::size_t _nbLog;
-    std::unique_ptr<std::ofstream> _output;
+    size_t _nbLog;
+    std::ofstream _output;
 };
 
 #endif

@@ -8,7 +8,6 @@
 #ifndef A_PRODUCT_HPP
 #define A_PRODUCT_HPP
 
-#include <vector>
 #include "Interfaces/ProductInterface.hpp"
 
 template <typename Type, typename Size, typename IngredientType> class AProduct : public IProduct<Type, Size, IngredientType> {

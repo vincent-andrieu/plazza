@@ -7,26 +7,25 @@
 
 #include "Logger.hpp"
 
-Logger::Logger(std::string filepath) : _nbLog(0), _output(std::make_unique<std::ofstream>(filepath))
+Logger::Logger(string filepath) : _nbLog(0), _output(std::ofstream(filepath))
 {
-    if (!this->_output->is_open())
+    if (!this->_output.is_open())
         throw std::invalid_argument("Logger");
 }
 
 Logger::~Logger()
 {
-    this->_output->close();
+    this->_output.close();
 }
 
-void Logger::writeLog(std::string log)
+void Logger::writeLog(string log)
 {
-    std::string tmp = "";
     std::chrono::time_point<std::chrono::system_clock> now_time = std::chrono::system_clock::now();
     std::time_t now_time_print = std::chrono::system_clock::to_time_t(now_time);
-    std::string to_write =  std::to_string(this->_nbLog++) + std::string(". ");
+    string to_write = std::to_string(this->_nbLog++) + ". ";
+    string tmp(std::ctime(&now_time_print));
 
-    tmp = std::ctime(&now_time_print);
     tmp.pop_back();
-    to_write += tmp + std::string(": ") + log;
-    *(this->_output.get()) << to_write << std::endl;
+    to_write += tmp + ": " + log;
+    this->_output << to_write << std::endl;
 }

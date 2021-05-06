@@ -30,9 +30,10 @@ void Serializer::operator<<(const int msqId)
 void Serializer::pack(const int msqId) const
 {
     SendedObject sendedObject;
-    sendedObject.type = 1;
-    memcpy(sendedObject.object, this, this->_size);
-    if (msgsnd(msqId, &sendedObject, sizeof(sendedObject), 0) == -1)
+    memset(&sendedObject, 0, sizeof(sendedObject));
+    sendedObject.mtype = 1;
+    memcpy(sendedObject.mtext, this, this->_size);
+    if (msgsnd(msqId, &sendedObject, this->_size, 0) == -1)
         throw SerializerError(getErrnoMsg("msgsnd"));
 }
 
@@ -40,7 +41,8 @@ void Serializer::unpack(const int msqId)
 {
     SendedObject sendedObject;
 
+    memset(sendedObject.mtext, 0, MAX_OBJECT_SIZE);
     if (msgrcv(msqId, &sendedObject, sizeof(sendedObject), 1, 0) == -1)
         throw SerializerError(getErrnoMsg("msgrcv"));
-    memcpy(this, sendedObject.object, this->_size);
+    memcpy(this, sendedObject.mtext, this->_size);
 }

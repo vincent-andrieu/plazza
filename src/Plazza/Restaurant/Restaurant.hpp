@@ -15,8 +15,6 @@
 #include "Reception/Reception.hpp"
 #include "CoreDisplay/CoreDisplay.hpp"
 
-#include <memory>
-
 using namespace Pizzeria;
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -27,22 +25,24 @@ class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredien
 
     void lunchTime() override;
     [[nodiscard]] bool isOpen() const override;
+    void close() override;
+    void askKitchensStatus() const override;
 
   protected:
-    void _newKitchen(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
-    void _distributeOrder(const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
+    void _newKitchen(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
+    void _distributeOrder(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void _sendOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchen,
-        const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
+        const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void _retreiveOrders() override;
 
   private:
-    void _retreiveOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage);
+    bool _retreiveOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage);
 
     bool _isOpen{true};
     double _bakingMultiplier;
     size_t _cooksPerKitchen;
     double _restockTime;
-    std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> _kitchens;
+    std::list<KitchenManage<ProductType, ProductSize, ProductIngredientType>> _kitchens;
     Reception _reception;
 };
 

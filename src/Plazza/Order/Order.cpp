@@ -7,6 +7,7 @@
 
 #include "Order/Order.hpp"
 #include "Interfaces/ProductInterface.hpp"
+#include "Product/AProduct.hpp"
 #include "enumPizza.hpp"
 #include <memory>
 
@@ -32,5 +33,5 @@ template <typename T> void Order<T>::setOrder(T &object)
     this->_object = object;
 }
 
-template class Order<IProduct<PizzaType, PizzaSize, PizzaIngredient>>;
+template class Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>;
 template class Order<std::shared_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>>>;

@@ -55,4 +55,12 @@ template <typename IngredientType> bool Stock<IngredientType>::takeIngredients(I
     return true;
 }
 
+template <typename IngredientType> const std::unordered_map<IngredientType, size_t> Stock<IngredientType>::getStockList()
+{
+    this->_mutex.lock();
+    const std::unordered_map<IngredientType, size_t> tempStock(this->_stock);
+    this->_mutex.unlock();
+    return tempStock;
+}
+
 template class Stock<enum Pizzeria::PizzaIngredient>;
