@@ -10,6 +10,7 @@
 
 #include <queue>
 #include <mutex>
+#include <chrono>
 #include "enumPizza.hpp"
 #include "Interfaces/KitchenInterface.hpp"
 #include "Stock/Stock.hpp"
@@ -38,6 +39,10 @@ class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>
     void _sendFinishedOrders() override;
 
   private:
+    void _destroyManage();
+
+  private:
+    std::chrono::time_point<std::chrono::system_clock> _lastAct;
     Stock<ProductIngredientType> _stock;
     bool _isCooking{true};
     double _bakingMultiplier;

@@ -15,7 +15,7 @@ using namespace Pizzeria;
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Kitchen<ProductType, ProductSize, ProductIngredientType>::Kitchen(
     double bakingMultiplier, size_t cooksPerKitchen, size_t restockTime)
-    : _stock(restockTime), _bakingMultiplier(bakingMultiplier), _cooksPerKitchen(cooksPerKitchen)
+    : _lastAct(std::chrono::system_clock::now()), _stock(restockTime), _bakingMultiplier(bakingMultiplier), _cooksPerKitchen(cooksPerKitchen)
 {
     // TODO: Create threads per cooks
 }
@@ -27,7 +27,9 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
         this->_receiveOrder();
         this->_sendFinishedOrders();
         this->_stock.restock();
+        this->_destroyManage();
     }
+    // TODO send message for destroy
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -99,6 +101,19 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 double Kitchen<ProductType, ProductSize, ProductIngredientType>::getBakingMultiplier() const
 {
     return this->_bakingMultiplier;
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Kitchen<ProductType, ProductSize, ProductIngredientType>::_destroyManage()
+{
+    std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+    size_t elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(now - this->_lastAct).count() / 1000;
+
+    if (this->_pendingOrders.queue.size() || this->_finishedOrders.queue.size()) {
+        this->_lastAct = std::chrono::system_clock::now()
+        return;
+    } else if (elapsedTime >= 5)
+        this->_isCooking = false;
 }
 
 template class Kitchen<PizzaType, PizzaSize, PizzaIngredient>;
