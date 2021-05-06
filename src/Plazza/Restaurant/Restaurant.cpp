@@ -117,9 +117,10 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
 {
     for (size_t i = 0; i < this->_kitchens.size();) {
         if (this->_retreiveOrder(this->_kitchens[i]))
-            this->_kitchens.erase(this->_kitchens.begin() + i);
+            (void) i;
+            //this->_kitchens.erase(this->_kitchens.begin() + i);
         else
-            i++
+            i++;
     }
 }
 
@@ -131,7 +132,7 @@ bool Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
     CommunicationType commType;
 
     if (kitchenManage.kitchen.receive(commType) == false)
-        return;
+        return status;
     switch (commType.getType()) {
         case ECommunicationType::ORDER_PIZZA: {
             Pizza pizza = Pizza();
