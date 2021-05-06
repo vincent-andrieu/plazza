@@ -19,7 +19,7 @@ static void hackedby(void)
 
 ExecutingInput::ExecutingInput()
 {
-    this->setFunctionCall("cmoi", hackedby);
+    this->setFunctionCall("CMOI", hackedby);
 }
 
 ExecutingInput::~ExecutingInput()
