@@ -23,6 +23,8 @@ template <typename IngredientType> class Stock {
     Stock(double restockTime, const std::vector<IngredientType> &stackableIngredients);
     ~Stock() = default;
 
+    [[nodiscard]] Stock<IngredientType> &operator=(const Stock<IngredientType> &rhs);
+
     /**
      * @brief Add ingredient to stock
      * @details If ingredient exists in the stock, do nothing, otherwise, add it to the stackable ingredients
@@ -32,7 +34,7 @@ template <typename IngredientType> class Stock {
     void addIngredient(const IngredientType &ingredient);
 
     /**
-     * @brief Check weither or not it is time to restock
+     * @brief Check whether or not it is time to restock
      * @return True if it is time to restock, false otherwise
      */
     [[nodiscard]] bool isRestockTime() const;

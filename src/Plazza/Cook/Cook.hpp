@@ -9,6 +9,7 @@
 #define COOK_HPP
 
 #include <memory>
+#include <vector>
 #include "Interfaces/ICook.hpp"
 #include "Interfaces/ProductInterface.hpp"
 #include "Encapsulations/LockedQueue/LockedQueue.hpp"
@@ -29,27 +30,6 @@ class Cook : public ICook<ProductType, ProductSize, ProductIngredientType> {
     void startWorking() override;
 
     /**
-     * @brief Set the place where the cook will search goods when needed
-     * @param stockPlace The stock place
-     */
-    void setStockPlace(Stock<ProductIngredientType> &stockPlace) override;
-
-    /**
-     * @brief Set the place where the cook will get new order to cook
-     * @param orderReceivePlace The order check place
-     */
-    void setOrderReceivePlace(
-        LockedQueue<Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>>> &orderReceivePlace)
-        override;
-
-    /**
-     * @brief Set the place where the cook will deliver cooked orders
-     * @param deliveryPlace The delivery place
-     */
-    void setDeliveryPlace(
-        LockedQueue<Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>>> &deliveryPlace) override;
-
-    /**
      * @brief Check if the cook is cooking or has finished cooking but did not delivered yet
      * @return True if cooking, false otherwise
      */
@@ -67,7 +47,7 @@ class Cook : public ICook<ProductType, ProductSize, ProductIngredientType> {
      * @param size
      * @param ingredients
      */
-    void cook(Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>> order) override;
+    void cook(std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>> order) override;
 
     /**
      * @brief check if has finished cooking
@@ -87,7 +67,7 @@ class Cook : public ICook<ProductType, ProductSize, ProductIngredientType> {
      * @param product The product to deliver
      * @return True if delivery success, false otherwise
      */
-    void deliverOrder() const override;
+    void deliverOrder() override;
 
     /**
      * @brief Get ingredient from stock

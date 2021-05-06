@@ -25,26 +25,6 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
     virtual void startWorking() = 0;
 
     /**
-     * @brief Set the place where the cook will search goods when needed
-     * @param stockPlace The stock place
-     */
-    virtual void setStockPlace(Stock<ProductIngredientType> &stockPlace) = 0;
-
-    /**
-     * @brief Set the place where the cook will get new order to cook
-     * @param orderReceivePlace The order check place
-     */
-    virtual void setOrderReceivePlace(
-        LockedQueue<Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>>> &orderReceivePlace) = 0;
-
-    /**
-     * @brief Set the place where the cook will deliver cooked orders
-     * @param deliveryPlace The delivery place
-     */
-    virtual void setDeliveryPlace(
-        LockedQueue<Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>>> &deliveryPlace) = 0;
-
-    /**
      * @brief Check if the cook is cooking or has finished cooking but did not delivered yet
      * @return True if cooking, false otherwise
      */
@@ -62,7 +42,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
      * @param size
      * @param ingredients
      */
-    virtual void cook(Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>> order) = 0;
+    virtual void cook(std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>> order) = 0;
 
     /**
      * @brief check if has finished cooking
@@ -83,7 +63,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
      * @param product The product to deliver
      * @return True if delivery success, false otherwise
      */
-    virtual void deliverOrder() const = 0;
+    virtual void deliverOrder() = 0;
 
     /**
      * @brief Get ingredient from stock

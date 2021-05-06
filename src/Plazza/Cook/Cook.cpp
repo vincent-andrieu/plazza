@@ -6,6 +6,7 @@
 */
 
 #include "Cook.hpp"
+#include "enumPizza.hpp"
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Cook<ProductType, ProductSize, ProductIngredientType>::Cook(Stock<ProductIngredientType> &stockPlace,
@@ -18,36 +19,16 @@ Cook<ProductType, ProductSize, ProductIngredientType>::Cook(Stock<ProductIngredi
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Cook<ProductType, ProductSize, ProductIngredientType>::startWorking()
 {
-    _isWorking = true;
     std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>> order(nullptr);
+    _isWorking = true;
 
     while (_isWorking) {
-        order = receiveOrder();
+        order = receiveOrder().getOrder();
         if (order) {
             cook(order);
-            deliverOrder(order);
+            deliverOrder();
         }
     }
-}
-
-template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Cook<ProductType, ProductSize, ProductIngredientType>::setStockPlace(Stock<ProductIngredientType> &stockPlace)
-{
-    _stockPlace = stockPlace;
-}
-
-template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Cook<ProductType, ProductSize, ProductIngredientType>::setOrderReceivePlace(
-    LockedQueue<Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>>> &orderReceivePlace)
-{
-    _orderReceivePlace = orderReceivePlace;
-}
-
-template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Cook<ProductType, ProductSize, ProductIngredientType>::setDeliveryPlace(
-    LockedQueue<Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>>> &deliveryPlace)
-{
-    _deliveryPlace = deliveryPlace;
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -63,12 +44,18 @@ void Cook<ProductType, ProductSize, ProductIngredientType>::stopWorking()
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Cook<ProductType, ProductSize, ProductIngredientType>::cook(
-    Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>> order)
+    std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>> order)
 {
-    std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>> my_product = order.getOrder();
-    ProductIngredientType my_ingredients;
+    _cookingProduct = order;
 
-    pickIngredientInStock(my_product->getIngredients());
+    std::vector<ProductIngredientType> my_pendingIngredients(_cookingProduct->getIngredients());
+
+    for (auto iterator = my_pendingIngredients.begin(); !my_pendingIngredients.empty(); ++iterator) {
+        if (iterator == my_pendingIngredients.end())
+            iterator = my_pendingIngredients.begin();
+        if (pickIngredientInStock(*iterator))
+            my_pendingIngredients.erase(iterator);
+    }
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -87,11 +74,13 @@ Cook<ProductType, ProductSize, ProductIngredientType>::receiveOrder() const
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Cook<ProductType, ProductSize, ProductIngredientType>::deliverOrder() const
+void Cook<ProductType, ProductSize, ProductIngredientType>::deliverOrder()
 {
-    if (_cookingProduct->isFinished)
+    if (_cookingProduct->isFinished())
         throw CookError("Product not finished");
-    _deliveryPlace.push(_cookingProduct);
+
+    Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>> my_delivery(_cookingProduct);
+    _deliveryPlace.push(my_delivery);
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -99,3 +88,5 @@ bool Cook<ProductType, ProductSize, ProductIngredientType>::pickIngredientInStoc
 {
     return _stockPlace.takeIngredients(ingredient, 1);
 }
+
+template class Cook<Pizzeria::PizzaType, Pizzeria::PizzaSize, Pizzeria::PizzaIngredient>;
