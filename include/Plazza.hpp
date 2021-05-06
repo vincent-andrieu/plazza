@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <memory>
 
 #define PRIORITORY_LIB "arcade_ncurse.so"
 #define EXIT_SUCCESS   0
@@ -18,5 +19,6 @@
 typedef std::string string;
 typedef std::size_t size_t;
 typedef std::stringstream stringstream;
+#define charette_ptr(T) std::shared_ptr<T>
 
 #endif
