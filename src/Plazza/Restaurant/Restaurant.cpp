@@ -22,33 +22,31 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
 {
     string input = "lol";
-    std::unique_ptr<CoreDisplay<ProductType, ProductSize, ProductIngredientType>> core =
-        std::make_unique<CoreDisplay<ProductType, ProductSize, ProductIngredientType>>(
-            Vector(1400, 900), Vector(9.95, 21.6), 300);
+    CoreDisplay<ProductType, ProductSize, ProductIngredientType> core(Vector(1400, 900), Vector(9.95, 21.6), 300);
     std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> currentOrderQueue;
 
-    core->setPrompt("$> ");
-    while (this->isOpen() && core->isRunning()) {
-        core->clear();
-        core->printPrompt();
-        core->printKitchen(this->_kitchens);
-        input = core->getLine();
+    core.setPrompt("$> ");
+    while (this->isOpen() && core.isRunning()) {
+        core.clear();
+        core.printPrompt();
+        core.printKitchen(this->_kitchens);
+        input = core.getLine();
         if (input.length()) {
             try {
                 this->_reception.receiveCommands(input, currentOrderQueue);
-                core->setError("");
+                core.setError("");
             } catch (const ReceptionError &e) {
-                core->setError(e.getComponent() + ": " + e.what());
+                core.setError(e.getComponent() + ": " + e.what());
             }
         }
-        core->printError();
+        core.printError();
         while (!currentOrderQueue.empty()) {
             this->_distributeOrder(currentOrderQueue.front());
             currentOrderQueue.pop();
         }
         // }
         this->_retreiveOrders();
-        core->update();
+        core.update();
     }
 }
 
