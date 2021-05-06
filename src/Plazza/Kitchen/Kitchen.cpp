@@ -74,8 +74,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_sendFinishedOrde
 {
     while (!this->_finishedOrders.empty()) {
         this->send(CommunicationType(ECommunicationType::ORDER_PIZZA));
-        this->send(this->_finishedOrders.front());
-        this->_finishedOrders.pop();
+        this->send(this->_finishedOrders.getFront());
     }
 }
 

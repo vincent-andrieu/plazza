@@ -83,7 +83,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>>
 Cook<ProductType, ProductSize, ProductIngredientType>::receiveOrder() const
 {
-    return _orderReceivePlace.queue;
+    return _orderReceivePlace.getFront();
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>

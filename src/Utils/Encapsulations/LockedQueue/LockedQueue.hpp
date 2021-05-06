@@ -26,6 +26,14 @@ template <typename T> class LockedQueue : public std::queue<T> {
         std::lock_guard<std::mutex> my_lock(_mutex);
         std::queue<T>::push(elem);
     };
+    const T &getFront()
+    {
+        std::lock_guard<std::mutex> my_lock(_mutex);
+        const T &my_elem(std::queue<T>::front());
+
+        std::queue<T>::pop();
+        return my_elem;
+    };
     const T &front()
     {
         std::lock_guard<std::mutex> my_lock(_mutex);
