@@ -26,7 +26,10 @@ Process::Process()
         this->_isParent = true;
         this->_isChild = false;
     }
-    this->_communication = Communication(std::to_string(this->_childPid));
+    this->_parentCommunication =
+        Communication(std::to_string(this->_parentPid) + "-" + std::to_string(this->_childPid)); // parent send to child
+    this->_childCommunication =
+        Communication(std::to_string(this->_childPid) + "-" + std::to_string(this->_parentPid)); // child send to parent
 }
 
 Process::Process(const Process &process)
@@ -35,7 +38,8 @@ Process::Process(const Process &process)
     this->_isParent = process._isParent;
     this->_childPid = process._childPid;
     this->_isChild = process._isChild;
-    this->_communication = process._communication;
+    this->_parentCommunication = process._parentCommunication;
+    this->_childCommunication = process._childCommunication;
 }
 
 bool Process::operator==(const Process &process) const
@@ -82,24 +86,42 @@ int Process::waitChild() const
 void Process::killChild() const
 {
     if (kill(this->_childPid, SIGKILL) == -1)
-        throw ProcessError(getErrnoMsg());
+        throw ProcessError(getErrnoMsg("killChild => kill"));
 }
 
 void Process::send(const Serializer &object) const
 {
-    this->_communication.write(object);
+    if (this->isParent())
+        this->_parentCommunication << object;
+    else if (this->isChild())
+        this->_childCommunication << object;
+    else
+        throw ProcessError("No parent or child process");
 }
 
 bool Process::receive(Serializer &object) const
 {
-    if (this->_communication.getQueueSize() > 0) {
-        this->_communication.read(object);
-        return true;
-    }
+    if (this->isParent()) {
+        if (this->_childCommunication.getQueueSize() > 0) {
+            this->_childCommunication >> object;
+            return true;
+        }
+    } else if (this->isChild()) {
+        if (this->_parentCommunication.getQueueSize() > 0) {
+            this->_parentCommunication >> object;
+            return true;
+        }
+    } else
+        throw ProcessError("receive => No parent or child process");
     return false;
 }
 
 void Process::waitingReceive(Serializer &object) const
 {
-    this->_communication.read(object);
+    if (this->isParent())
+        this->_childCommunication >> object;
+    else if (this->isChild())
+        this->_parentCommunication >> object;
+    else
+        throw ProcessError("waitingReceive => No parent or child process");
 }

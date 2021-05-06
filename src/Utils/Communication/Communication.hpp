@@ -24,7 +24,7 @@ class Communication {
     ~Communication() = default;
 
     void operator<<(const Serializer &object) const;
-    void operator>>(Serializer &object);
+    void operator>>(Serializer &object) const;
 
     Communication &operator=(const Communication &communication) = default;
 
