@@ -70,6 +70,18 @@ namespace Pizzeria
         PizzaIngredient::GOAT_CHEESE,
         PizzaIngredient::CHIEF_LOVE,
     };
+
+    const std::unordered_map<PizzaIngredient, string> PizzaIngredientListName = {
+        {PizzaIngredient::DOE, "DOE"},
+        {PizzaIngredient::TOMATOE, "TOMATOE"},
+        {PizzaIngredient::GRUYERE, "GRUYERE"},
+        {PizzaIngredient::HAM, "HAM"},
+        {PizzaIngredient::MUSHROOMS, "MUSHROOMS"},
+        {PizzaIngredient::STEAK, "STEAK"},
+        {PizzaIngredient::EGGPLANT, "EGGPLANT"},
+        {PizzaIngredient::GOAT_CHEESE, "GOAT_CHEESE"},
+        {PizzaIngredient::CHIEF_LOVE, "CHIEF_LOVE"},
+    };
 } // namespace Pizzeria
 
 #endif
