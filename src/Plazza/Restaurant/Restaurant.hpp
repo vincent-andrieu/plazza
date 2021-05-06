@@ -43,7 +43,7 @@ class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredien
     double _bakingMultiplier;
     size_t _cooksPerKitchen;
     size_t _restockTime;
-    std::vector<KitchenManage<ProductType, ProductSize, ProductIngredientType>> _kitchens;
+    std::list<KitchenManage<ProductType, ProductSize, ProductIngredientType>> _kitchens;
     Reception _reception;
 };
 

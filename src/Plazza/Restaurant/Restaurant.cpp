@@ -62,17 +62,18 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_distributeOrder(
     const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
-    size_t selectedKitchenIndex;
+    std::_List_iterator<KitchenManage<ProductType, ProductSize, ProductIngredientType>> selectedKitchenIndex;
     size_t maxOrders = this->_cooksPerKitchen * 2;
 
-    for (size_t i = 0; i < this->_kitchens.size(); i++) {
-        if (this->_kitchens[i].orders.size() < maxOrders) {
-            maxOrders = this->_kitchens[i].orders.size();
-            selectedKitchenIndex = i;
+    for (std::_List_iterator<KitchenManage<ProductType, ProductSize, ProductIngredientType>> it = this->_kitchens.begin();
+         it != this->_kitchens.end(); it++) {
+        if (it->orders.size() < maxOrders) {
+            maxOrders = it->orders.size();
+            selectedKitchenIndex = it;
         }
     }
     if (maxOrders < this->_cooksPerKitchen * 2) {
-        this->_sendOrder(this->_kitchens[selectedKitchenIndex], order);
+        this->_sendOrder(*selectedKitchenIndex, order);
     } else {
         this->_newKitchen(order);
     }
@@ -115,12 +116,10 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::askKitchensSta
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrders()
 {
-    for (size_t i = 0; i < this->_kitchens.size();) {
-        if (this->_retreiveOrder(this->_kitchens[i]))
-            (void) i;
-            //this->_kitchens.erase(this->_kitchens.begin() + i);
-        else
-            i++;
+    for (std::_List_iterator<KitchenManage<ProductType, ProductSize, ProductIngredientType>> it = this->_kitchens.begin();
+         it != this->_kitchens.end(); it++) {
+        if (this->_retreiveOrder(*it))
+            this->_kitchens.erase(it);
     }
 }
 
@@ -128,11 +127,10 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 bool Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder(
     KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage)
 {
-    bool status = false;
     CommunicationType commType;
 
     if (kitchenManage.kitchen.receive(commType) == false)
-        return status;
+        return false;
     switch (commType.getType()) {
         case ECommunicationType::ORDER_PIZZA: {
             Pizza pizza = Pizza();
@@ -153,11 +151,11 @@ bool Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
 
         case ECommunicationType::KILL_CHILD: {
             kitchenManage.kitchen.killChild();
-            status = true;
+            return true;
         } break;
         default: break;
     };
-    return status;
+    return false;
 }
 
 template class Restaurant<PizzaType, PizzaSize, PizzaIngredient>;
