@@ -22,7 +22,7 @@ namespace Pizzeria
 {
     class Reception : IReception<PizzaType, PizzaSize, PizzaIngredient> {
       public:
-        Reception(double multiplier);
+        Reception(double multiplier, std::function<void()> statusFunc);
         ~Reception() override = default;
         void sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) override;
         void sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, PizzaIngredient> &kitchenStatus);

@@ -14,7 +14,10 @@ using namespace Pizzeria;
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Restaurant<ProductType, ProductSize, ProductIngredientType>::Restaurant(
     double bakingTime, size_t cooksPerKitchen, size_t restockTime)
-    : _bakingMultiplier(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime), _reception(bakingTime)
+    : _bakingMultiplier(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime),
+      _reception(bakingTime, [this]() {
+          return this->askKitchensStatus();
+      })
 {
 }
 
@@ -99,6 +102,14 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_sendOrder(
     kitchenManage.orders.push_back(order);
     kitchenManage.kitchen.send(CommunicationType(ECommunicationType::ORDER_PIZZA));
     kitchenManage.kitchen.send(order);
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Restaurant<ProductType, ProductSize, ProductIngredientType>::askKitchensStatus() const
+{
+    for (const KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage : this->_kitchens) {
+        kitchenManage.kitchen.send(CommunicationType(ECommunicationType::STATUS));
+    }
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>

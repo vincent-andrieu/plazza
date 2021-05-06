@@ -14,9 +14,9 @@
 
 using namespace Pizzeria;
 
-Reception::Reception(double multiplier) : _bakingMultiplier(multiplier), _logger("./log_plazza")
+Reception::Reception(double multiplier, std::function<void()> statusFunc) : _bakingMultiplier(multiplier), _logger(LOG_FILE_PATH)
 {
-    // this->_otherCommand.setFunctionCall("STATUS", test);
+    this->_otherCommand.setFunctionCall("STATUS", statusFunc);
 }
 
 void Reception::sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> &order)

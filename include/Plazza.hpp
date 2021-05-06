@@ -13,6 +13,7 @@
 #include <memory>
 
 #define PRIORITORY_LIB "arcade_ncurse.so"
+#define LOG_FILE_PATH  "./log_plazza"
 #define EXIT_SUCCESS   0
 #define EXIT_ERROR     84
 

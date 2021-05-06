@@ -26,6 +26,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 
     virtual void lunchTime() = 0;
     [[nodiscard]] virtual bool isOpen() const = 0;
+    virtual void askKitchensStatus() const = 0;
 
   protected:
     virtual void _newKitchen(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
