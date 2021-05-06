@@ -31,14 +31,19 @@ void Reception::sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngred
         std::find_if(PizzaNames.begin(), PizzaNames.end(), [type](const auto &params) {
             return params.second == type;
         });
-    string to_write = "";
+    string to_write;
 
     if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end()) {
         this->_logger.writeLog("Data not correctly defined");
         return;
     }
-    to_write = string("Size: ") + size_it->first + string(" Type: ") + type_it->first + string("\n");
+    to_write = "Size: " + size_it->first + " Type: " + type_it->first + "\n";
     this->_logger.writeLog(to_write);
+}
+
+void Reception::sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, PizzaIngredient> &kitchenStatus)
+{
+    // this->_logger.writeLog();
 }
 
 void Reception::receiveCommands(
