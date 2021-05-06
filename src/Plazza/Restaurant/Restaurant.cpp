@@ -21,7 +21,7 @@ Restaurant<ProductType, ProductSize, ProductIngredientType>::Restaurant(
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
 {
-    string input = "lol";
+    string input;
     CoreDisplay<ProductType, ProductSize, ProductIngredientType> core(Vector(1400, 900), Vector(9.95, 21.6), 300);
     std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> currentOrderQueue;
 
