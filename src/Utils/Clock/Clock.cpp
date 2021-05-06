@@ -18,12 +18,12 @@ void Clock::setElapsedTime()
     _elapsedTime = std::chrono::system_clock::now() - _startingPoint;
 }
 
-[[nodiscard]] const std::chrono::duration<double> &Clock::getElapsedTime()
+[[nodiscard]] const std::chrono::duration<double> &Clock::getElapsedTime() const
 {
     return _elapsedTime;
 }
 
-[[nodiscard]] double Clock::getElapsedTimeDouble()
+[[nodiscard]] double Clock::getElapsedTimeDouble() const
 {
     return _elapsedTime.count();
 }

@@ -26,14 +26,14 @@ class Clock
      *
      * @return Time elapsed since last call to resetElapsedTime as duration
      */
-    [[nodiscard]] const std::chrono::duration<double> &getElapsedTime();
+    [[nodiscard]] const std::chrono::duration<double> &getElapsedTime() const;
 
     /**
      * @brief Get elapsed time in seconds
      *
      * @return Time elapsed since last call to resetElapsedTime as double
      */
-    [[nodiscard]] double getElapsedTimeDouble();
+    [[nodiscard]] double getElapsedTimeDouble() const;
 
     /**
      * @brief Set the elapsed time to 0
