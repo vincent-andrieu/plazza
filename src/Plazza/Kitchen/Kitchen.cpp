@@ -66,21 +66,17 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void Kitchen<ProductType, ProductSize, ProductIngredientType>::_addPendingOrder(
     const Order<IProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
-    this->_pendingOrders.mutex.lock();
-    this->_pendingOrders.queue.push(order);
-    this->_pendingOrders.mutex.unlock();
+    this->_pendingOrders.push(order);
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Kitchen<ProductType, ProductSize, ProductIngredientType>::_sendFinishedOrders()
 {
-    this->_finishedOrders.mutex.lock();
-    while (!this->_finishedOrders.queue.empty()) {
+    while (!this->_finishedOrders.empty()) {
         this->send(CommunicationType(ECommunicationType::ORDER_PIZZA));
-        this->send(this->_finishedOrders.queue.front());
-        this->_finishedOrders.queue.pop();
+        this->send(this->_finishedOrders.front());
+        this->_finishedOrders.pop();
     }
-    this->_finishedOrders.mutex.unlock();
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>

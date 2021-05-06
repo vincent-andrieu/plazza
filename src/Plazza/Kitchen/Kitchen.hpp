@@ -13,11 +13,7 @@
 #include "Interfaces/KitchenInterface.hpp"
 #include "Stock/Stock.hpp"
 #include "Encapsulations/Process/Process.hpp"
-
-template <typename T> struct LockedQueue {
-    std::queue<T> queue;
-    std::mutex mutex;
-};
+#include "Encapsulations/LockedQueue/LockedQueue.hpp"
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>, public Process {

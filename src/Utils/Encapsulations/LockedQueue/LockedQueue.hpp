@@ -16,17 +16,27 @@ template <typename T> class LockedQueue : public std::queue<T> {
     explicit LockedQueue(const std::queue<T> &queue) : std::queue<T>(queue){};
     ~LockedQueue() = default;
 
-    void pop(T elem) override
+    void pop()
     {
         std::lock_guard<std::mutex> my_lock(_mutex);
-        std::queue<T>::pop(elem);
+        std::queue<T>::pop();
     };
-    void push(T elem) override
+    void push(const T &elem)
     {
         std::lock_guard<std::mutex> my_lock(_mutex);
         std::queue<T>::push(elem);
     };
-    [[nodiscard]] bool empty() const override
+    const T &front()
+    {
+        std::lock_guard<std::mutex> my_lock(_mutex);
+        return std::queue<T>::front();
+    };
+    const T &back()
+    {
+        std::lock_guard<std::mutex> my_lock(_mutex);
+        return std::queue<T>::back();
+    };
+    [[nodiscard]] bool empty() const
     {
         return std::queue<T>::empty();
     };

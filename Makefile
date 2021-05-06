@@ -34,7 +34,6 @@ SRC =   src/main.cpp																	\
 		${MY_UTILS_DIR}Clock/Clock.cpp													\
 																						\
 		${MY_UTILS_DIR}Encapsulations/Process/Process.cpp								\
-		${MY_UTILS_DIR}Encapsulations/LockedQueue/LockedQueue.cpp						\
 																						\
 		${MY_DISPLAY_DIR}DLLoader/DLLoader.cpp											\
 		${MY_DISPLAY_DIR}DLLib/DLLib.cpp												\
