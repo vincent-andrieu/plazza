@@ -142,7 +142,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
 
         case ECommunicationType::STATUS: {
             kitchenManage.kitchen.waitingReceive(kitchenManage.kitchenStatus);
-        }
+        } break;
 
         default: break;
     };
