@@ -86,9 +86,10 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_newKitchen(
         this->_bakingMultiplier, this->_cooksPerKitchen, this->_restockTime);
     KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchenManage = {kitchen, {}};
 
-    if (kitchen.isParent())
+    if (kitchen.isParent()) {
+        // this->_kitchens.push_back(kitchenManage);
         this->_sendOrder(kitchenManage, order);
-    else if (kitchen.isChild())
+    } else if (kitchen.isChild())
         kitchen.cook();
 }
 
