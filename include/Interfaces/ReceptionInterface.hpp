@@ -18,7 +18,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 class IReception : public CommandInterpreter {
   public:
     virtual ~IReception() = default;
-    virtual void sendOrder(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) const = 0;
+    virtual void sendOrder(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
     virtual void receiveCommands(
         const string &cmd, std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> &orderList) = 0;
 };

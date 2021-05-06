@@ -22,7 +22,7 @@ class Logger {
 
   private:
     std::size_t _nbLog;
-    std::unique_ptr<std::ofstream> _output;
+    std::ofstream _output;
 };
 
 #endif

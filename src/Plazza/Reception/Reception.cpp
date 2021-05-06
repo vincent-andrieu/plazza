@@ -14,12 +14,12 @@
 
 using namespace Pizzeria;
 
-Reception::Reception(double multiplier) : _bakingMultiplier(multiplier), _logger(std::make_unique<Logger>("./log_plazza")), _otherCommand(std::make_unique<ExecutingInput>())
+Reception::Reception(double multiplier) : _bakingMultiplier(multiplier), _logger("./log_plazza")
 {
-    //this->_otherCommand->setFunctionCall("STATUS", test);
+    // this->_otherCommand.setFunctionCall("STATUS", test);
 }
 
-void Reception::sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) const
+void Reception::sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> &order)
 {
     PizzaSize size = order.getOrder().getSize();
     PizzaType type = order.getOrder().getType();
@@ -34,11 +34,11 @@ void Reception::sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngred
     string to_write = "";
 
     if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end()) {
-        this->_logger->writeLog("Data not correctly defined");
+        this->_logger.writeLog("Data not correctly defined");
         return;
     }
     to_write = string("Size: ") + size_it->first + string(" Type: ") + type_it->first + string("\n");
-    this->_logger->writeLog(to_write);
+    this->_logger.writeLog(to_write);
 }
 
 void Reception::receiveCommands(
@@ -63,7 +63,7 @@ void Reception::_writePizzasCommand(
         words.push_back(word);
     if (words.size() != 3) {
         if (words.size() == 1) {
-            if (!this->_otherCommand->callFunction(words[0]))
+            if (!this->_otherCommand.callFunction(words[0]))
                 throw ReceptionError("Invalid command arguments");
             else
                 return;

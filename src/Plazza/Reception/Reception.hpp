@@ -9,7 +9,6 @@
 #define RECEPTION_HPP
 
 #include <queue>
-#include <memory>
 #include "enumPizza.hpp"
 #include "Logger/Logger.hpp"
 #include "Interfaces/ReceptionInterface.hpp"
@@ -25,7 +24,7 @@ namespace Pizzeria
       public:
         Reception(double multiplier);
         ~Reception() override = default;
-        void sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) const override;
+        void sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) override;
         void receiveCommands(
             const string &cmd, std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> &orderList) override;
 
@@ -37,8 +36,8 @@ namespace Pizzeria
         [[nodiscard]] static size_t _getNbr(const string &nbr);
 
         double _bakingMultiplier;
-        std::unique_ptr<Logger> _logger;
-        std::unique_ptr<ExecutingInput> _otherCommand;
+        Logger _logger;
+        ExecutingInput _otherCommand;
     };
 } // namespace Pizzeria
 
