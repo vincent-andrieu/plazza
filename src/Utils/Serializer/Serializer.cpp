@@ -10,13 +10,6 @@
 #include "Serializer/Serializer.hpp"
 #include "Error/Error.hpp"
 
-Serializer::Serializer(size_t size) : _size(size)
-{
-    if (size > MAX_OBJECT_SIZE)
-        throw SerializerError(
-            "The sending object is over limit: " + std::to_string(size) + ". Limited to: " + std::to_string(MAX_OBJECT_SIZE));
-}
-
 void Serializer::operator>>(const int msqId) const
 {
     this->pack(msqId);
@@ -30,10 +23,15 @@ void Serializer::operator<<(const int msqId)
 void Serializer::pack(const int msqId) const
 {
     SendedObject sendedObject;
+    const string str = this->_SerializeToString();
+
+    if (str.size() > MAX_OBJECT_SIZE)
+        throw SerializerError("The sending string is over limit: " + std::to_string(str.size())
+            + ". Limited to: " + std::to_string(MAX_OBJECT_SIZE));
     memset(&sendedObject, 0, sizeof(sendedObject));
     sendedObject.mtype = 1;
-    memcpy(sendedObject.mtext, this, this->_size);
-    if (msgsnd(msqId, &sendedObject, this->_size, 0) == -1)
+    strcpy(sendedObject.mtext, str.c_str());
+    if (msgsnd(msqId, &sendedObject, str.size(), 0) == -1)
         throw SerializerError(getErrnoMsg("msgsnd"));
 }
 
@@ -41,8 +39,8 @@ void Serializer::unpack(const int msqId)
 {
     SendedObject sendedObject;
 
-    memset(sendedObject.mtext, 0, MAX_OBJECT_SIZE);
+    memset(&sendedObject, 0, sizeof(sendedObject));
     if (msgrcv(msqId, &sendedObject, sizeof(sendedObject), 1, 0) == -1)
         throw SerializerError(getErrnoMsg("msgrcv"));
-    memcpy(this, sendedObject.mtext, this->_size);
+    this->_SerializeFromString(string(sendedObject.mtext));
 }

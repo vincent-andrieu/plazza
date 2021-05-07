@@ -12,7 +12,7 @@ KitchenStatus<ProductType, ProductSize, ProductIngredientType>::KitchenStatus(
     const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> pendingOrders,
     const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> finishedOrders,
     const std::unordered_map<ProductIngredientType, size_t> stock)
-    : Serializer(sizeof(KitchenStatus)), _pendingOrders(pendingOrders), _finishedOrders(finishedOrders), _stock(stock)
+    : _pendingOrders(pendingOrders), _finishedOrders(finishedOrders), _stock(stock)
 {
 }
 
@@ -35,6 +35,18 @@ const std::unordered_map<ProductIngredientType, size_t> &
 KitchenStatus<ProductType, ProductSize, ProductIngredientType>::getStock() const
 {
     return this->_stock;
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeToString() const
+{
+    return "";
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeFromString(const string str)
+{
+    (void) str;
 }
 
 template class KitchenStatus<PizzaType, PizzaSize, PizzaIngredient>;

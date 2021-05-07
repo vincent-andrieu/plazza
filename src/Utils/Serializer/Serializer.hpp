@@ -20,16 +20,12 @@ struct SendedObject {
 class Serializer {
   public:
     Serializer() = default;
-    explicit Serializer(size_t size);
 
     void operator>>(const int msqId) const;
     void operator<<(const int msqId);
 
     void pack(const int msqId) const;
     void unpack(const int msqId);
-
-  private:
-    size_t _size = 0;
 
   protected:
     virtual const string _SerializeToString() const = 0;

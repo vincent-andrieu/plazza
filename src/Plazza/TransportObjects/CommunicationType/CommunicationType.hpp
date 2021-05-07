@@ -26,6 +26,10 @@ class CommunicationType : public Serializer {
 
     ECommunicationType getType() const;
 
+  protected:
+    const string _SerializeToString() const;
+    void _SerializeFromString(const string str);
+
   private:
     ECommunicationType _type = ECommunicationType::UNDEFINED;
 };

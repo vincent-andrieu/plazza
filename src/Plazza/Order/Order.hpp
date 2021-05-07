@@ -17,6 +17,10 @@ template <typename T> class Order : public Serializer {
 
     const T &getOrder() const;
 
+  protected:
+    const string _SerializeToString() const;
+    void _SerializeFromString(const string str);
+
   private:
     const T _object;
 };

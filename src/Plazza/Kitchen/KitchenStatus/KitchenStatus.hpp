@@ -28,6 +28,10 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
     const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> &getFinishedOrders() const;
     const std::unordered_map<ProductIngredientType, size_t> &getStock() const;
 
+  protected:
+    const string _SerializeToString() const;
+    void _SerializeFromString(const string str);
+
   private:
     const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
     const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> _finishedOrders;
