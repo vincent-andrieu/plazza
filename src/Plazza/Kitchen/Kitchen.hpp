@@ -33,6 +33,9 @@ class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>
     void _addPendingOrder(const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void _sendFinishedOrders() override;
 
+    void cooksStartCooking();
+    void cooksStopCooking();
+
   private:
     void _destroyManage();
 

@@ -22,17 +22,14 @@ Kitchen<ProductType, ProductSize, ProductIngredientType>::Kitchen(
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
 {
-    for (auto &cook : _cooks) {
-        cook.startWorking();
-    }
-
+    cooksStartCooking();
     while (this->isCooking()) {
         this->_receiveOrder();
         this->_sendFinishedOrders();
         this->_stock.restock();
         this->_destroyManage();
     }
-
+    cooksStopCooking();
     this->send(CommunicationType(ECommunicationType::KILL_CHILD));
 }
 
@@ -112,6 +109,22 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_destroyManage()
         return;
     } else if (elapsedTime >= 5)
         this->_isCooking = false;
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Kitchen<ProductType, ProductSize, ProductIngredientType>::cooksStartCooking()
+{
+    for (auto &cook : _cooks) {
+        cook.startWorking();
+    }
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Kitchen<ProductType, ProductSize, ProductIngredientType>::cooksStopCooking()
+{
+    for (auto &cook : _cooks) {
+        cook.stopWorking();
+    }
 }
 
 template class Kitchen<Pizzeria::PizzaType, Pizzeria::PizzaSize, Pizzeria::PizzaIngredient>;

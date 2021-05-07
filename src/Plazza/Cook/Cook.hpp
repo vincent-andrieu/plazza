@@ -22,7 +22,7 @@ class Cook : public ICook<ProductType, ProductSize, ProductIngredientType> {
     Cook(Stock<ProductIngredientType> &stockPlace,
         LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &orderReceivePlace,
         LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &deliveryPlace);
-    ~Cook() = default;
+    ~Cook();
 
     Cook(const Cook<ProductType, ProductSize, ProductIngredientType> &rhs);
 

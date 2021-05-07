@@ -15,6 +15,13 @@ Cook<ProductType, ProductSize, ProductIngredientType>::Cook(Stock<ProductIngredi
     : _stockPlace(stockPlace), _orderReceivePlace(orderReceivePlace), _deliveryPlace(deliveryPlace)
 {
 }
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+Cook<ProductType, ProductSize, ProductIngredientType>::~Cook()
+{
+    _isWorking = false;
+    if (_thread.joinable())
+        _thread.join();
+}
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Cook<ProductType, ProductSize, ProductIngredientType>::Cook(const Cook<ProductType, ProductSize, ProductIngredientType> &rhs)
@@ -63,7 +70,8 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void Cook<ProductType, ProductSize, ProductIngredientType>::stopWorking()
 {
     _isWorking = false;
-    _thread.join();
+    if (_thread.joinable())
+        _thread.join();
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>

@@ -57,9 +57,9 @@ template <typename IngredientType> bool Stock<IngredientType>::takeIngredients(I
 
 template <typename IngredientType> const std::unordered_map<IngredientType, size_t> Stock<IngredientType>::getStockList()
 {
-    this->_mutex.lock();
+    std::lock_guard<std::mutex> my_lock(_mutex);
     const std::unordered_map<IngredientType, size_t> tempStock(this->_stock);
-    this->_mutex.unlock();
+
     return tempStock;
 }
 
