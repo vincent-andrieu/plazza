@@ -13,6 +13,7 @@
 #include "Plazza.hpp"
 #include "Order/Order.hpp"
 #include "Product/AProduct.hpp"
+#include "Translator/Translator.hpp"
 #include "enumPizza.hpp"
 
 using namespace Pizzeria;

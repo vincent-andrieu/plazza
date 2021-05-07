@@ -8,6 +8,7 @@
 #ifndef ORDER_HPP
 #define ORDER_HPP
 
+#include "Translator/Translator.hpp"
 #include "Serializer/Serializer.hpp"
 
 template <typename T> class Order : public Serializer {
@@ -22,7 +23,7 @@ template <typename T> class Order : public Serializer {
     void _SerializeFromString(const string str);
 
   private:
-    const T _object;
+    T _object;
 };
 
 #endif
