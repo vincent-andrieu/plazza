@@ -30,6 +30,10 @@ class Serializer {
 
   private:
     size_t _size = 0;
+
+  protected:
+    virtual const string _SerializeToString() const = 0;
+    virtual void _SerializeFromString() = 0;
 };
 
 #endif
