@@ -71,8 +71,8 @@ void Cook<ProductType, ProductSize, ProductIngredientType>::cook(Product<Product
 {
     _isCooking = true;
     _cookingProduct = order;
-
     getIngredients(_cookingProduct.getIngredients());
+    _cookingProduct.setFinished();
     _isCooking = false;
 }
 
