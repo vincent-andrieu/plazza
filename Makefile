@@ -10,7 +10,7 @@ MY_UTILS_DIR = src/Utils/
 MY_DISPLAY_DIR = src/Display/
 
 SRC =   src/main.cpp																	\
-		${MY_PLAZZA_DIR}Product/AProduct.cpp											\
+		${MY_PLAZZA_DIR}Product/Product.cpp												\
 		${MY_PLAZZA_DIR}Product/Pizza/Pizza.cpp											\
 		${MY_PLAZZA_DIR}Product/Pizza/Factory/Factory.cpp								\
 		${MY_PLAZZA_DIR}Product/Pizza/PizzaType/Americana/Americana.cpp					\
@@ -49,7 +49,7 @@ NAME =	plazza
 
 INCLUDES =	-I include -I src/Plazza -I src/Utils -I src/Display
 CXXFLAGS =	$(INCLUDES) -W -Wall -Wextra
-LXXFLAGS =	-ldl
+LXXFLAGS =	-ldl -lpthread
 
 all:	$(NAME)
 

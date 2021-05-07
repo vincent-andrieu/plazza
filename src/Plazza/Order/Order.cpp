@@ -6,12 +6,8 @@
  */
 
 #include "Order/Order.hpp"
-#include "Interfaces/ProductInterface.hpp"
-#include "Product/AProduct.hpp"
+#include "Product/Product.hpp"
 #include "enumPizza.hpp"
-#include <memory>
-
-using namespace Pizzeria;
 
 template <typename T> Order<T>::Order(T &object) : Serializer(sizeof(Order)), _object(object)
 {
@@ -33,5 +29,4 @@ template <typename T> void Order<T>::setOrder(T &object)
     this->_object = object;
 }
 
-template class Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>;
-template class Order<std::shared_ptr<IProduct<PizzaType, PizzaSize, PizzaIngredient>>>;
+template class Order<Product<Pizzeria::PizzaType, Pizzeria::PizzaSize, Pizzeria::PizzaIngredient>>;

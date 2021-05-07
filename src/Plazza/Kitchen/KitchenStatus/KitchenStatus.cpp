@@ -9,22 +9,22 @@
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 KitchenStatus<ProductType, ProductSize, ProductIngredientType>::KitchenStatus(
-    const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> pendingOrders,
-    const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> finishedOrders,
+    const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> pendingOrders,
+    const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> finishedOrders,
     const std::unordered_map<ProductIngredientType, size_t> stock)
     : Serializer(sizeof(KitchenStatus)), _pendingOrders(pendingOrders), _finishedOrders(finishedOrders), _stock(stock)
 {
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> &
+const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &
 KitchenStatus<ProductType, ProductSize, ProductIngredientType>::getPendingOrders() const
 {
     return this->_pendingOrders;
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> &
+const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &
 KitchenStatus<ProductType, ProductSize, ProductIngredientType>::getFinishedOrders() const
 {
     return this->_finishedOrders;

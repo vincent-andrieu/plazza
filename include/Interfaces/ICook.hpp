@@ -10,9 +10,9 @@
 
 #include <memory>
 #include <queue>
-#include "Interfaces/ProductInterface.hpp"
+#include "Product/Product.hpp"
 #include "Stock/Stock.hpp"
-#include "Kitchen/Kitchen.hpp"
+#include "Order/Order.hpp"
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType> class ICook {
   public:
@@ -20,15 +20,27 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 
     /**
      * @brief Start working
-     * @details Wait for order, get an one, cook, deliver
+     * @details Start thread
      */
     virtual void startWorking() = 0;
+
+    /**
+     * @brief Start working
+     * @details Wait for order, get an one, cook, deliver
+     */
+    virtual void work() = 0;
 
     /**
      * @brief Check if the cook is cooking or has finished cooking but did not delivered yet
      * @return True if cooking, false otherwise
      */
     [[nodiscard]] virtual bool isCooking() const = 0;
+
+    /**
+     * @brief Check if the cook is working
+     * @return True if Working, false otherwise
+     */
+    [[nodiscard]] virtual bool isWorking() const = 0;
 
     /**
      * @brief Stop working
@@ -42,7 +54,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
      * @param size
      * @param ingredients
      */
-    virtual void cook(std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>> order) = 0;
+    virtual void cook(Product<ProductType, ProductSize, ProductIngredientType> order) = 0;
 
     /**
      * @brief check if has finished cooking
@@ -55,8 +67,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
      * @brief Take order from order place
      * @return The order that is to be cooked
      */
-    [[nodiscard]] virtual Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>>
-    receiveOrder() const = 0;
+    [[nodiscard]] virtual Order<Product<ProductType, ProductSize, ProductIngredientType>> receiveOrder() const = 0;
 
     /**
      * @brief Deliver cooked order

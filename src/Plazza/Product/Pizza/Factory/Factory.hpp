@@ -13,7 +13,7 @@
 #include <functional>
 #include <unordered_map>
 #include "Error/Error.hpp"
-#include "Product/AProduct.hpp"
+#include "Product/Product.hpp"
 
 #include "enumPizza.hpp"
 
@@ -28,7 +28,7 @@ namespace Pizzeria
       public:
         Factory() = default;
         ~Factory() = default;
-        static AProduct<PizzaType, PizzaSize, PizzaIngredient> callFactory(
+        static Product<PizzaType, PizzaSize, PizzaIngredient> callFactory(
             const PizzaType type, const PizzaSize size, const double multiplier);
     };
 } // namespace Pizzeria

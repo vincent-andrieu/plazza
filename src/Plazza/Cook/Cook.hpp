@@ -10,8 +10,9 @@
 
 #include <memory>
 #include <vector>
+#include <thread>
 #include "Interfaces/ICook.hpp"
-#include "Interfaces/ProductInterface.hpp"
+#include "Product/Product.hpp"
 #include "Encapsulations/LockedQueue/LockedQueue.hpp"
 #include "Error/Error.hpp"
 
@@ -19,15 +20,23 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 class Cook : public ICook<ProductType, ProductSize, ProductIngredientType> {
   public:
     Cook(Stock<ProductIngredientType> &stockPlace,
-        LockedQueue<Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>>> &orderReceivePlace,
-        LockedQueue<Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>>> &deliveryPlace);
+        LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &orderReceivePlace,
+        LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &deliveryPlace);
     ~Cook() = default;
+
+    Cook(const Cook<ProductType, ProductSize, ProductIngredientType> &rhs);
 
     /**
      * @brief Start working
-     * @details Wait for order, get an one, cook, deliver
+     * @details Start thread
      */
     void startWorking() override;
+
+    /**
+     * @brief Work
+     * @details Wait for order, get an one, cook, deliver
+     */
+    void work() override;
 
     /**
      * @brief Check if the cook is cooking or has finished cooking but did not delivered yet
@@ -36,9 +45,20 @@ class Cook : public ICook<ProductType, ProductSize, ProductIngredientType> {
     [[nodiscard]] bool isCooking() const override;
 
     /**
+     * @brief Check if the cook is working
+     * @return True if Working, false otherwise
+     */
+    [[nodiscard]] bool isWorking() const override;
+
+    /**
      * @brief Stop working
      */
     void stopWorking() override;
+
+    [[nodiscard]] const Product<ProductType, ProductSize, ProductIngredientType> &getCookingProduct() const;
+    [[nodiscard]] Stock<ProductIngredientType> &getStockPlace() const;
+    [[nodiscard]] LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &getOrderReceivePlace() const;
+    [[nodiscard]] LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &getDeliveryPlace() const;
 
   protected:
     /**
@@ -47,7 +67,9 @@ class Cook : public ICook<ProductType, ProductSize, ProductIngredientType> {
      * @param size
      * @param ingredients
      */
-    void cook(std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>> order) override;
+    void cook(Product<ProductType, ProductSize, ProductIngredientType> order) override;
+
+    void getIngredients(const std::vector<ProductIngredientType> &ingredients);
 
     /**
      * @brief check if has finished cooking
@@ -60,7 +82,7 @@ class Cook : public ICook<ProductType, ProductSize, ProductIngredientType> {
      * @brief Take order from order place
      * @return The order that is to be cooked
      */
-    [[nodiscard]] Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>> receiveOrder() const override;
+    [[nodiscard]] Order<Product<ProductType, ProductSize, ProductIngredientType>> receiveOrder() const override;
 
     /**
      * @brief Deliver cooked order
@@ -79,11 +101,12 @@ class Cook : public ICook<ProductType, ProductSize, ProductIngredientType> {
   private:
     bool _isWorking{false};
     bool _isCooking{false};
-    std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>> _cookingProduct{nullptr};
-
+    Product<ProductType, ProductSize, ProductIngredientType> _cookingProduct;
     Stock<ProductIngredientType> &_stockPlace;
-    LockedQueue<Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>>> &_orderReceivePlace;
-    LockedQueue<Order<std::shared_ptr<IProduct<ProductType, ProductSize, ProductIngredientType>>>> &_deliveryPlace;
+    LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &_orderReceivePlace;
+    LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &_deliveryPlace;
+
+    std::thread _thread;
 };
 
 #endif

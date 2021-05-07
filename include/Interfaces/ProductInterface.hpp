@@ -29,7 +29,7 @@ template <typename Type, typename Size, typename IngredientType> class IProduct 
     [[nodiscard]] virtual const std::vector<IngredientType> &getIngredients() const = 0;
     virtual void setIngredients(const std::vector<IngredientType> &ingredients) = 0;
 
-    [[nodiscard]] virtual bool isFinished() = 0;
+    [[nodiscard]] virtual bool isFinished() const = 0;
     virtual void setFinished() = 0;
 };
 

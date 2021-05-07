@@ -10,7 +10,7 @@
 using namespace Pizzeria;
 
 const std::unordered_map<PizzaType,
-    std::function<AProduct<PizzaType, PizzaSize, PizzaIngredient>(const PizzaSize size, const double multiplier)>>
+    std::function<Product<PizzaType, PizzaSize, PizzaIngredient>(const PizzaSize size, const double multiplier)>>
     PizzaList{
         {PizzaType::Americana,
             [](const PizzaSize size, const double multiplier) {
@@ -30,7 +30,7 @@ const std::unordered_map<PizzaType,
             }},
     };
 
-AProduct<PizzaType, PizzaSize, PizzaIngredient> Factory::callFactory(
+Product<PizzaType, PizzaSize, PizzaIngredient> Factory::callFactory(
     const PizzaType type, const PizzaSize size, const double multiplier)
 {
     if (PizzaList.find(type) != PizzaList.end())

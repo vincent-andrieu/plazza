@@ -89,8 +89,8 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
     KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen)
 {
     //Logger log("./last_display");
-    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> finish(kitchen.kitchenStatus.getFinishedOrders());
-    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> pending(kitchen.kitchenStatus.getPendingOrders());
+    std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> finish(kitchen.kitchenStatus.getFinishedOrders());
+    std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> pending(kitchen.kitchenStatus.getPendingOrders());
     std::unordered_map<ProductIngredientType, size_t> stock(kitchen.kitchenStatus.getStock());
     std::unordered_map<string, PizzaSize>::const_iterator size_it;
     std::unordered_map<string, PizzaType>::const_iterator type_it;
@@ -102,7 +102,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
     this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("finish order:"));
     //log.writeLog(std::string("finish size: ") + std::to_string(finish.size()));
     while (finish.size()) {
-        const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> tmp = finish.front();
+        const Order<Product<ProductType, ProductSize, ProductIngredientType>> tmp = finish.front();
         finish.pop();
         size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [tmp](const auto &params) {
                             return params.second == tmp.getOrder().getSize();
@@ -122,7 +122,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
     this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("pending order:"));
     //log.writeLog(std::string("pending size: ") + std::to_string(pending.size()));
     while (pending.size()) {
-        const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> tmp = pending.front();
+        const Order<Product<ProductType, ProductSize, ProductIngredientType>> tmp = pending.front();
         pending.pop();
         size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [tmp](const auto &params) {
                             return params.second == tmp.getOrder().getSize();

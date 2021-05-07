@@ -16,6 +16,7 @@
 #include "Stock/Stock.hpp"
 #include "Encapsulations/Process/Process.hpp"
 #include "Encapsulations/LockedQueue/LockedQueue.hpp"
+#include "Cook/Cook.hpp"
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>, public Process {
@@ -29,7 +30,7 @@ class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>
 
   protected:
     void _receiveOrder() override;
-    void _addPendingOrder(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
+    void _addPendingOrder(const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void _sendFinishedOrders() override;
 
   private:
@@ -41,8 +42,9 @@ class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>
     bool _isCooking{true};
     double _bakingMultiplier;
     size_t _cooksPerKitchen;
-    LockedQueue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
-    LockedQueue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> _finishedOrders;
+    LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
+    LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> _finishedOrders;
+    std::vector<Cook<ProductType, ProductSize, ProductIngredientType>> _cooks;
 };
 
 #endif

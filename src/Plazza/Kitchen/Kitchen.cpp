@@ -10,12 +10,12 @@
 #include "Product/Pizza/Pizza.hpp"
 #include "Kitchen/KitchenStatus/KitchenStatus.hpp"
 
-using namespace Pizzeria;
-
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Kitchen<ProductType, ProductSize, ProductIngredientType>::Kitchen(
     double bakingMultiplier, size_t cooksPerKitchen, double restockTime)
-    : _lastAct(std::chrono::system_clock::now()), _stock(restockTime), _bakingMultiplier(bakingMultiplier), _cooksPerKitchen(cooksPerKitchen)
+    : _lastAct(std::chrono::system_clock::now()), _stock(restockTime), _bakingMultiplier(bakingMultiplier),
+      _cooksPerKitchen(cooksPerKitchen),
+      _cooks(cooksPerKitchen, Cook<ProductType, ProductSize, ProductIngredientType>(_stock, _pendingOrders, _finishedOrders))
 {
 }
 
@@ -23,6 +23,9 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
 {
     // TODO: Create threads per cooks
+    for (auto &cook : _cooks) {
+        cook.startWorking();
+    }
 
     while (this->isCooking()) {
         this->_receiveOrder();
@@ -51,7 +54,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
     switch (commType.getType()) {
         case ECommunicationType::ORDER_PIZZA: {
             Pizza pizza = Pizza();
-            Order<AProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
+            Order<Product<ProductType, ProductSize, ProductIngredientType>> order(pizza);
 
             this->waitingReceive(order);
             this->_addPendingOrder(order);
@@ -74,7 +77,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Kitchen<ProductType, ProductSize, ProductIngredientType>::_addPendingOrder(
-    const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order)
+    const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     this->_pendingOrders.push(order);
 }
@@ -106,11 +109,11 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_destroyManage()
     std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
     size_t elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(now - this->_lastAct).count() / 1000;
 
-    if (this->_pendingOrders.size() || this->_finishedOrders.size()) {
+    if (!this->_pendingOrders.empty() || !this->_finishedOrders.empty()) {
         this->_lastAct = std::chrono::system_clock::now();
         return;
     } else if (elapsedTime >= 5)
         this->_isCooking = false;
 }
 
-template class Kitchen<PizzaType, PizzaSize, PizzaIngredient>;
+template class Kitchen<Pizzeria::PizzaType, Pizzeria::PizzaSize, Pizzeria::PizzaIngredient>;

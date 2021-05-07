@@ -29,10 +29,10 @@ class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredien
     void askKitchensStatus() const override;
 
   protected:
-    void _newKitchen(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
-    void _distributeOrder(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
+    void _newKitchen(const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order) override;
+    void _distributeOrder(const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void _sendOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchen,
-        const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
+        const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void _retreiveOrders() override;
 
   private:

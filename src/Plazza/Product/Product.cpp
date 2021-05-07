@@ -1,82 +1,82 @@
 /*
 ** EPITECH PROJECT, 2021
-** AProduct.cpp.c
+** Product.cpp.c
 ** File description:
 ** Implementation of abstract product
 */
 
-#include "Product/AProduct.hpp"
+#include "Product/Product.hpp"
 #include "Product/Pizza/Pizza.hpp"
 
 template <typename Type, typename Size, typename IngredientType>
-bool AProduct<Type, Size, IngredientType>::operator==(const IProduct<Type, Size, IngredientType> &product) const
+bool Product<Type, Size, IngredientType>::operator==(const IProduct<Type, Size, IngredientType> &product) const
 {
     return this->getType() == product.getType() && this->getSize() == product.getSize()
         && this->getPreparationTime() == product.getPreparationTime() && this->getIngredients() == product.getIngredients();
 }
 
 template <typename Type, typename Size, typename IngredientType>
-bool AProduct<Type, Size, IngredientType>::operator!=(const IProduct<Type, Size, IngredientType> &product) const
+bool Product<Type, Size, IngredientType>::operator!=(const IProduct<Type, Size, IngredientType> &product) const
 {
     return this->getType() != product.getType() || this->getSize() != product.getSize()
         || this->getPreparationTime() != product.getPreparationTime() || this->getIngredients() != product.getIngredients();
 }
 
 template <typename Type, typename Size, typename IngredientType>
-[[nodiscard]] Type AProduct<Type, Size, IngredientType>::getType() const
+[[nodiscard]] Type Product<Type, Size, IngredientType>::getType() const
 {
     return _type;
 }
 
-template <typename Type, typename Size, typename IngredientType> void AProduct<Type, Size, IngredientType>::setType(Type type)
+template <typename Type, typename Size, typename IngredientType> void Product<Type, Size, IngredientType>::setType(Type type)
 {
     _type = type;
 }
 
 template <typename Type, typename Size, typename IngredientType>
-[[nodiscard]] Size AProduct<Type, Size, IngredientType>::getSize() const
+[[nodiscard]] Size Product<Type, Size, IngredientType>::getSize() const
 {
     return _size;
 }
 
-template <typename Type, typename Size, typename IngredientType> void AProduct<Type, Size, IngredientType>::setSize(Size size)
+template <typename Type, typename Size, typename IngredientType> void Product<Type, Size, IngredientType>::setSize(Size size)
 {
     _size = size;
 }
 
 template <typename Type, typename Size, typename IngredientType>
-[[nodiscard]] double AProduct<Type, Size, IngredientType>::getPreparationTime() const
+[[nodiscard]] double Product<Type, Size, IngredientType>::getPreparationTime() const
 {
     return _preparationTime;
 }
 
 template <typename Type, typename Size, typename IngredientType>
-void AProduct<Type, Size, IngredientType>::setPreparationTime(double preparationTime)
+void Product<Type, Size, IngredientType>::setPreparationTime(double preparationTime)
 {
     _preparationTime = preparationTime;
 }
 
 template <typename Type, typename Size, typename IngredientType>
-[[nodiscard]] const std::vector<IngredientType> &AProduct<Type, Size, IngredientType>::getIngredients() const
+[[nodiscard]] const std::vector<IngredientType> &Product<Type, Size, IngredientType>::getIngredients() const
 {
     return _ingredients;
 }
 
 template <typename Type, typename Size, typename IngredientType>
-void AProduct<Type, Size, IngredientType>::setIngredients(const std::vector<IngredientType> &ingredients)
+void Product<Type, Size, IngredientType>::setIngredients(const std::vector<IngredientType> &ingredients)
 {
     _ingredients = ingredients;
 }
 
 template <typename Type, typename Size, typename IngredientType>
-[[nodiscard]] bool AProduct<Type, Size, IngredientType>::isFinished()
+[[nodiscard]] bool Product<Type, Size, IngredientType>::isFinished() const
 {
     return _finished;
 }
 
-template <typename Type, typename Size, typename IngredientType> void AProduct<Type, Size, IngredientType>::setFinished()
+template <typename Type, typename Size, typename IngredientType> void Product<Type, Size, IngredientType>::setFinished()
 {
     _finished = true;
 }
 
-template class AProduct<Pizzeria::PizzaType, Pizzeria::PizzaSize, Pizzeria::PizzaIngredient>;
+template class Product<Pizzeria::PizzaType, Pizzeria::PizzaSize, Pizzeria::PizzaIngredient>;

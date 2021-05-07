@@ -22,7 +22,7 @@ Reception::Reception(double multiplier, std::function<void()> statusFunc, std::f
     this->_otherCommand.setFunctionCall("QUIT", std::move(quitFunc));
 }
 
-void Reception::sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> &order)
+void Reception::sendOrder(const Order<Product<PizzaType, PizzaSize, PizzaIngredient>> &order)
 {
     PizzaSize size = order.getOrder().getSize();
     PizzaType type = order.getOrder().getType();
@@ -45,8 +45,8 @@ void Reception::sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngred
 void Reception::sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, PizzaIngredient> &kitchenStatus)
 {
     std::string tab = "\t";
-    std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> finish(kitchenStatus.getFinishedOrders());
-    std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> pending(kitchenStatus.getPendingOrders());
+    std::queue<Order<Product<PizzaType, PizzaSize, PizzaIngredient>>> finish(kitchenStatus.getFinishedOrders());
+    std::queue<Order<Product<PizzaType, PizzaSize, PizzaIngredient>>> pending(kitchenStatus.getPendingOrders());
     std::unordered_map<PizzaIngredient, size_t> stock(kitchenStatus.getStock());
     std::unordered_map<string, PizzaSize>::const_iterator size_it;
     std::unordered_map<string, PizzaType>::const_iterator type_it;
@@ -55,7 +55,7 @@ void Reception::sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, Pizz
     this->_logger.writeLog("kitchen status:");
     this->_logger.writeLog(tab + std::string("finish order:"));
     while (!finish.empty()) {
-        const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> tmp = finish.front();
+        const Order<Product<PizzaType, PizzaSize, PizzaIngredient>> tmp = finish.front();
         finish.pop();
         size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [tmp](const auto &params) {
             return params.second == tmp.getOrder().getSize();
@@ -72,7 +72,7 @@ void Reception::sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, Pizz
 
     this->_logger.writeLog(tab + std::string("pending order:"));
     while (!pending.empty()) {
-        const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> tmp = pending.front();
+        const Order<Product<PizzaType, PizzaSize, PizzaIngredient>> tmp = pending.front();
         pending.pop();
         size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [tmp](const auto &params) {
             return params.second == tmp.getOrder().getSize();
@@ -95,7 +95,7 @@ void Reception::sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, Pizz
 }
 
 void Reception::receiveCommands(
-    const string &commands, std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> &orderList)
+    const string &commands, std::queue<Order<Product<PizzaType, PizzaSize, PizzaIngredient>>> &orderList)
 {
     stringstream ss(commands);
     string segment;
@@ -106,7 +106,7 @@ void Reception::receiveCommands(
 }
 
 void Reception::_writePizzasCommand(
-    const string &cmd, std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> &orderList)
+    const string &cmd, std::queue<Order<Product<PizzaType, PizzaSize, PizzaIngredient>>> &orderList)
 {
     stringstream ss(cmd);
     string word;
@@ -127,10 +127,10 @@ void Reception::_writePizzasCommand(
 
     const size_t nbr = _getNbr(words[2]);
     for (size_t i = 0; i < nbr; i++) {
-        AProduct<PizzaType, PizzaSize, PizzaIngredient> product =
+        Product<PizzaType, PizzaSize, PizzaIngredient> product =
             Factory::callFactory(_getType(words[0]), _getSize(words[1]), this->_bakingMultiplier);
 
-        orderList.push(Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>(product));
+        orderList.push(Order<Product<PizzaType, PizzaSize, PizzaIngredient>>(product));
     }
 }
 
