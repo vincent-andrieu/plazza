@@ -142,7 +142,6 @@ bool Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
 
     if (kitchenManage->kitchen.receive(commType) == false)
         return false;
-    std::cerr << "OK 1, type: " << commType.getType() << std::endl;
     switch (commType.getType()) {
         case ECommunicationType::ORDER_PIZZA: {
             Pizza pizza = Pizza();
@@ -167,7 +166,6 @@ bool Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
         } break;
         default: break;
     };
-    std::cerr << "OK 2" << std::endl;
     return false;
 }
 
