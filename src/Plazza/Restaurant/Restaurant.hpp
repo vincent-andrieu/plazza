@@ -31,18 +31,18 @@ class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredien
   protected:
     void _newKitchen(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void _distributeOrder(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
-    void _sendOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchen,
+    void _sendOrder(std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchen,
         const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void _retreiveOrders() override;
 
   private:
-    bool _retreiveOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage);
+    bool _retreiveOrder(std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchenManage);
 
     bool _isOpen{true};
     double _bakingMultiplier;
     size_t _cooksPerKitchen;
     size_t _restockTime;
-    std::list<KitchenManage<ProductType, ProductSize, ProductIngredientType>> _kitchens;
+    std::vector<std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>>> _kitchens;
     Reception _reception;
 };
 

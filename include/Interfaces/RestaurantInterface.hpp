@@ -8,13 +8,17 @@
 #ifndef RESTAURANT_INTERFACE_HPP
 #define RESTAURANT_INTERFACE_HPP
 
+#include <memory>
 #include <list>
 #include "Kitchen/Kitchen.hpp"
 #include "Order/Order.hpp"
 #include "Product/AProduct.hpp"
 #include "Kitchen/KitchenStatus/KitchenStatus.hpp"
 
-template <typename ProductType, typename ProductSize, typename ProductIngredientType> struct KitchenManage {
+template <typename ProductType, typename ProductSize, typename ProductIngredientType> class KitchenManage {
+  public:
+    KitchenManage(const Kitchen<ProductType, ProductSize, ProductIngredientType> &kit) : kitchen(kit){};
+    ~KitchenManage() = default;
     const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen;
     std::list<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> orders;
     KitchenStatus<ProductType, ProductSize, ProductIngredientType> kitchenStatus;
@@ -32,7 +36,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
   protected:
     virtual void _newKitchen(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
     virtual void _distributeOrder(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
-    virtual void _sendOrder(KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchen,
+    virtual void _sendOrder(std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchen,
         const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
     virtual void _retreiveOrders() = 0;
 };

@@ -37,7 +37,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
     while (this->isOpen() && core.isRunning()) {
         core.clear();
         core.printPrompt();
-        core.printKitchen(this->_kitchens);
+        // core.printKitchen(this->_kitchens);
         input = core.getLine();
         if (input.length()) {
             try {
@@ -73,18 +73,17 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_distributeOrder(
     const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
-    std::_List_iterator<KitchenManage<ProductType, ProductSize, ProductIngredientType>> selectedKitchenIndex;
+    size_t selectedKitchenIndex;
     size_t maxOrders = this->_cooksPerKitchen * 2;
 
-    for (std::_List_iterator<KitchenManage<ProductType, ProductSize, ProductIngredientType>> it = this->_kitchens.begin();
-         it != this->_kitchens.end(); it++) {
-        if (it->orders.size() < maxOrders) {
-            maxOrders = it->orders.size();
-            selectedKitchenIndex = it;
+    for (size_t i = 0; i < this->_kitchens.size(); i++) {
+        if (this->_kitchens[i]->orders.size() < maxOrders) {
+            maxOrders = this->_kitchens[i]->orders.size();
+            selectedKitchenIndex = i;
         }
     }
     if (maxOrders < this->_cooksPerKitchen * 2) {
-        this->_sendOrder(*selectedKitchenIndex, order);
+        this->_sendOrder(this->_kitchens[selectedKitchenIndex], order);
     } else {
         this->_newKitchen(order);
     }
@@ -94,78 +93,81 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_newKitchen(
     const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
-    Kitchen<ProductType, ProductSize, ProductIngredientType> kitchen(
-        this->_bakingMultiplier, this->_cooksPerKitchen, this->_restockTime);
-    KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchenManage = {
-        kitchen, {}, KitchenStatus<ProductType, ProductSize, ProductIngredientType>()};
+    Kitchen<ProductType, ProductSize, ProductIngredientType> *kitchen =
+        new Kitchen<ProductType, ProductSize, ProductIngredientType>(
+            this->_bakingMultiplier, this->_cooksPerKitchen, this->_restockTime);
 
-    if (kitchen.isParent()) {
-        this->_sendOrder(kitchenManage, order);
-        this->_kitchens.push_back(kitchenManage);
-    } else if (kitchen.isChild())
-        kitchen.cook();
+    if (kitchen->isParent()) {
+        this->_kitchens.push_back(std::make_unique<KitchenManage<ProductType, ProductSize, ProductIngredientType>>(
+            KitchenManage<ProductType, ProductSize, ProductIngredientType>(*kitchen)));
+        this->_sendOrder(this->_kitchens.back(), order);
+    } else if (kitchen->isChild())
+        kitchen->cook();
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_sendOrder(
-    KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage,
+    std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchenManage,
     const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order)
 {
-    kitchenManage.orders.push_back(order);
-    kitchenManage.kitchen.send(CommunicationType(ECommunicationType::ORDER_PIZZA));
-    kitchenManage.kitchen.send(order);
+    kitchenManage->orders.push_back(order);
+    kitchenManage->kitchen.send(CommunicationType(ECommunicationType::ORDER_PIZZA));
+    kitchenManage->kitchen.send(order);
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::askKitchensStatus() const
 {
-    for (const KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage : this->_kitchens) {
-        kitchenManage.kitchen.send(CommunicationType(ECommunicationType::STATUS));
+    for (const std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchenManage : this->_kitchens) {
+        kitchenManage->kitchen.send(CommunicationType(ECommunicationType::STATUS));
     }
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrders()
 {
-    for (std::_List_iterator<KitchenManage<ProductType, ProductSize, ProductIngredientType>> it = this->_kitchens.begin();
-         it != this->_kitchens.end(); it++) {
-        if (this->_retreiveOrder(*it))
-            this->_kitchens.erase(it);
+    for (size_t i = 0; i < this->_kitchens.size(); i++) {
+        if (this->_retreiveOrder(this->_kitchens[i])) {
+            this->_kitchens.erase(this->_kitchens.begin() + i);
+            delete this->_kitchens[i].get();
+        }
     }
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 bool Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder(
-    KitchenManage<ProductType, ProductSize, ProductIngredientType> &kitchenManage)
+    std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchenManage)
 {
     CommunicationType commType;
 
-    if (kitchenManage.kitchen.receive(commType) == false)
+    if (kitchenManage->kitchen.receive(commType) == false)
         return false;
+    std::cerr << "OK 1, type: " << commType.getType() << std::endl;
     switch (commType.getType()) {
         case ECommunicationType::ORDER_PIZZA: {
             Pizza pizza = Pizza();
             Order<AProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
 
-            kitchenManage.kitchen.waitingReceive(order);
+            kitchenManage->kitchen.waitingReceive(order);
             this->_reception.sendOrder(order);
 
-            kitchenManage.orders.remove_if([order](Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &elemOrder) {
+            kitchenManage->orders.remove_if([order](Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &elemOrder) {
                 return order.getOrder() == elemOrder.getOrder();
             });
         } break;
 
         case ECommunicationType::STATUS: {
-            kitchenManage.kitchen.waitingReceive(kitchenManage.kitchenStatus);
-            this->_reception.sendKitchenStatus(kitchenManage.kitchenStatus);
+            kitchenManage->kitchen.waitingReceive(kitchenManage->kitchenStatus);
+            this->_reception.sendKitchenStatus(kitchenManage->kitchenStatus);
         } break;
 
         case ECommunicationType::KILL_CHILD: {
-            kitchenManage.kitchen.killChild();
+            kitchenManage->kitchen.killChild();
             return true;
         } break;
         default: break;
     };
+    std::cerr << "OK 2" << std::endl;
     return false;
 }
 
