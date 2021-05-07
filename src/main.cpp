@@ -34,7 +34,11 @@ int main(int argc, char **argv)
         return EXIT_ERROR;
 
     Restaurant<PizzaType, PizzaSize, PizzaIngredient> restaurant(bakingMultiplier, cooksPerKitchen, restockTime);
-    restaurant.lunchTime();
-
+    try {
+        restaurant.lunchTime();
+    } catch (const ManageError &e) {
+        std::cerr << e.getComponent() + ": " + e.what() << std::endl;
+        return EXIT_ERROR;
+    }
     return EXIT_SUCCESS;
 }
