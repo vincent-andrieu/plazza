@@ -55,8 +55,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
 
             this->waitingReceive(order);
             this->_addPendingOrder(order);
-            break;
-        }
+        } break;
 
         case ECommunicationType::STATUS: {
             this->_pendingOrders.mutex.lock();
@@ -65,8 +64,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
                 this->_pendingOrders.queue, this->_finishedOrders.queue, this->_stock.getStockList()));
             this->_pendingOrders.mutex.unlock();
             this->_finishedOrders.mutex.unlock();
-            break;
-        }
+        } break;
 
         default: break;
     };
