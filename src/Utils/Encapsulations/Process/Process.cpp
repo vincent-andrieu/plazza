@@ -42,6 +42,18 @@ Process::Process(const Process &process)
     this->_childCommunication = process._childCommunication;
 }
 
+Process &Process::operator=(const Process &process)
+{
+    this->_parentPid = process._parentPid;
+    this->_isParent = process._isParent;
+    this->_childPid = process._childPid;
+    this->_isChild = process._isChild;
+    this->_parentCommunication = process._parentCommunication;
+    this->_childCommunication = process._childCommunication;
+
+    return *this;
+}
+
 bool Process::operator==(const Process &process) const
 {
     if (this->isParent() && process.isChild())

@@ -18,7 +18,7 @@ class Process {
     Process(const Process &process);
     ~Process() = default;
 
-    Process &operator=(const Process &process) = default;
+    Process &operator=(const Process &process);
     [[nodiscard]] bool operator==(const Process &process) const;
 
     [[nodiscard]] bool isParent() const;

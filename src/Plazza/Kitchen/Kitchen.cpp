@@ -22,7 +22,6 @@ Kitchen<ProductType, ProductSize, ProductIngredientType>::Kitchen(
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
 {
-    // TODO: Create threads per cooks
     for (auto &cook : _cooks) {
         cook.startWorking();
     }
@@ -58,8 +57,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
 
             this->waitingReceive(order);
             this->_addPendingOrder(order);
-            break;
-        }
+        } break;
 
         case ECommunicationType::STATUS: {
             this->_pendingOrders.lock();
