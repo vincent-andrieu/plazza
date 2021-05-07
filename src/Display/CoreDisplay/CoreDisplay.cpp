@@ -53,9 +53,9 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printPrompt()
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printKitchen(
-    std::list<KitchenManage<ProductType, ProductSize, ProductIngredientType>> kitchenList)
+    std::vector<std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>>> &kitchenList)
 {
-    typename std::list<KitchenManage<ProductType, ProductSize, ProductIngredientType>>::iterator it =
+    typename std::vector<std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>>>::iterator it =
         kitchenList.begin();
     std::string to_display = "";
     std::size_t pos_y = 1;
@@ -86,12 +86,12 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printKitchen(
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetailledKitchen(
-    KitchenManage<ProductType, ProductSize, ProductIngredientType> kitchen)
+    std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchen)
 {
     //Logger log("./last_display");
-    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> finish(kitchen.kitchenStatus.getFinishedOrders());
-    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> pending(kitchen.kitchenStatus.getPendingOrders());
-    std::unordered_map<ProductIngredientType, size_t> stock(kitchen.kitchenStatus.getStock());
+    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> finish(kitchen->kitchenStatus.getFinishedOrders());
+    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> pending(kitchen->kitchenStatus.getPendingOrders());
+    std::unordered_map<ProductIngredientType, size_t> stock(kitchen->kitchenStatus.getStock());
     std::unordered_map<string, PizzaSize>::const_iterator size_it;
     std::unordered_map<string, PizzaType>::const_iterator type_it;
     std::string to_write = "";
