@@ -22,7 +22,7 @@ Kitchen<ProductType, ProductSize, ProductIngredientType>::Kitchen(
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
+int Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
 {
     while (this->isCooking()) {
         this->_receiveOrder();
@@ -32,6 +32,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
     }
 
     this->send(CommunicationType(ECommunicationType::KILL_CHILD));
+    return EXIT_SUCCESS;
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -50,11 +51,11 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
 
     switch (commType.getType()) {
         case ECommunicationType::ORDER_PIZZA: {
-            Pizza pizza = Pizza();
-            Order<AProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
+            Order<AProduct<ProductType, ProductSize, ProductIngredientType>> *order =
+                new Order<AProduct<ProductType, ProductSize, ProductIngredientType>>(Pizza());
 
-            this->waitingReceive(order);
-            this->_addPendingOrder(order);
+            this->waitingReceive(*order);
+            this->_addPendingOrder(*order);
         } break;
 
         case ECommunicationType::STATUS: {

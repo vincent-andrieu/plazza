@@ -102,7 +102,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_newKitchen(
             KitchenManage<ProductType, ProductSize, ProductIngredientType>(*kitchen)));
         this->_sendOrder(this->_kitchens.back(), order);
     } else if (kitchen->isChild())
-        kitchen->cook();
+        exit(kitchen->cook());
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -161,7 +161,6 @@ bool Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
         } break;
 
         case ECommunicationType::KILL_CHILD: {
-            kitchenManage->kitchen.killChild();
             return true;
         } break;
         default: break;
