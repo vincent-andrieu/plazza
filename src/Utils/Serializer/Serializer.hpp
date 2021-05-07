@@ -33,7 +33,7 @@ class Serializer {
 
   protected:
     virtual const string _SerializeToString() const = 0;
-    virtual void _SerializeFromString() = 0;
+    virtual void _SerializeFromString(const string str) = 0;
 };
 
 #endif
