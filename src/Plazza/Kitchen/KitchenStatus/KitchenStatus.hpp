@@ -9,6 +9,7 @@
 #define KITCHEN_STATUS_HPP
 
 #include <queue>
+#include <string>
 #include <unordered_map>
 #include "Plazza.hpp"
 #include "Order/Order.hpp"
