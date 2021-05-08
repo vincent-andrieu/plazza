@@ -13,6 +13,7 @@
 #include <unordered_map>
 #include "Plazza.hpp"
 #include "Order/Order.hpp"
+#include "Product/Pizza/Factory/Factory.hpp"
 #include "Product/AProduct.hpp"
 #include "Translator/Translator.hpp"
 #include "enumPizza.hpp"
@@ -35,9 +36,9 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
     void _SerializeFromString(const string str);
 
   private:
-    const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
-    const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> _finishedOrders;
-    const std::unordered_map<ProductIngredientType, size_t> _stock;
+    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
+    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> _finishedOrders;
+    std::unordered_map<ProductIngredientType, size_t> _stock;
 };
 
 #endif

@@ -56,7 +56,7 @@ const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_Se
         type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [tmp](const auto &params) {
                             return params.second == tmp.getOrder().getType();
                         });
-        serial += (type_it->first + std::string(" ") + size_it->first);
+        serial += (type_it->first + std::string(" ") + size_it->first + std::string(" ") + std::to_string(tmp.getOrder().getPreparationTime()));
         if (finish.size())
             serial += "|";
     }
@@ -70,7 +70,7 @@ const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_Se
         type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [tmp](const auto &params) {
                             return params.second == tmp.getOrder().getType();
                         });
-        serial += (type_it->first + std::string(" ") + size_it->first);
+        serial += (type_it->first + std::string(" ") + size_it->first + std::string(" ") + std::to_string(tmp.getOrder().getPreparationTime()));
         if (pending.size())
             serial += "|";
     }
@@ -94,6 +94,8 @@ void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeF
     std::string word;
     ProductIngredientType ingredient;
     std::unordered_map<PizzaIngredient, string>::const_iterator ingred_it;
+    PizzaSize tmp_size;
+    PizzaType tmp_type;
 
     std::getline(lineStream, finish, '-');
     std::getline(lineStream, pending, '-');
@@ -102,17 +104,21 @@ void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeF
     while (std::getline(lineStream, tmp, '|')) {
         ss = stringstream(tmp);
         ss >> word;
-        //this->_object.setType(Translator<PizzaType, PizzaSize>::StringToType(word));
+        tmp_type = Translator<PizzaType, PizzaSize>::StringToType(word);
         ss >> word;
-        //this->_object.setSize(Translator<PizzaType, PizzaSize>::StringToSize(word));
+        tmp_size = Translator<PizzaType, PizzaSize>::StringToSize(word);
+        ss >> word;
+        this->_finishedOrders.push(Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>(Factory::callFactory(tmp_type, tmp_size, std::stoull(word))));
     }
     lineStream = std::istringstream(pending);
     while (std::getline(lineStream, tmp, '|')) {
         ss = stringstream(tmp);
         ss >> word;
-        //this->_object.setType(Translator<PizzaType, PizzaSize>::StringToType(word));
+        tmp_type = Translator<PizzaType, PizzaSize>::StringToType(word);
         ss >> word;
-        //this->_object.setSize(Translator<PizzaType, PizzaSize>::StringToSize(word));
+        tmp_size = Translator<PizzaType, PizzaSize>::StringToSize(word);
+        ss >> word;
+        this->_finishedOrders.push(Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>(Factory::callFactory(tmp_type, tmp_size, std::stoull(word))));
     }
     lineStream = std::istringstream(stock);
     while (std::getline(lineStream, tmp, '|')) {
@@ -128,7 +134,7 @@ void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeF
                 word += x;
             }
         }
-        //this->_stock[ingredient] = std::stoull(word);
+        this->_stock[ingredient] = std::stoull(word);
     }
 }
 
