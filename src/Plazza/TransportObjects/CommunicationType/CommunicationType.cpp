@@ -27,5 +27,7 @@ const string CommunicationType::_SerializeToString() const
 
 void CommunicationType::_SerializeFromString(const string str)
 {
-    this->_type = (ECommunicationType) std::stoi(str);
+    std::cerr << "here: " << str << std::endl;
+    //todo vincent
+    this->_type = (ECommunicationType) std::stoi("20");
 }

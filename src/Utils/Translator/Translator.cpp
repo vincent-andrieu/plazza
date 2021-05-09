@@ -13,7 +13,9 @@ template <typename Type, typename Size> const string Translator<Type, Size>::Enu
         std::find_if(PizzaNames.begin(), PizzaNames.end(), [type](const auto &params) {
             return params.second == type;
         });
-    return it->first;
+    if (it == PizzaNames.end())
+        return std::string("yolo");
+    return std::string(it->first);
 }
 
 template <typename Type, typename Size> const string Translator<Type, Size>::EnumToString(Size size)
@@ -22,7 +24,9 @@ template <typename Type, typename Size> const string Translator<Type, Size>::Enu
         std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [size](const auto &params) {
             return params.second == size;
         });
-    return it->first;
+    if (it == PizzaSizeList.end())
+        return std::string("yolo");
+    return std::string(it->first);
 }
 
 template <typename Type, typename Size> Type Translator<Type, Size>::StringToType(string src)

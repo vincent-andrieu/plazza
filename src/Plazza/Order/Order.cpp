@@ -26,7 +26,9 @@ template <typename T> const string Order<T>::_SerializeToString() const
 
     serial += " ";
     serial += Translator<PizzaType, PizzaSize>::EnumToString(this->_object.getSize());
-    return serial;
+    serial += " ";
+    serial += std::to_string(this->_object.getPreparationTime());
+    return std::string(serial);
 }
 
 template <typename T> void Order<T>::_SerializeFromString(const string str)
@@ -38,6 +40,8 @@ template <typename T> void Order<T>::_SerializeFromString(const string str)
     this->_object.setType(Translator<PizzaType, PizzaSize>::StringToType(word));
     ss >> word;
     this->_object.setSize(Translator<PizzaType, PizzaSize>::StringToSize(word));
+    ss >> word;
+    this->_object.setPreparationTime(std::stoull(word));
 }
 
 template class Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>;
