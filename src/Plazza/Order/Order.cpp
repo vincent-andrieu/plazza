@@ -22,7 +22,7 @@ template <typename T> const T &Order<T>::getOrder() const
 
 template <typename T> const string Order<T>::_SerializeToString() const
 {
-    std::string serial = Translator<PizzaType, PizzaSize>::EnumToString(this->_object.getType());
+    string serial = Translator<PizzaType, PizzaSize>::EnumToString(this->_object.getType());
 
     serial += " ";
     serial += Translator<PizzaType, PizzaSize>::EnumToString(this->_object.getSize());
@@ -32,7 +32,7 @@ template <typename T> const string Order<T>::_SerializeToString() const
 template <typename T> void Order<T>::_SerializeFromString(const string str)
 {
     stringstream ss(str);
-    std::string word;
+    string word;
 
     ss >> word;
     this->_object.setType(Translator<PizzaType, PizzaSize>::StringToType(word));
