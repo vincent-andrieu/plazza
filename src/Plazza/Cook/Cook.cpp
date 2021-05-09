@@ -19,8 +19,9 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 Cook<ProductType, ProductSize, ProductIngredientType>::~Cook()
 {
     _isWorking = false;
-    if (_thread.joinable())
+    if (_thread.joinable()) {
         _thread.join();
+    }
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -89,7 +90,7 @@ void Cook<ProductType, ProductSize, ProductIngredientType>::getIngredients(const
 {
     auto my_ingredients(ingredients);
 
-    for (auto iterator = my_ingredients.begin(); !my_ingredients.empty(); ++iterator) {
+    for (auto iterator = my_ingredients.begin(); !my_ingredients.empty() && _isWorking; ++iterator) {
         if (iterator == my_ingredients.end())
             iterator = my_ingredients.begin();
         if (pickIngredientInStock(*iterator))

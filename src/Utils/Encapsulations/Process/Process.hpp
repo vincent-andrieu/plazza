@@ -23,6 +23,8 @@ class Process {
 
     [[nodiscard]] bool isParent() const;
     [[nodiscard]] bool isChild() const;
+    [[nodiscard]] bool parentExists() const;
+    [[nodiscard]] bool childExists() const;
     int waitChild() const;
     void killChild() const;
     void send(const Serializer &object) const;

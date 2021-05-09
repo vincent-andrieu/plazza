@@ -9,7 +9,7 @@
 #include "Plazza.hpp"
 #include "Restaurant/Restaurant.hpp"
 
-void printHelp(const string binaryName)
+void printHelp(const string &binaryName)
 {
     std::cout << "USAGE:\t" << binaryName << " COOKING_TIME COOKS STOCK_RELOAD" << std::endl
               << "\tCOOKING_TIME:\tMultiplier for the cooking time." << std::endl

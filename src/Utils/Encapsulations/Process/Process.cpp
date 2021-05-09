@@ -73,6 +73,24 @@ bool Process::isChild() const
     return this->_isChild;
 }
 
+bool Process::parentExists() const
+{
+    if (this->isParent())
+        throw ProcessError("Parent don't have a parent");
+    if (kill(this->_parentPid, 0) == -1)
+        return false;
+    return true;
+}
+
+bool Process::childExists() const
+{
+    if (this->isChild())
+        throw ProcessError("Child don't have a child");
+    if (kill(this->_childPid, 0) == -1)
+        return false;
+    return true;
+}
+
 /**
  * @brief Wait child process and return the process exit value.
  * @throw If the child try to wait himself or if waitpid fails.

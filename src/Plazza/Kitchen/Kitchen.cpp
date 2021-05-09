@@ -26,7 +26,8 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
     while (this->isCooking()) {
         this->_receiveOrder();
         this->_sendFinishedOrders();
-        this->_stock.restock();
+        if (this->_stock.isRestockTime())
+            this->_stock.restock();
         this->_destroyManage();
     }
     cooksStopCooking();
@@ -107,8 +108,9 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_destroyManage()
     if (!this->_pendingOrders.empty() || !this->_finishedOrders.empty()) {
         this->_lastAct = std::chrono::system_clock::now();
         return;
-    } else if (elapsedTime >= 5)
+    } else if (elapsedTime >= 5 || !parentExists()) {
         this->_isCooking = false;
+    }
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
