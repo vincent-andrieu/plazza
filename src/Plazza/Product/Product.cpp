@@ -9,6 +9,13 @@
 #include "Product/Pizza/Pizza.hpp"
 
 template <typename Type, typename Size, typename IngredientType>
+Product<Type, Size, IngredientType>::Product(const Product<Type, Size, IngredientType> &src)
+    : _type(src.getType()), _size(src.getSize()), _preparationTime(src.getPreparationTime()), _ingredients(src.getIngredients()),
+      _finished(src.isFinished())
+{
+}
+
+template <typename Type, typename Size, typename IngredientType>
 Product<Type, Size, IngredientType> &Product<Type, Size, IngredientType>::operator=(
     const Product<Type, Size, IngredientType> &rhs)
 {

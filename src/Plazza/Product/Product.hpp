@@ -13,6 +13,7 @@
 template <typename Type, typename Size, typename IngredientType> class Product : public IProduct<Type, Size, IngredientType> {
   public:
     Product() = default;
+    Product(const Product<Type, Size, IngredientType> &src);
     ~Product() = default;
 
     Product<Type, Size, IngredientType> &operator=(const Product<Type, Size, IngredientType> &rhs);
