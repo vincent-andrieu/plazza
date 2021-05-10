@@ -75,6 +75,7 @@ const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_Se
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeFromString(const string str)
 {
+    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> emptyQueue;
     std::istringstream lineStream(str);
     string finish;
     string pending;
@@ -91,6 +92,7 @@ void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeF
     std::getline(lineStream, pending, '-');
     std::getline(lineStream, stock, '-');
     lineStream = std::istringstream(finish);
+    this->_finishedOrders.swap(emptyQueue);
     while (std::getline(lineStream, tmp, '|')) {
         ss = stringstream(tmp);
         ss >> word;
@@ -102,6 +104,7 @@ void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeF
             Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>(Factory::callFactory(tmp_type, tmp_size, toSize_t(word))));
     }
     lineStream = std::istringstream(pending);
+    this->_pendingOrders.swap(emptyQueue);
     while (std::getline(lineStream, tmp, '|')) {
         ss = stringstream(tmp);
         ss >> word;

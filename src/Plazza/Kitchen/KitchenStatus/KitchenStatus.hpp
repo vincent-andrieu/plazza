@@ -10,12 +10,10 @@
 
 #include <queue>
 #include <string>
-#include <unordered_map>
 #include "Order/Order.hpp"
 #include "Product/Pizza/Factory/Factory.hpp"
 #include "Product/AProduct.hpp"
 #include "Translator/Translator.hpp"
-#include "enumPizza.hpp"
 
 using namespace Pizzeria;
 
