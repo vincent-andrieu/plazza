@@ -10,7 +10,7 @@
 
 #include "Plazza.hpp"
 
-#define MAX_OBJECT_SIZE 128
+#define MAX_OBJECT_SIZE 4096
 
 struct SendedObject {
     long mtype;
