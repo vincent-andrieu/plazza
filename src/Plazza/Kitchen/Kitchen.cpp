@@ -71,7 +71,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_addPendingOrder(
     this->_pendingOrders.mutex.lock();
     this->_pendingOrders.queue.push(order);
     this->_pendingOrders.mutex.unlock();
-    this->_sendStatus();
+    //this->_sendStatus();
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
