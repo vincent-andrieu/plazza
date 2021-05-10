@@ -58,15 +58,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
             this->_addPendingOrder(*order);
         } break;
 
-        case ECommunicationType::STATUS: {
-            this->send(CommunicationType(ECommunicationType::STATUS));
-            this->_pendingOrders.mutex.lock();
-            this->_finishedOrders.mutex.lock();
-            this->send(KitchenStatus<ProductType, ProductSize, ProductIngredientType>(
-                this->_pendingOrders.queue, this->_finishedOrders.queue, this->_stock.getStockList()));
-            this->_pendingOrders.mutex.unlock();
-            this->_finishedOrders.mutex.unlock();
-        } break;
+        case ECommunicationType::STATUS: this->_sendStatus(); break;
 
         default: break;
     };
@@ -79,17 +71,34 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_addPendingOrder(
     this->_pendingOrders.mutex.lock();
     this->_pendingOrders.queue.push(order);
     this->_pendingOrders.mutex.unlock();
+    this->_sendStatus();
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Kitchen<ProductType, ProductSize, ProductIngredientType>::_sendFinishedOrders()
 {
+    bool doesUpdate = !this->_finishedOrders.queue.empty();
+
     this->_finishedOrders.mutex.lock();
     while (!this->_finishedOrders.queue.empty()) {
         this->send(CommunicationType(ECommunicationType::ORDER_PIZZA));
         this->send(this->_finishedOrders.queue.front());
         this->_finishedOrders.queue.pop();
     }
+    this->_finishedOrders.mutex.unlock();
+    if (doesUpdate)
+        this->_sendStatus();
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Kitchen<ProductType, ProductSize, ProductIngredientType>::_sendStatus()
+{
+    this->send(CommunicationType(ECommunicationType::STATUS));
+    this->_pendingOrders.mutex.lock();
+    this->_finishedOrders.mutex.lock();
+    this->send(KitchenStatus<ProductType, ProductSize, ProductIngredientType>(
+        this->_pendingOrders.queue, this->_finishedOrders.queue, this->_stock.getStockList()));
+    this->_pendingOrders.mutex.unlock();
     this->_finishedOrders.mutex.unlock();
 }
 

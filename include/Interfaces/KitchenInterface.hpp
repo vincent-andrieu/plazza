@@ -24,6 +24,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
     virtual void _receiveOrder() = 0; // from pipe
     virtual void _addPendingOrder(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
     virtual void _sendFinishedOrders() = 0;
+    virtual void _sendStatus() = 0;
 };
 
 #endif
