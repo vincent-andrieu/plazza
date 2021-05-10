@@ -11,7 +11,6 @@
 #include <queue>
 #include <string>
 #include <unordered_map>
-#include "Plazza.hpp"
 #include "Order/Order.hpp"
 #include "Product/Pizza/Factory/Factory.hpp"
 #include "Product/AProduct.hpp"

@@ -40,7 +40,7 @@ KitchenStatus<ProductType, ProductSize, ProductIngredientType>::getStock() const
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeToString() const
 {
-    std::string serial = "";
+    string serial = "";
     std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> finish(this->_finishedOrders);
     std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> pending(this->_pendingOrders);
     std::unordered_map<ProductIngredientType, size_t> stock(this->_stock);
@@ -56,8 +56,8 @@ const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_Se
         type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [tmp](const auto &params) {
             return params.second == tmp.getOrder().getType();
         });
-        serial += (type_it->first + std::string(" ") + size_it->first + std::string(" ")
-            + std::to_string(tmp.getOrder().getPreparationTime()));
+        serial +=
+            (type_it->first + string(" ") + size_it->first + string(" ") + std::to_string(tmp.getOrder().getPreparationTime()));
         if (finish.size())
             serial += "|";
     }
@@ -71,14 +71,14 @@ const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_Se
         type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [tmp](const auto &params) {
             return params.second == tmp.getOrder().getType();
         });
-        serial += (type_it->first + std::string(" ") + size_it->first + std::string(" ")
-            + std::to_string(tmp.getOrder().getPreparationTime()));
+        serial +=
+            (type_it->first + string(" ") + size_it->first + string(" ") + std::to_string(tmp.getOrder().getPreparationTime()));
         if (pending.size())
             serial += "|";
     }
     serial += "-";
     for (auto &q : stock) {
-        serial += PizzaIngredientListName.at(q.first) + std::string(":") + std::to_string(q.second);
+        serial += PizzaIngredientListName.at(q.first) + string(":") + std::to_string(q.second);
         serial += "|";
     }
     return serial;
@@ -88,12 +88,12 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeFromString(const string str)
 {
     std::istringstream lineStream(str);
-    std::string finish = "";
-    std::string pending = "";
-    std::string stock = "";
-    std::string tmp = "";
+    string finish = "";
+    string pending = "";
+    string stock = "";
+    string tmp = "";
     stringstream ss;
-    std::string word;
+    string word;
     ProductIngredientType ingredient;
     std::unordered_map<PizzaIngredient, string>::const_iterator ingred_it;
     PizzaSize tmp_size;
