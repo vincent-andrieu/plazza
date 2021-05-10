@@ -9,7 +9,7 @@
 #include "Product/Product.hpp"
 #include "enumPizza.hpp"
 
-template <typename T> Order<T>::Order(T &object) : _object(object)
+template <typename T> Order<T>::Order(T object) : _object(object)
 {
 }
 

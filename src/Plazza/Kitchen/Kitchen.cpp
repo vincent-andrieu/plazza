@@ -52,7 +52,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
     switch (commType.getType()) {
         case ECommunicationType::ORDER_PIZZA: {
             Order<Product<ProductType, ProductSize, ProductIngredientType>> *order =
-                new Order<Product<ProductType, ProductSize, ProductIngredientType>>(Pizza());
+                new Order<Product<ProductType, ProductSize, ProductIngredientType>>();
 
             this->waitingReceive(*order);
             this->_addPendingOrder(*order);

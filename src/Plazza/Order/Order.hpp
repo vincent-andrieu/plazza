@@ -13,7 +13,8 @@
 
 template <typename T> class Order : public Serializer {
   public:
-    explicit Order(T &object);
+    Order() = default;
+    Order(T object);
     ~Order() = default;
 
     [[nodiscard]] Order<T> &operator=(const Order<T> &rhs);
