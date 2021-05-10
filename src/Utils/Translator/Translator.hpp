@@ -14,16 +14,16 @@
 
 using namespace Pizzeria;
 
-template <typename Type, typename Size> class Translator {
+class Translator {
   public:
-    static const string EnumToString(Type);
-    static const string EnumToString(Size);
+    static const string EnumToString(PizzaType);
+    static const string EnumToString(PizzaSize);
 
-    static Type StringToType(string src);
-    static Size StringToSize(string src);
+    static PizzaType StringToType(string src);
+    static PizzaSize StringToSize(string src);
 
   private:
-    std::string _input;
+    string _input;
 };
 
 #endif

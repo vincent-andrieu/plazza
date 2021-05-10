@@ -51,12 +51,13 @@ const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_Se
         const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> tmp = finish.front();
         finish.pop();
         size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [tmp](const auto &params) {
-                            return params.second == tmp.getOrder().getSize();
-                        });
+            return params.second == tmp.getOrder().getSize();
+        });
         type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [tmp](const auto &params) {
-                            return params.second == tmp.getOrder().getType();
-                        });
-        serial += (type_it->first + std::string(" ") + size_it->first + std::string(" ") + std::to_string(tmp.getOrder().getPreparationTime()));
+            return params.second == tmp.getOrder().getType();
+        });
+        serial += (type_it->first + std::string(" ") + size_it->first + std::string(" ")
+            + std::to_string(tmp.getOrder().getPreparationTime()));
         if (finish.size())
             serial += "|";
     }
@@ -65,12 +66,13 @@ const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_Se
         const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> tmp = pending.front();
         pending.pop();
         size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [tmp](const auto &params) {
-                            return params.second == tmp.getOrder().getSize();
-                        });
+            return params.second == tmp.getOrder().getSize();
+        });
         type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [tmp](const auto &params) {
-                            return params.second == tmp.getOrder().getType();
-                        });
-        serial += (type_it->first + std::string(" ") + size_it->first + std::string(" ") + std::to_string(tmp.getOrder().getPreparationTime()));
+            return params.second == tmp.getOrder().getType();
+        });
+        serial += (type_it->first + std::string(" ") + size_it->first + std::string(" ")
+            + std::to_string(tmp.getOrder().getPreparationTime()));
         if (pending.size())
             serial += "|";
     }
@@ -104,30 +106,33 @@ void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeF
     while (std::getline(lineStream, tmp, '|')) {
         ss = stringstream(tmp);
         ss >> word;
-        tmp_type = Translator<PizzaType, PizzaSize>::StringToType(word);
+        tmp_type = Translator::StringToType(word);
         ss >> word;
-        tmp_size = Translator<PizzaType, PizzaSize>::StringToSize(word);
+        tmp_size = Translator::StringToSize(word);
         ss >> word;
-        this->_finishedOrders.push(Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>(Factory::callFactory(tmp_type, tmp_size, std::stoull(word))));
+        this->_finishedOrders.push(
+            Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>(Factory::callFactory(tmp_type, tmp_size, std::stoull(word))));
     }
     lineStream = std::istringstream(pending);
     while (std::getline(lineStream, tmp, '|')) {
         ss = stringstream(tmp);
         ss >> word;
-        tmp_type = Translator<PizzaType, PizzaSize>::StringToType(word);
+        tmp_type = Translator::StringToType(word);
         ss >> word;
-        tmp_size = Translator<PizzaType, PizzaSize>::StringToSize(word);
+        tmp_size = Translator::StringToSize(word);
         ss >> word;
-        this->_finishedOrders.push(Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>(Factory::callFactory(tmp_type, tmp_size, std::stoull(word))));
+        this->_finishedOrders.push(
+            Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>(Factory::callFactory(tmp_type, tmp_size, std::stoull(word))));
     }
     lineStream = std::istringstream(stock);
     while (std::getline(lineStream, tmp, '|')) {
         word = "";
         for (auto x : str) {
             if (x == ':') {
-                ingred_it = std::find_if(PizzaIngredientListName.begin(), PizzaIngredientListName.end(), [word](const auto &params) {
-                            return params.second == word;
-                        });
+                ingred_it =
+                    std::find_if(PizzaIngredientListName.begin(), PizzaIngredientListName.end(), [word](const auto &params) {
+                        return params.second == word;
+                    });
                 ingredient = ingred_it->first;
                 word = "";
             } else {
