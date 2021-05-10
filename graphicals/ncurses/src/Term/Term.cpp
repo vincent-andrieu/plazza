@@ -61,6 +61,7 @@ void Term::setTermMode(bool toggle)
 
 void Term::initNCurses()
 {
+    noecho(); // do not print typed characters
     curs_set(0);
     keypad(stdscr, TRUE);
     mousemask(ALL_MOUSE_EVENTS, NULL);
