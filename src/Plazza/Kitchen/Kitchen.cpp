@@ -59,6 +59,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
         } break;
 
         case ECommunicationType::STATUS: {
+            this->send(CommunicationType(ECommunicationType::STATUS));
             this->_pendingOrders.mutex.lock();
             this->_finishedOrders.mutex.lock();
             this->send(KitchenStatus<ProductType, ProductSize, ProductIngredientType>(
