@@ -9,9 +9,8 @@
 
 template <typename IngredientType> Stock<IngredientType>::Stock(size_t restockTime) : _restockTime(restockTime)
 {
-    for (const std::pair<IngredientType, size_t> &ingredient : _stock)
-        this->_stock[ingredient.first] = DEFAULT_STOCK;
-
+    for (const IngredientType &ingredient : pizzaIngredientList)
+        this->_stock[ingredient] = DEFAULT_STOCK;
     time(&this->_restockClock);
 }
 
