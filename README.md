@@ -1,7 +1,8 @@
 # Plazza
 ## Keys
-- Change graphic lib    =>  Arrow Left/Right
-- Valid command         =>  Enter
+- Change graphic lib        =>  Arrow Left/Right
+- Change selected kitchen   =>  Arrow Up/Down
+- Valid command             =>  Enter
 
 ## Commands
 - <**TYPE**> <**SIZE**> X<**NUMBER**> => Order a pizza
