@@ -9,6 +9,18 @@
 #include "Product/Pizza/Pizza.hpp"
 
 template <typename Type, typename Size, typename IngredientType>
+Product<Type, Size, IngredientType> &Product<Type, Size, IngredientType>::operator=(
+    const Product<Type, Size, IngredientType> &rhs)
+{
+    _type = rhs.getType();
+    _size = rhs.getSize();
+    _preparationTime = rhs.getPreparationTime();
+    _ingredients = rhs.getIngredients();
+    _finished = rhs.isFinished();
+    return *this;
+}
+
+template <typename Type, typename Size, typename IngredientType>
 bool Product<Type, Size, IngredientType>::operator==(const IProduct<Type, Size, IngredientType> &product) const
 {
     return this->getType() == product.getType() && this->getSize() == product.getSize()

@@ -15,6 +15,8 @@ template <typename Type, typename Size, typename IngredientType> class Product :
     Product() = default;
     ~Product() = default;
 
+    Product<Type, Size, IngredientType> &operator=(const Product<Type, Size, IngredientType> &rhs);
+
     [[nodiscard]] bool operator==(const IProduct<Type, Size, IngredientType> &product) const override;
     [[nodiscard]] bool operator!=(const IProduct<Type, Size, IngredientType> &product) const override;
 
