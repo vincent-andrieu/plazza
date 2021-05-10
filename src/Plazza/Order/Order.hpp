@@ -17,8 +17,6 @@ template <typename T> class Order : public Serializer {
     Order(T object);
     ~Order() = default;
 
-    [[nodiscard]] Order<T> &operator=(const Order<T> &rhs);
-
     const T &getOrder() const;
     void setOrder(T &object);
 
