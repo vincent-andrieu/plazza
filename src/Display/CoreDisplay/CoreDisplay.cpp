@@ -102,7 +102,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
     this->_dirName[this->_pos]->getEntryPoint()->putText(
         IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("finish order:"));
     // log.writeLog(std::string("finish size: ") + std::to_string(finish.size()));
-    while (finish.size()) {
+    while (!finish.empty()) {
         const Order<Product<ProductType, ProductSize, ProductIngredientType>> tmp = finish.front();
         finish.pop();
         size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [tmp](const auto &params) {
@@ -122,15 +122,15 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
     pos_x += 20;
     this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("pending order:"));
     //log.writeLog(std::string("pending size: ") + std::to_string(pending.size()));
-    while (pending.size()) {
+    while (!pending.empty()) {
         const Order<Product<ProductType, ProductSize, ProductIngredientType>> tmp = pending.front();
         pending.pop();
         size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [tmp](const auto &params) {
-                            return params.second == tmp.getOrder().getSize();
-                        });
+            return params.second == tmp.getOrder().getSize();
+        });
         type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [tmp](const auto &params) {
-                            return params.second == tmp.getOrder().getType();
-                        });
+            return params.second == tmp.getOrder().getType();
+        });
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
             to_write = "data wrong";
         else

@@ -16,8 +16,8 @@ template <typename T> Order<T>::Order(T object) : _object(object)
 template <typename T> Order<T> &Order<T>::operator=(const Order<T> &rhs)
 {
     T my_order(rhs.getOrder());
-    setOrder(my_order);
 
+    setOrder(my_order);
     return *this;
 }
 
