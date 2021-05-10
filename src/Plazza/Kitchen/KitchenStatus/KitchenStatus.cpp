@@ -109,7 +109,7 @@ void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeF
         ss >> word;
         tmp_size = (PizzaSize) toInteger(word);
         ss >> word;
-        this->_finishedOrders.push(
+        this->_pendingOrders.push(
             Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>(Factory::callFactory(tmp_type, tmp_size, toSize_t(word))));
     }
     lineStream = std::istringstream(stock);
