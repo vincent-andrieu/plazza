@@ -90,7 +90,11 @@ void Reception::sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, Pizz
 
     this->_logger.writeLog(tab + std::string("stock:"));
     for (auto &q : stock) {
-        to_write = PizzaIngredientListName.at(q.first) + std::string(": ") + std::to_string(q.second);
+        try {
+            to_write = PizzaIngredientListName.at(q.first) + std::string(": ") + std::to_string(q.second);
+        } catch (const std::out_of_range & e) {
+            to_write = std::string("Internal error: ") + e.what();
+        }
         this->_logger.writeLog(tab + tab + to_write);
     }
 }
