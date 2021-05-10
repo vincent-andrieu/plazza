@@ -60,12 +60,15 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printKitchen(
     std::string to_display = "";
     std::size_t pos_y = 1;
     std::size_t max = 15;
-    size_t len = 0;
+    size_t len = kitchenList.size();
 
-    for (; it != kitchenList.end() && max; it++, pos_y += 3, max--) {
+    if (len) {
+        if (len <= this->_kitechToPrint)
+            this->_kitechToPrint = len - 1;
+    }
+    for (size_t i = 0; it != kitchenList.end() && max; it++, pos_y += 3, max--, i++) {
         this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(IDisplayModule::Color::YELLOW, Coord(20, 3), Coord(0, pos_y));
-        //to_display = (it->kitchen.isCooking()) ? "Working" : "Pending";
-        to_display = "not dev";
+        to_display = (i == this->_kitechToPrint) ? "You are here" : "Available";
         this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(1, pos_y + 1), to_display);
     }
     if (it != kitchenList.end()) {
@@ -74,14 +77,8 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printKitchen(
     }
     to_display = std::string("There are ") + std::to_string(kitchenList.size()) + std::string(" kitchens.");
     this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(0, pos_y + 1), to_display);
-    len = kitchenList.size();
-    it = kitchenList.begin();
-    if (len) {
-        if (len >= this->_kitechToPrint)
-            this->_kitechToPrint = len - 1;
-        std::advance(it, this->_kitechToPrint);
-        this->printDetailledKitchen(*it);
-    }
+    if (len)
+        this->printDetailledKitchen(kitchenList[this->_kitechToPrint]);
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -113,7 +110,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
             to_write = "data wrong";
         else
-            to_write = std::string("type: ") + type_it->first + std::string(" size: ") + size_it->first;
+            to_write = type_it->first + std::string(" ") + size_it->first;
         this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::GREEN, Coord(pos_x + 1, pos_y++), to_write);
     }
 
@@ -133,7 +130,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
             to_write = "data wrong";
         else
-            to_write = std::string("type: ") + type_it->first + std::string(" size: ") + size_it->first;
+            to_write = type_it->first + std::string(" ") + size_it->first;
         this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::GREEN, Coord(pos_x + 1, pos_y++), to_write);
     }
 
@@ -229,7 +226,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::kitchenSwitch
 {
     if (this->_dirName[this->_pos]->getEntryPoint()->isKeyPress(IDisplayModule::KeyList::ARROW_DOWN)) {
         this->_kitechToPrint = (this->_kitechToPrint > 0) ? this->_kitechToPrint - 1 : 0;
-    } else if (this->_dirName[this->_kitechToPrint]->getEntryPoint()->isKeyPress(IDisplayModule::KeyList::ARROW_UP)) {
+    } else if (this->_dirName[this->_pos]->getEntryPoint()->isKeyPress(IDisplayModule::KeyList::ARROW_UP)) {
         this->_kitechToPrint++;
     }
 }
