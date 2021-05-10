@@ -66,7 +66,7 @@ const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_Se
     }
     serial += "-";
     for (auto &q : stock) {
-        serial += PizzaIngredientListName.at(q.first) + ":" + toString(q.second);
+        serial += toString(q.first) + ":" + toString(q.second);
         serial += "|";
     }
     return serial;
@@ -120,11 +120,7 @@ void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeF
         word = "";
         for (auto x : str) {
             if (x == ':') {
-                ingred_it =
-                    std::find_if(PizzaIngredientListName.begin(), PizzaIngredientListName.end(), [word](const auto &params) {
-                        return params.second == word;
-                    });
-                ingredient = ingred_it->first;
+                ingredient = (ProductIngredientType) toInteger(word);
                 word = "";
             } else {
                 word += x;
