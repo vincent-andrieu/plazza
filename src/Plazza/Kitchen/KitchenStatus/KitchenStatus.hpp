@@ -9,17 +9,17 @@
 #define KITCHEN_STATUS_HPP
 
 #include <queue>
-#include <unordered_map>
-#include "Plazza.hpp"
+#include <string>
 #include "Order/Order.hpp"
+#include "Product/Pizza/Factory/Factory.hpp"
 #include "Product/Product.hpp"
-#include "enumPizza.hpp"
+#include "Translator/Translator.hpp"
 
 using namespace Pizzeria;
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType> class KitchenStatus : public Serializer {
   public:
-    KitchenStatus() : Serializer(sizeof(KitchenStatus<ProductType, ProductSize, ProductIngredientType>)){};
+    KitchenStatus() = default;
     KitchenStatus(const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &pendingOrders,
         const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &finishedOrders,
         const std::unordered_map<ProductIngredientType, size_t> &stock);
@@ -28,10 +28,14 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
     const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &getFinishedOrders() const;
     const std::unordered_map<ProductIngredientType, size_t> &getStock() const;
 
+  protected:
+    const string _SerializeToString() const;
+    void _SerializeFromString(const string str);
+
   private:
-    const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
-    const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> _finishedOrders;
-    const std::unordered_map<ProductIngredientType, size_t> _stock;
+    std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
+    std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> _finishedOrders;
+    std::unordered_map<ProductIngredientType, size_t> _stock;
 };
 
 #endif

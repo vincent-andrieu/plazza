@@ -21,7 +21,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredientType> {
   public:
     Restaurant(double bakingMultiplier, size_t cooksPerKitchen, double restockTime);
-    ~Restaurant() override = default;
+    ~Restaurant() override;
 
     void lunchTime() override;
     [[nodiscard]] bool isOpen() const override;

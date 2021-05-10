@@ -25,6 +25,12 @@ Restaurant<ProductType, ProductSize, ProductIngredientType>::Restaurant(
           })
 {
 }
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+Restaurant<ProductType, ProductSize, ProductIngredientType>::~Restaurant()
+{
+    for (const std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchen : this->_kitchens)
+        kitchen->kitchen.killChild();
+}
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
@@ -102,7 +108,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_newKitchen(
             KitchenManage<ProductType, ProductSize, ProductIngredientType>(*kitchen)));
         this->_sendOrder(this->_kitchens.back(), order);
     } else if (kitchen->isChild())
-        kitchen->cook();
+        exit(kitchen->cook());
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -160,10 +166,7 @@ bool Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
             this->_reception.sendKitchenStatus(kitchenManage->kitchenStatus);
         } break;
 
-        case ECommunicationType::KILL_CHILD: {
-            kitchenManage->kitchen.killChild();
-            return true;
-        } break;
+        case ECommunicationType::KILL_CHILD: return true;
         default: break;
     };
     return false;

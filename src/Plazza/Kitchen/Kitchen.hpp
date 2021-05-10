@@ -23,7 +23,7 @@ class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>
   public:
     Kitchen(double bakingMultiplier, size_t cooksPerKitchen, double restockTime);
     ~Kitchen() override = default;
-    void cook() override;
+    int cook() override;
     [[nodiscard]] bool isCooking() const override;
     [[nodiscard]] size_t getNbCooks() const override;
     [[nodiscard]] double getBakingMultiplier() const override;
@@ -32,6 +32,7 @@ class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>
     void _receiveOrder() override;
     void _addPendingOrder(const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void _sendFinishedOrders() override;
+    void _sendStatus() override;
 
     void cooksStartCooking();
     void cooksStopCooking();

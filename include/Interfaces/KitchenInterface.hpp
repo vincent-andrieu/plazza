@@ -15,7 +15,7 @@
 template <typename ProductType, typename ProductSize, typename ProductIngredientType> class IKitchen {
   public:
     virtual ~IKitchen() = default;
-    virtual void cook() = 0;                          // while work
+    virtual int cook() = 0;                           // while work
     [[nodiscard]] virtual bool isCooking() const = 0; // while is true, loop
     [[nodiscard]] virtual size_t getNbCooks() const = 0;
     [[nodiscard]] virtual double getBakingMultiplier() const = 0;
@@ -24,6 +24,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
     virtual void _receiveOrder() = 0; // from pipe
     virtual void _addPendingOrder(const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
     virtual void _sendFinishedOrders() = 0;
+    virtual void _sendStatus() = 0;
 };
 
 #endif

@@ -11,6 +11,7 @@
 #include <iostream>
 #include <sstream>
 #include <memory>
+#include <string>
 
 #define PRIORITORY_LIB "arcade_ncurse.so"
 #define LOG_FILE_PATH  "./log_plazza"
@@ -21,5 +22,8 @@ typedef std::string string;
 typedef std::size_t size_t;
 typedef std::stringstream stringstream;
 #define charette_ptr(T) std::shared_ptr<T>
+#define toString(str)   std::to_string(str)
+#define toInteger(str)  std::stoi(str)
+#define toSize_t(str)   std::stoul(str)
 
 #endif

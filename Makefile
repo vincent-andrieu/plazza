@@ -30,6 +30,7 @@ SRC =   src/main.cpp																	\
 		${MY_UTILS_DIR}Error/Error.cpp													\
 		${MY_UTILS_DIR}Logger/Logger.cpp												\
 		${MY_UTILS_DIR}Serializer/Serializer.cpp										\
+		${MY_UTILS_DIR}Translator/Translator.cpp										\
 		${MY_UTILS_DIR}Communication/Communication.cpp									\
 		${MY_UTILS_DIR}CommandInterpreter/CommandInterpreter.cpp						\
 		${MY_UTILS_DIR}Clock/Clock.cpp													\

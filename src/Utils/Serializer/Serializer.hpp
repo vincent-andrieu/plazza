@@ -10,17 +10,16 @@
 
 #include "Plazza.hpp"
 
-#define MAX_OBJECT_SIZE 128
+#define MAX_OBJECT_SIZE 4096
 
 struct SendedObject {
     long mtype;
     char mtext[MAX_OBJECT_SIZE];
-} __attribute((packed));
+};
 
 class Serializer {
   public:
     Serializer() = default;
-    explicit Serializer(size_t size);
 
     void operator>>(const int msqId) const;
     void operator<<(const int msqId);
@@ -28,8 +27,9 @@ class Serializer {
     void pack(const int msqId) const;
     void unpack(const int msqId);
 
-  private:
-    size_t _size = 0;
+  protected:
+    virtual const string _SerializeToString() const = 0;
+    virtual void _SerializeFromString(const string str) = 0;
 };
 
 #endif

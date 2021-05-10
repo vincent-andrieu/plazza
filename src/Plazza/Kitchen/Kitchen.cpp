@@ -20,7 +20,7 @@ Kitchen<ProductType, ProductSize, ProductIngredientType>::Kitchen(
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
+int Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
 {
     cooksStartCooking();
     while (this->isCooking()) {
@@ -32,6 +32,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
     }
     cooksStopCooking();
     this->send(CommunicationType(ECommunicationType::KILL_CHILD));
+    return EXIT_SUCCESS;
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -50,22 +51,14 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
 
     switch (commType.getType()) {
         case ECommunicationType::ORDER_PIZZA: {
-            Pizza pizza = Pizza();
-            Order<Product<ProductType, ProductSize, ProductIngredientType>> order(pizza);
+            Order<Product<ProductType, ProductSize, ProductIngredientType>> *order =
+                new Order<Product<ProductType, ProductSize, ProductIngredientType>>(Pizza());
 
-            this->waitingReceive(order);
-            this->_addPendingOrder(order);
+            this->waitingReceive(*order);
+            this->_addPendingOrder(*order);
         } break;
 
-        case ECommunicationType::STATUS: {
-            this->_pendingOrders.lock();
-            this->_finishedOrders.lock();
-            this->send(KitchenStatus<ProductType, ProductSize, ProductIngredientType>(
-                this->_pendingOrders, this->_finishedOrders, this->_stock.getStockList()));
-            this->_pendingOrders.unlock();
-            this->_finishedOrders.unlock();
-            break;
-        }
+        case ECommunicationType::STATUS: this->_sendStatus(); break;
 
         default: break;
     };
@@ -76,15 +69,28 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_addPendingOrder(
     const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     this->_pendingOrders.push(order);
+    this->_sendStatus();
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Kitchen<ProductType, ProductSize, ProductIngredientType>::_sendFinishedOrders()
 {
+    bool doesUpdate = !this->_finishedOrders.empty();
+
     while (!this->_finishedOrders.empty()) {
         this->send(CommunicationType(ECommunicationType::ORDER_PIZZA));
         this->send(this->_finishedOrders.getFront());
     }
+    if (doesUpdate)
+        this->_sendStatus();
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Kitchen<ProductType, ProductSize, ProductIngredientType>::_sendStatus()
+{
+    this->send(CommunicationType(ECommunicationType::STATUS));
+    this->send(KitchenStatus<ProductType, ProductSize, ProductIngredientType>(
+        this->_pendingOrders, this->_finishedOrders, this->_stock.getStockList()));
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
