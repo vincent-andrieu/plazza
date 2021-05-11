@@ -224,9 +224,9 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printError()
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::kitchenSwitch()
 {
-    if (this->_dirName[this->_pos]->getEntryPoint()->isKeyPress(IDisplayModule::KeyList::ARROW_DOWN)) {
+    if (this->_dirName[this->_pos]->getEntryPoint()->isKeyPress(IDisplayModule::KeyList::ARROW_UP)) {
         this->_kitechToPrint = (this->_kitechToPrint > 0) ? this->_kitechToPrint - 1 : 0;
-    } else if (this->_dirName[this->_pos]->getEntryPoint()->isKeyPress(IDisplayModule::KeyList::ARROW_UP)) {
+    } else if (this->_dirName[this->_pos]->getEntryPoint()->isKeyPress(IDisplayModule::KeyList::ARROW_DOWN)) {
         this->_kitechToPrint++;
     }
 }
