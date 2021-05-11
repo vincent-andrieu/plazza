@@ -118,7 +118,7 @@ void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeF
     lineStream = std::istringstream(stock);
     while (std::getline(lineStream, tmp, '|')) {
         word = "";
-        for (auto x : str) {
+        for (auto x : tmp) {
             if (x == ':') {
                 ingredient = (ProductIngredientType) toInteger(word);
                 word = "";
