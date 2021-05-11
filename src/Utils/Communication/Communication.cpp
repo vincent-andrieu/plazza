@@ -59,8 +59,8 @@ void Communication::read(Serializer &object) const
         throw CommunicationError(getErrnoMsg("read => msgget"));
     object << msqId;
 
-    if (this->getQueueSize(msqId) <= 0)
-        this->_removeQueue(msqId);
+    // if (this->getQueueSize(msqId) <= 0)
+    //     this->_removeQueue(msqId);
 }
 
 msgqnum_t Communication::getQueueSize(int msqId) const
