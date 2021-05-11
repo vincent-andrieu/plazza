@@ -17,16 +17,16 @@ SRC =   src/main.cpp																	\
 		${MY_PLAZZA_DIR}Product/Pizza/PizzaType/Fantasia/Fantasia.cpp					\
 		${MY_PLAZZA_DIR}Product/Pizza/PizzaType/Margarita/Margarita.cpp					\
 		${MY_PLAZZA_DIR}Product/Pizza/PizzaType/Regina/Regina.cpp						\
-        ${MY_PLAZZA_DIR}Order/Order.cpp													\
-        ${MY_PLAZZA_DIR}Cook/Cook.cpp		        									\
-        ${MY_PLAZZA_DIR}Kitchen/Kitchen.cpp												\
-        ${MY_PLAZZA_DIR}Kitchen/KitchenStatus/KitchenStatus.cpp							\
-        ${MY_PLAZZA_DIR}Reception/Reception.cpp											\
-        ${MY_PLAZZA_DIR}Restaurant/Restaurant.cpp										\
-        ${MY_PLAZZA_DIR}Stock/Stock.cpp													\
+	${MY_PLAZZA_DIR}Order/Order.cpp													\
+	${MY_PLAZZA_DIR}Cook/Cook.cpp												\
+	${MY_PLAZZA_DIR}Kitchen/Kitchen.cpp												\
+	${MY_PLAZZA_DIR}Kitchen/KitchenStatus/KitchenStatus.cpp							\
+	${MY_PLAZZA_DIR}Reception/Reception.cpp											\
+	${MY_PLAZZA_DIR}Restaurant/Restaurant.cpp										\
+	${MY_PLAZZA_DIR}Stock/Stock.cpp													\
 		${MY_PLAZZA_DIR}TransportObjects/CommunicationType/CommunicationType.cpp		\
 																						\
-        																				\
+																					\
 		${MY_UTILS_DIR}Error/Error.cpp													\
 		${MY_UTILS_DIR}Logger/Logger.cpp												\
 		${MY_UTILS_DIR}Serializer/Serializer.cpp										\
@@ -56,7 +56,7 @@ all:	$(NAME)
 
 $(NAME):	$(OBJ)
 		@$(ECHO)
-		@g++ -o $(NAME) $(OBJ) $(LXXFLAGS)\
+		@clang++ -o $(NAME) $(OBJ) $(LXXFLAGS)\
 		&& $(ECHO) $(BOLD) $(GREEN)"► PLAZZA BUILD SUCCESS !"$(DEFAULT) || ($(ECHO) $(BOLD) $(RED)"► PLAZZA BUILD FAILED"$(DEFAULT) && exit 1)
 		@(make -s -C graphicals)
 
@@ -76,7 +76,7 @@ debug: CXXFLAGS += -g
 debug: all
 
 %.o :		%.cpp
-		@g++ -c -o $@ $^ $(CXXFLAGS) && $(ECHO) -n $(BOLD) $(GREEN)"  [OK] "$(WHITE) || $(ECHO) -n $(BOLD) $(RED)"  [KO] "$(WHITE) && $(ECHO) $(BOLD) $< | rev | cut -d'/' -f 1 | rev
+		@clang++ -c -o $@ $^ $(CXXFLAGS) && $(ECHO) -n $(BOLD) $(GREEN)"  [OK] "$(WHITE) || $(ECHO) -n $(BOLD) $(RED)"  [KO] "$(WHITE) && $(ECHO) $(BOLD) $< | rev | cut -d'/' -f 1 | rev
 
 .PHONY: all clean fclean re debug
 
@@ -86,13 +86,13 @@ DEFAULT =	   "\033[00m"
 
 DEFAULT =	   "\e[0m"
 BOLD	=	   "\e[1m"
-DIM	 	=	   "\e[2m"
+DIM		=	   "\e[2m"
 UNDLN   =	   "\e[4m"
 SHINE   =	   "\e[5;37m"
 RODE	=	   "\e[9;37m"
 
 BLACK   =	   "\e[30m"
-RED	 	=	   "\e[31m"
+RED		=	   "\e[31m"
 GREEN   =	   "\e[32m"
 YELLOW  =	   "\e[33m"
 BLUE	=	   "\e[34m"
@@ -100,9 +100,9 @@ MAGEN   =	   "\e[35m"
 CYAN	=	   "\e[36m"
 WHITE   =	   "\e[1;37m"
 
-LIGHT_RED	   	=	   "\e[91m"
-LIGHT_GREEN	 	=	   "\e[92m"
+LIGHT_RED		=	   "\e[91m"
+LIGHT_GREEN		=	   "\e[92m"
 LIGHT_YELLOW	=	   "\e[93m"
-LIGHT_BLUE	  	=	   "\e[94m"
-LIGHT_MAGEN	 	=	   "\e[95m"
-LIGHT_CYAN	  	=	   "\e[96m"
+LIGHT_BLUE		=	   "\e[94m"
+LIGHT_MAGEN		=	   "\e[95m"
+LIGHT_CYAN		=	   "\e[96m"

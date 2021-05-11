@@ -22,8 +22,8 @@ void Serializer::operator<<(const int msqId)
 
 void Serializer::pack(const int msqId) const
 {
-    SendedObject sendedObject;
-    const string str = this->_SerializeToString();
+    SendedObject sendedObject{0, {0}};
+    const string str = this->SerializeToString();
 
     if (str.size() > MAX_OBJECT_SIZE)
         throw SerializerError("The sending string is over limit: " + std::to_string(str.size())
@@ -37,10 +37,10 @@ void Serializer::pack(const int msqId) const
 
 void Serializer::unpack(const int msqId)
 {
-    SendedObject sendedObject;
+    SendedObject sendedObject{0, {0}};
 
     memset(&sendedObject, 0, sizeof(sendedObject));
     if (msgrcv(msqId, &sendedObject, sizeof(sendedObject), 1, 0) == -1)
         throw SerializerError(getErrnoMsg("msgrcv"));
-    this->_SerializeFromString(string(sendedObject.mtext));
+    this->SerializeFromString(string(sendedObject.mtext));
 }
