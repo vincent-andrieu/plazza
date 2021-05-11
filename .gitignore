@@ -10,5 +10,7 @@ cmake-build-debug
 *.gcno
 *.gcda
 
+*.log
+
 .idea
 .vscode
