@@ -23,7 +23,7 @@ Kitchen<ProductType, ProductSize, ProductIngredientType>::Kitchen(
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 int Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
 {
-    cooksStartCooking();
+    this->_cooksStartCooking();
     while (this->isCooking()) {
         this->_receiveOrder();
         this->_sendFinishedOrders();
@@ -31,7 +31,7 @@ int Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
             this->_stock.restock();
         this->_destroyManage();
     }
-    cooksStopCooking();
+    this->_cooksStopCooking();
     this->send(CommunicationType(ECommunicationType::KILL_CHILD));
     return EXIT_SUCCESS;
 }
@@ -116,16 +116,17 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_destroyManage()
     std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
     size_t elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(now - this->_lastAct).count() / 1000;
 
-    if (!this->_pendingOrders.empty() || !this->_finishedOrders.empty()) {
+    if (!this->_pendingOrders.empty() || !this->_finishedOrders.empty() || this->_isCookersWorking()) {
         this->_lastAct = std::chrono::system_clock::now();
-        return;
-    } else if (elapsedTime >= 5 || !parentExists()) {
+    } else if (elapsedTime >= 5) {
         this->_isCooking = false;
     }
+    if (!this->parentExists())
+        this->_isCooking = false;
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Kitchen<ProductType, ProductSize, ProductIngredientType>::cooksStartCooking()
+void Kitchen<ProductType, ProductSize, ProductIngredientType>::_cooksStartCooking()
 {
     for (auto &cook : _cooks) {
         cook.startWorking();
@@ -133,11 +134,20 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::cooksStartCooking
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Kitchen<ProductType, ProductSize, ProductIngredientType>::cooksStopCooking()
+void Kitchen<ProductType, ProductSize, ProductIngredientType>::_cooksStopCooking()
 {
     for (auto &cook : _cooks) {
         cook.stopWorking();
     }
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+bool Kitchen<ProductType, ProductSize, ProductIngredientType>::_isCookersWorking() const
+{
+    for (const Cook<ProductType, ProductSize, ProductIngredientType> &cook : this->_cooks)
+        if (cook.isWorking())
+            return true;
+    return false;
 }
 
 template class Kitchen<Pizzeria::PizzaType, Pizzeria::PizzaSize, Pizzeria::PizzaIngredient>;
