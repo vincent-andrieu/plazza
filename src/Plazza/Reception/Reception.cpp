@@ -53,7 +53,7 @@ void Reception::sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, Pizz
     std::string to_write;
 
     this->_logger.writeLog("kitchen status:");
-    this->_logger.writeLog(tab + std::string("finish order:"));
+    this->_logger.writeLog(tab + std::string("finished orders:"));
     while (!finish.empty()) {
         const Order<Product<PizzaType, PizzaSize, PizzaIngredient>> tmp = finish.front();
         finish.pop();
@@ -64,13 +64,13 @@ void Reception::sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, Pizz
             return params.second == tmp.getOrder().getType();
         });
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
-            to_write = "data wrong";
+            to_write = "wrong data";
         else
             to_write = std::string("type: ") + type_it->first + std::string(" size: ") + size_it->first;
         this->_logger.writeLog(tab + tab + to_write);
     }
 
-    this->_logger.writeLog(tab + std::string("pending order:"));
+    this->_logger.writeLog(tab + std::string("pending orders:"));
     while (!pending.empty()) {
         const Order<Product<PizzaType, PizzaSize, PizzaIngredient>> tmp = pending.front();
         pending.pop();
@@ -81,7 +81,7 @@ void Reception::sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, Pizz
             return params.second == tmp.getOrder().getType();
         });
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
-            to_write = "data wrong";
+            to_write = "wrong data";
         else
             to_write = std::string("type: ") + type_it->first + std::string(" size: ") + size_it->first;
         this->_logger.writeLog(tab + tab + to_write);
