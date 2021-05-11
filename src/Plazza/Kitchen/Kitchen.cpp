@@ -9,6 +9,7 @@
 #include "TransportObjects/CommunicationType/CommunicationType.hpp"
 #include "Product/Pizza/Pizza.hpp"
 #include "Kitchen/KitchenStatus/KitchenStatus.hpp"
+#include "Product/Pizza/Factory/Factory.hpp"
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Kitchen<ProductType, ProductSize, ProductIngredientType>::Kitchen(
@@ -55,6 +56,9 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_receiveOrder()
                 new Order<Product<ProductType, ProductSize, ProductIngredientType>>();
 
             this->waitingReceive(*order);
+            Product<ProductType, ProductSize, ProductIngredientType> product(
+                Factory::callFactory(order->getOrder().getType(), order->getOrder().getSize(), this->_bakingMultiplier));
+            order->setOrder(product);
             this->_addPendingOrder(*order);
         } break;
 

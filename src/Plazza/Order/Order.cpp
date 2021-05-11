@@ -13,6 +13,10 @@ template <typename T> Order<T>::Order(T object) : _object(object)
 {
 }
 
+template <typename T> Order<T>::Order(const Order<T> &order) : _object(order.getOrder())
+{
+}
+
 template <typename T> const T &Order<T>::getOrder() const
 {
     return _object;
@@ -25,12 +29,10 @@ template <typename T> void Order<T>::setOrder(T &object)
 
 template <typename T> const string Order<T>::_SerializeToString() const
 {
-    string serial = std::to_string(this->_object.getType());
+    string serial = toString(this->_object.getType());
 
     serial += " ";
-    serial += std::to_string(this->_object.getSize());
-    serial += " ";
-    serial += std::to_string(this->_object.getPreparationTime());
+    serial += toString(this->_object.getSize());
     return serial;
 }
 
@@ -38,14 +40,11 @@ template <typename T> void Order<T>::_SerializeFromString(const string str)
 {
     stringstream ss(str);
     string word;
-    size_t preparationTime;
 
     ss >> word;
-    this->_object.setType((PizzaType) std::stoi(word));
+    this->_object.setType((PizzaType) toInteger(word));
     ss >> word;
-    this->_object.setSize((PizzaSize) std::stoi(word));
-    ss >> preparationTime;
-    this->_object.setPreparationTime(preparationTime);
+    this->_object.setSize((PizzaSize) toInteger(word));
 }
 
 template class Order<Product<Pizzeria::PizzaType, Pizzeria::PizzaSize, Pizzeria::PizzaIngredient>>;
