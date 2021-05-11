@@ -9,10 +9,8 @@
 
 using namespace Pizzeria;
 
-Pizza::Pizza(const PizzaType type, const PizzaSize size, const double timeSec, const std::vector<PizzaIngredient> &ingredients)
+Pizza::Pizza(
+    const PizzaType type, const PizzaSize size, const double preparationTime, const std::vector<PizzaIngredient> &ingredients)
+    : Product(type, size, preparationTime, ingredients)
 {
-    setType(type);
-    setSize(size);
-    setIngredients(ingredients);
-    setPreparationTime(timeSec);
 }

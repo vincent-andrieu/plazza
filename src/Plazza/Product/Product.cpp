@@ -8,16 +8,22 @@
 #include "Product/Product.hpp"
 #include "Product/Pizza/Pizza.hpp"
 
-template <typename Type, typename Size, typename IngredientType>
-Product<Type, Size, IngredientType>::Product(const Product<Type, Size, IngredientType> &src)
+template <typename Type, typename Size, typename Ingredient>
+Product<Type, Size, Ingredient>::Product(
+    const Type &type, const Size &size, double preparationTime, const std::vector<Ingredient> &ingredients)
+    : _type(type), _size(size), _preparationTime(preparationTime), _ingredients(ingredients)
+{
+}
+
+template <typename Type, typename Size, typename Ingredient>
+Product<Type, Size, Ingredient>::Product(const Product<Type, Size, Ingredient> &src)
     : _type(src.getType()), _size(src.getSize()), _preparationTime(src.getPreparationTime()), _ingredients(src.getIngredients()),
       _finished(src.isFinished())
 {
 }
 
-template <typename Type, typename Size, typename IngredientType>
-Product<Type, Size, IngredientType> &Product<Type, Size, IngredientType>::operator=(
-    const Product<Type, Size, IngredientType> &rhs)
+template <typename Type, typename Size, typename Ingredient>
+Product<Type, Size, Ingredient> &Product<Type, Size, Ingredient>::operator=(const Product<Type, Size, Ingredient> &rhs)
 {
     _type = rhs.getType();
     _size = rhs.getSize();
@@ -27,73 +33,71 @@ Product<Type, Size, IngredientType> &Product<Type, Size, IngredientType>::operat
     return *this;
 }
 
-template <typename Type, typename Size, typename IngredientType>
-bool Product<Type, Size, IngredientType>::operator==(const IProduct<Type, Size, IngredientType> &product) const
+template <typename Type, typename Size, typename Ingredient>
+bool Product<Type, Size, Ingredient>::operator==(const IProduct<Type, Size, Ingredient> &product) const
 {
     return this->getType() == product.getType() && this->getSize() == product.getSize()
         && this->getPreparationTime() == product.getPreparationTime() && this->getIngredients() == product.getIngredients();
 }
 
-template <typename Type, typename Size, typename IngredientType>
-bool Product<Type, Size, IngredientType>::operator!=(const IProduct<Type, Size, IngredientType> &product) const
+template <typename Type, typename Size, typename Ingredient>
+bool Product<Type, Size, Ingredient>::operator!=(const IProduct<Type, Size, Ingredient> &product) const
 {
     return this->getType() != product.getType() || this->getSize() != product.getSize()
         || this->getPreparationTime() != product.getPreparationTime() || this->getIngredients() != product.getIngredients();
 }
 
-template <typename Type, typename Size, typename IngredientType>
-[[nodiscard]] Type Product<Type, Size, IngredientType>::getType() const
+template <typename Type, typename Size, typename Ingredient> [[nodiscard]] Type Product<Type, Size, Ingredient>::getType() const
 {
     return _type;
 }
 
-template <typename Type, typename Size, typename IngredientType> void Product<Type, Size, IngredientType>::setType(Type type)
+template <typename Type, typename Size, typename Ingredient> void Product<Type, Size, Ingredient>::setType(Type type)
 {
     _type = type;
 }
 
-template <typename Type, typename Size, typename IngredientType>
-[[nodiscard]] Size Product<Type, Size, IngredientType>::getSize() const
+template <typename Type, typename Size, typename Ingredient> [[nodiscard]] Size Product<Type, Size, Ingredient>::getSize() const
 {
     return _size;
 }
 
-template <typename Type, typename Size, typename IngredientType> void Product<Type, Size, IngredientType>::setSize(Size size)
+template <typename Type, typename Size, typename Ingredient> void Product<Type, Size, Ingredient>::setSize(Size size)
 {
     _size = size;
 }
 
-template <typename Type, typename Size, typename IngredientType>
-[[nodiscard]] double Product<Type, Size, IngredientType>::getPreparationTime() const
+template <typename Type, typename Size, typename Ingredient>
+[[nodiscard]] double Product<Type, Size, Ingredient>::getPreparationTime() const
 {
     return _preparationTime;
 }
 
-template <typename Type, typename Size, typename IngredientType>
-void Product<Type, Size, IngredientType>::setPreparationTime(double preparationTime)
+template <typename Type, typename Size, typename Ingredient>
+void Product<Type, Size, Ingredient>::setPreparationTime(double preparationTime)
 {
     _preparationTime = preparationTime;
 }
 
-template <typename Type, typename Size, typename IngredientType>
-[[nodiscard]] const std::vector<IngredientType> &Product<Type, Size, IngredientType>::getIngredients() const
+template <typename Type, typename Size, typename Ingredient>
+[[nodiscard]] const std::vector<Ingredient> &Product<Type, Size, Ingredient>::getIngredients() const
 {
     return _ingredients;
 }
 
-template <typename Type, typename Size, typename IngredientType>
-void Product<Type, Size, IngredientType>::setIngredients(const std::vector<IngredientType> &ingredients)
+template <typename Type, typename Size, typename Ingredient>
+void Product<Type, Size, Ingredient>::setIngredients(const std::vector<Ingredient> &ingredients)
 {
     _ingredients = ingredients;
 }
 
-template <typename Type, typename Size, typename IngredientType>
-[[nodiscard]] bool Product<Type, Size, IngredientType>::isFinished() const
+template <typename Type, typename Size, typename Ingredient>
+[[nodiscard]] bool Product<Type, Size, Ingredient>::isFinished() const
 {
     return _finished;
 }
 
-template <typename Type, typename Size, typename IngredientType> void Product<Type, Size, IngredientType>::setFinished()
+template <typename Type, typename Size, typename Ingredient> void Product<Type, Size, Ingredient>::setFinished()
 {
     _finished = true;
 }

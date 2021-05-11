@@ -10,16 +10,17 @@
 
 #include "Interfaces/ProductInterface.hpp"
 
-template <typename Type, typename Size, typename IngredientType> class Product : public IProduct<Type, Size, IngredientType> {
+template <typename Type, typename Size, typename Ingredient> class Product : public IProduct<Type, Size, Ingredient> {
   public:
     Product() = default;
-    Product(const Product<Type, Size, IngredientType> &src);
+    Product(const Type &type, const Size &size, double preparationTime, const std::vector<Ingredient> &ingredients);
+    Product(const Product<Type, Size, Ingredient> &src);
     ~Product() = default;
 
-    Product<Type, Size, IngredientType> &operator=(const Product<Type, Size, IngredientType> &rhs);
+    Product<Type, Size, Ingredient> &operator=(const Product<Type, Size, Ingredient> &rhs);
 
-    [[nodiscard]] bool operator==(const IProduct<Type, Size, IngredientType> &product) const override;
-    [[nodiscard]] bool operator!=(const IProduct<Type, Size, IngredientType> &product) const override;
+    [[nodiscard]] bool operator==(const IProduct<Type, Size, Ingredient> &product) const override;
+    [[nodiscard]] bool operator!=(const IProduct<Type, Size, Ingredient> &product) const override;
 
     [[nodiscard]] Type getType() const override;
     void setType(Type type) override;
@@ -30,8 +31,8 @@ template <typename Type, typename Size, typename IngredientType> class Product :
     [[nodiscard]] double getPreparationTime() const override;
     void setPreparationTime(double preparationTime) override;
 
-    [[nodiscard]] const std::vector<IngredientType> &getIngredients() const override;
-    void setIngredients(const std::vector<IngredientType> &ingredients) override;
+    [[nodiscard]] const std::vector<Ingredient> &getIngredients() const override;
+    void setIngredients(const std::vector<Ingredient> &ingredients) override;
 
     [[nodiscard]] bool isFinished() const override;
     void setFinished() override;
@@ -40,7 +41,7 @@ template <typename Type, typename Size, typename IngredientType> class Product :
     Type _type;
     Size _size;
     double _preparationTime{};
-    std::vector<IngredientType> _ingredients;
+    std::vector<Ingredient> _ingredients;
     bool _finished = false;
 };
 
