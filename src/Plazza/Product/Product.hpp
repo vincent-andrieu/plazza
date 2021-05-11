@@ -40,9 +40,9 @@ template <typename Type, typename Size, typename Ingredient> class Product : pub
   private:
     Type _type;
     Size _size;
-    double _preparationTime{};
+    double _preparationTime;
     std::vector<Ingredient> _ingredients;
-    bool _finished = false;
+    bool _finished{false};
 };
 
 #endif
