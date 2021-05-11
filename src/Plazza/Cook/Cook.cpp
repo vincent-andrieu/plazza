@@ -94,11 +94,12 @@ void Cook<ProductType, ProductSize, ProductIngredientType>::_getIngredients(cons
 {
     std::vector<ProductIngredientType> my_ingredients(ingredients);
 
-    for (auto iterator = my_ingredients.begin(); !my_ingredients.empty() && _isWorking; ++iterator) {
-        if (iterator == my_ingredients.end())
-            iterator = my_ingredients.begin();
-        if (pickIngredientInStock(*iterator))
-            my_ingredients.erase(iterator);
+    while (!my_ingredients.empty()) {
+        my_ingredients.erase(std::remove_if(my_ingredients.begin(), my_ingredients.end(),
+                                 [this](ProductIngredientType const &p) {
+                                     return this->pickIngredientInStock(p);
+                                 }),
+            my_ingredients.end());
     }
 }
 
