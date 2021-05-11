@@ -6,18 +6,21 @@
  */
 
 #include "Order/Order.hpp"
-#include "Product/AProduct.hpp"
+#include "Product/Product.hpp"
 #include "enumPizza.hpp"
 
-using namespace Pizzeria;
-
-template <typename T> Order<T>::Order(const T &object) : _object(object)
+template <typename T> Order<T>::Order(T object) : _object(object)
 {
 }
 
 template <typename T> const T &Order<T>::getOrder() const
 {
     return _object;
+}
+
+template <typename T> void Order<T>::setOrder(T &object)
+{
+    this->_object = object;
 }
 
 template <typename T> const string Order<T>::_SerializeToString() const
@@ -45,4 +48,4 @@ template <typename T> void Order<T>::_SerializeFromString(const string str)
     this->_object.setPreparationTime(preparationTime);
 }
 
-template class Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>;
+template class Order<Product<Pizzeria::PizzaType, Pizzeria::PizzaSize, Pizzeria::PizzaIngredient>>;

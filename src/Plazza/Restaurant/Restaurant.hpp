@@ -20,7 +20,7 @@ using namespace Pizzeria;
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredientType> {
   public:
-    Restaurant(double bakingMultiplier, size_t cooksPerKitchen, size_t restockTime);
+    Restaurant(double bakingMultiplier, size_t cooksPerKitchen, double restockTime);
     ~Restaurant() override;
 
     void lunchTime() override;
@@ -29,10 +29,10 @@ class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredien
     void askKitchensStatus() const override;
 
   protected:
-    void _newKitchen(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
-    void _distributeOrder(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
+    void _newKitchen(const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order) override;
+    void _distributeOrder(const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void _sendOrder(std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchen,
-        const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) override;
+        const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order) override;
     void _retreiveOrders() override;
 
   private:
@@ -41,7 +41,7 @@ class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredien
     bool _isOpen{true};
     double _bakingMultiplier;
     size_t _cooksPerKitchen;
-    size_t _restockTime;
+    double _restockTime;
     std::vector<std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>>> _kitchens;
     Reception _reception;
 };

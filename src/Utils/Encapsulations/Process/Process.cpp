@@ -5,7 +5,7 @@
  * Process.cpp - Created: 21/04/2021
  */
 
-#include <signal.h>
+#include <csignal>
 #include <sys/wait.h>
 #include "Error/Error.hpp"
 #include "Encapsulations/Process/Process.hpp"
@@ -71,6 +71,24 @@ bool Process::isParent() const
 bool Process::isChild() const
 {
     return this->_isChild;
+}
+
+bool Process::parentExists() const
+{
+    if (this->isParent())
+        throw ProcessError("Parent don't have a parent");
+    if (kill(this->_parentPid, 0) == -1)
+        return false;
+    return true;
+}
+
+bool Process::childExists() const
+{
+    if (this->isChild())
+        throw ProcessError("Child don't have a child");
+    if (kill(this->_childPid, 0) == -1)
+        return false;
+    return true;
 }
 
 /**

@@ -10,7 +10,7 @@
 
 #include "Encapsulations/Process/Process.hpp"
 #include "Order/Order.hpp"
-#include "Product/AProduct.hpp"
+#include "Product/Product.hpp"
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType> class IKitchen {
   public:
@@ -22,7 +22,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 
   protected:
     virtual void _receiveOrder() = 0; // from pipe
-    virtual void _addPendingOrder(const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
+    virtual void _addPendingOrder(const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
     virtual void _sendFinishedOrders() = 0;
     virtual void _sendStatus() = 0;
 };

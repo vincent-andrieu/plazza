@@ -9,22 +9,22 @@
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 KitchenStatus<ProductType, ProductSize, ProductIngredientType>::KitchenStatus(
-    const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> pendingOrders,
-    const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> finishedOrders,
+    const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> pendingOrders,
+    const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> finishedOrders,
     const std::unordered_map<ProductIngredientType, size_t> stock)
     : _pendingOrders(pendingOrders), _finishedOrders(finishedOrders), _stock(stock)
 {
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> &
+const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &
 KitchenStatus<ProductType, ProductSize, ProductIngredientType>::getPendingOrders() const
 {
     return this->_pendingOrders;
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> &
+const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &
 KitchenStatus<ProductType, ProductSize, ProductIngredientType>::getFinishedOrders() const
 {
     return this->_finishedOrders;
@@ -41,14 +41,14 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeToString() const
 {
     string serial;
-    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> finish(this->_finishedOrders);
-    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> pending(this->_pendingOrders);
+    std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> finish(this->_finishedOrders);
+    std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> pending(this->_pendingOrders);
     std::unordered_map<ProductIngredientType, size_t> stock(this->_stock);
     std::unordered_map<string, PizzaSize>::const_iterator size_it;
     std::unordered_map<string, PizzaType>::const_iterator type_it;
 
     while (finish.size()) {
-        const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> tmp = finish.front();
+        const Order<Product<ProductType, ProductSize, ProductIngredientType>> tmp = finish.front();
         finish.pop();
         serial += (toString(tmp.getOrder().getType()) + " " + toString(tmp.getOrder().getSize()) + " "
             + toString(tmp.getOrder().getPreparationTime()));
@@ -57,7 +57,7 @@ const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_Se
     }
     serial += "-";
     while (pending.size()) {
-        const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> tmp = pending.front();
+        const Order<Product<ProductType, ProductSize, ProductIngredientType>> tmp = pending.front();
         pending.pop();
         serial += (toString(tmp.getOrder().getType()) + " " + toString(tmp.getOrder().getSize()) + " "
             + toString(tmp.getOrder().getPreparationTime()));
@@ -75,7 +75,7 @@ const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_Se
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeFromString(const string str)
 {
-    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> emptyQueue;
+    std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> emptyQueue;
     std::istringstream lineStream(str);
     string finish;
     string pending;
@@ -101,7 +101,7 @@ void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeF
         tmp_size = (PizzaSize) toInteger(word);
         ss >> word;
         this->_finishedOrders.push(
-            Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>(Factory::callFactory(tmp_type, tmp_size, toSize_t(word))));
+            Order<Product<PizzaType, PizzaSize, PizzaIngredient>>(Factory::callFactory(tmp_type, tmp_size, toSize_t(word))));
     }
     lineStream = std::istringstream(pending);
     this->_pendingOrders.swap(emptyQueue);
@@ -113,7 +113,7 @@ void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeF
         tmp_size = (PizzaSize) toInteger(word);
         ss >> word;
         this->_pendingOrders.push(
-            Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>(Factory::callFactory(tmp_type, tmp_size, toSize_t(word))));
+            Order<Product<PizzaType, PizzaSize, PizzaIngredient>>(Factory::callFactory(tmp_type, tmp_size, toSize_t(word))));
     }
     lineStream = std::istringstream(stock);
     while (std::getline(lineStream, tmp, '|')) {

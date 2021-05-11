@@ -15,13 +15,13 @@ NAME =	arcade_ncurses.so
 
 INCLUDES =	-I ../../include -I ../../include/Interfaces -I src
 CXXFLAGS =	$(INCLUDES) -Wall -Wextra -lncurses -fPIC
-
+LXXFLAGS =	-lncurses
 
 all:    $(NAME)
 
 $(NAME):    $(OBJ)
 		@$(ECHO)
-		@g++ -shared -o $(NAME) $(OBJ) \
+		@g++ -shared -o $(NAME) $(OBJ) $(LXXFLAGS) \
 		&& $(ECHO) $(BOLD) $(GREEN)"► NCURSES BUILD SUCCESS !"$(DEFAULT) || ($(ECHO) $(BOLD) $(RED)"► NCURSES BUILD FAILED"$(DEFAULT) exit 1)
 		@mkdir -p ../../lib && mv $(NAME) ../../lib
 

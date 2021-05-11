@@ -9,7 +9,7 @@
 #include <cerrno>
 #include "Error.hpp"
 
-const string getErrnoMsg(const string name)
+const string getErrnoMsg(const string &name)
 {
     const string error = strerror(errno);
 
@@ -44,11 +44,6 @@ MutexError::MutexError(string const &message, string const &component) : ManageE
 {
 }
 
-ConditionalVariablesError::ConditionalVariablesError(string const &message, string const &component)
-    : ManageError(message, component)
-{
-}
-
 CommunicationError::CommunicationError(string const &message, string const &component) : ManageError(message, component)
 {
 }
@@ -62,5 +57,9 @@ FactoryError::FactoryError(string const &message, string const &component) : Man
 }
 
 ReceptionError::ReceptionError(string const &message, string const &component) : ManageError(message, component)
+{
+}
+
+CookError::CookError(const string &message, const string &component) : ManageError(message, component)
 {
 }

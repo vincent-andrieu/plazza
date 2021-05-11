@@ -9,7 +9,7 @@
 
 using namespace Pizzeria;
 
-MargaritaPizza::MargaritaPizza(PizzaSize size, long multiplier)
+MargaritaPizza::MargaritaPizza(PizzaSize size, double multiplier)
     : Pizza(PizzaType::Margarita, size, multiplier * 1,
         {
             PizzaIngredient::DOE,

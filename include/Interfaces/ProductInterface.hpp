@@ -23,13 +23,13 @@ template <typename Type, typename Size, typename IngredientType> class IProduct 
     [[nodiscard]] virtual Size getSize() const = 0;
     virtual void setSize(Size size) = 0;
 
-    [[nodiscard]] virtual size_t getPreparationTime() const = 0;
-    virtual void setPreparationTime(size_t preparationTime) = 0;
+    [[nodiscard]] virtual double getPreparationTime() const = 0;
+    virtual void setPreparationTime(double preparationTime) = 0;
 
     [[nodiscard]] virtual const std::vector<IngredientType> &getIngredients() const = 0;
     virtual void setIngredients(const std::vector<IngredientType> &ingredients) = 0;
 
-    [[nodiscard]] virtual bool isFinished() = 0;
+    [[nodiscard]] virtual bool isFinished() const = 0;
     virtual void setFinished() = 0;
 };
 

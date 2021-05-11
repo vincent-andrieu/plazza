@@ -9,7 +9,7 @@
 
 using namespace Pizzeria;
 
-AmericanaPizza::AmericanaPizza(PizzaSize size, long multiplier)
+AmericanaPizza::AmericanaPizza(PizzaSize size, double multiplier)
     : Pizza(PizzaType::Americana, size, multiplier * 2,
         {
             PizzaIngredient::DOE,

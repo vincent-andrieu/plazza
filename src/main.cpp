@@ -9,7 +9,7 @@
 #include "Plazza.hpp"
 #include "Restaurant/Restaurant.hpp"
 
-void printHelp(const string binaryName)
+void printHelp(const string &binaryName)
 {
     std::cout << "USAGE:\t" << binaryName << " COOKING_TIME COOKS STOCK_RELOAD" << std::endl
               << "\tCOOKING_TIME:\tMultiplier for the cooking time." << std::endl
@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 
     double bakingMultiplier = atof(argv[1]);
     size_t cooksPerKitchen;
-    size_t restockTime;
+    double restockTime;
 
     stringstream(argv[2]) >> cooksPerKitchen;
     stringstream(argv[3]) >> restockTime;

@@ -12,7 +12,7 @@
 #include <string>
 #include "Order/Order.hpp"
 #include "Product/Pizza/Factory/Factory.hpp"
-#include "Product/AProduct.hpp"
+#include "Product/Product.hpp"
 #include "Translator/Translator.hpp"
 
 using namespace Pizzeria;
@@ -20,12 +20,12 @@ using namespace Pizzeria;
 template <typename ProductType, typename ProductSize, typename ProductIngredientType> class KitchenStatus : public Serializer {
   public:
     KitchenStatus() = default;
-    KitchenStatus(const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> pendingOrders,
-        const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> finishedOrders,
+    KitchenStatus(const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> pendingOrders,
+        const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> finishedOrders,
         const std::unordered_map<ProductIngredientType, size_t> stock);
 
-    const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> &getPendingOrders() const;
-    const std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> &getFinishedOrders() const;
+    const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &getPendingOrders() const;
+    const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &getFinishedOrders() const;
     const std::unordered_map<ProductIngredientType, size_t> &getStock() const;
 
   protected:
@@ -33,8 +33,8 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
     void _SerializeFromString(const string str);
 
   private:
-    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
-    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> _finishedOrders;
+    std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
+    std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> _finishedOrders;
     std::unordered_map<ProductIngredientType, size_t> _stock;
 };
 
