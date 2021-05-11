@@ -67,9 +67,9 @@ class Cook : public ICook<ProductType, ProductSize, ProductIngredientType> {
      * @param size
      * @param ingredients
      */
-    void cook(Product<ProductType, ProductSize, ProductIngredientType> order) override;
+    void _cook(Product<ProductType, ProductSize, ProductIngredientType> &order) override;
 
-    void getIngredients(const std::vector<ProductIngredientType> &ingredients);
+    void _getIngredients(const std::vector<ProductIngredientType> &ingredients);
 
     /**
      * @brief check if has finished cooking

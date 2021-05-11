@@ -47,11 +47,15 @@ void Cook<ProductType, ProductSize, ProductIngredientType>::work()
     while (_isWorking) {
         try {
             order = receiveOrder().getOrder();
-        } catch ([[maybe_unused]] const CookError &my_e) {
+        } catch (...) {
             continue;
         }
-        cook(order);
-        deliverOrder();
+        std::cerr << "ingredients size: " << order.getIngredients().size() << std::endl;
+        for (const auto &ingre : order.getIngredients())
+            std::cerr << "ingre : " << ingre << std::endl;
+        this->_cook(order);
+        if (this->_cookingProduct.isFinished())
+            deliverOrder();
     }
 }
 
@@ -76,19 +80,19 @@ void Cook<ProductType, ProductSize, ProductIngredientType>::stopWorking()
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Cook<ProductType, ProductSize, ProductIngredientType>::cook(Product<ProductType, ProductSize, ProductIngredientType> order)
+void Cook<ProductType, ProductSize, ProductIngredientType>::_cook(Product<ProductType, ProductSize, ProductIngredientType> &order)
 {
-    _isCooking = true;
-    _cookingProduct = order;
-    getIngredients(_cookingProduct.getIngredients());
-    _cookingProduct.setFinished();
-    _isCooking = false;
+    this->_isCooking = true;
+    this->_cookingProduct = order;
+    this->_getIngredients(_cookingProduct.getIngredients());
+    this->_cookingProduct.setFinished();
+    this->_isCooking = false;
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Cook<ProductType, ProductSize, ProductIngredientType>::getIngredients(const std::vector<ProductIngredientType> &ingredients)
+void Cook<ProductType, ProductSize, ProductIngredientType>::_getIngredients(const std::vector<ProductIngredientType> &ingredients)
 {
-    auto my_ingredients(ingredients);
+    std::vector<ProductIngredientType> my_ingredients(ingredients);
 
     for (auto iterator = my_ingredients.begin(); !my_ingredients.empty() && _isWorking; ++iterator) {
         if (iterator == my_ingredients.end())
@@ -101,8 +105,6 @@ void Cook<ProductType, ProductSize, ProductIngredientType>::getIngredients(const
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 bool Cook<ProductType, ProductSize, ProductIngredientType>::hasFinishedCooking() const
 {
-    //    if (!_cookingProduct)
-    //        throw CookError("No cooking product");
     return _cookingProduct.isFinished();
 }
 
@@ -110,8 +112,6 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 Order<Product<ProductType, ProductSize, ProductIngredientType>>
 Cook<ProductType, ProductSize, ProductIngredientType>::receiveOrder() const
 {
-    if (_orderReceivePlace.empty())
-        throw CookError("No order received");
     return _orderReceivePlace.getFront();
 }
 

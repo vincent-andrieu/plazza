@@ -9,6 +9,7 @@
 
 #include <queue>
 #include <mutex>
+#include <exception>
 
 template <typename T> class LockedQueue : public std::queue<T> {
   public:
@@ -29,6 +30,8 @@ template <typename T> class LockedQueue : public std::queue<T> {
     T getFront()
     {
         std::lock_guard<std::mutex> my_lock(_mutex);
+        if (std::queue<T>::empty())
+            throw std::out_of_range("Locked queue empty");
         const T my_elem(std::queue<T>::front());
 
         std::queue<T>::pop();

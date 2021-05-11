@@ -54,7 +54,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
      * @param size
      * @param ingredients
      */
-    virtual void cook(Product<ProductType, ProductSize, ProductIngredientType> order) = 0;
+    virtual void _cook(Product<ProductType, ProductSize, ProductIngredientType> &order) = 0;
 
     /**
      * @brief check if has finished cooking
