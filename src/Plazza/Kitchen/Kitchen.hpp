@@ -34,8 +34,9 @@ class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>
     void _sendFinishedOrders() override;
     void _sendStatus() override;
 
-    void cooksStartCooking();
-    void cooksStopCooking();
+    void _cooksStartCooking();
+    void _cooksStopCooking();
+    bool _isCookersWorking() const;
 
   private:
     void _destroyManage();
