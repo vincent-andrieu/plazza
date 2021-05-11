@@ -14,9 +14,12 @@
 #include <vector>
 #include "Clock/Clock.hpp"
 #include "Plazza.hpp"
+#include "enumPizza.hpp"
 
 #define DEFAULT_STOCK 5
 #define RESTOCK_NBR   1
+
+using namespace Pizzeria;
 
 template <typename IngredientType> class Stock {
   public:

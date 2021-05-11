@@ -6,13 +6,11 @@
  */
 
 #include "Stock/Stock.hpp"
-#include "enumPizza.hpp"
 
 template <typename IngredientType> Stock<IngredientType>::Stock(double restockTime) : _restockTime(restockTime)
 {
     for (const IngredientType &ingredient : pizzaIngredientList)
         this->_stock[ingredient] = DEFAULT_STOCK;
-    time(&this->_restockClock);
 }
 
 template <typename IngredientType>
