@@ -7,49 +7,61 @@
 
 #include "Stock/Stock.hpp"
 
-template <typename IngredientType> Stock<IngredientType>::Stock(size_t restockTime) : _restockTime(restockTime)
+template <typename IngredientType> Stock<IngredientType>::Stock(double restockTime) : _restockTime(restockTime)
 {
     for (const IngredientType &ingredient : pizzaIngredientList)
         this->_stock[ingredient] = DEFAULT_STOCK;
-    time(&this->_restockClock);
+}
+
+template <typename IngredientType>
+Stock<IngredientType>::Stock(double restockTime, const std::vector<IngredientType> &stackableIngredients)
+    : _restockTime(restockTime)
+{
+    for (const auto &stackableIngredient : stackableIngredients) {
+        _stock.template emplace(std::make_pair(stackableIngredient, DEFAULT_STOCK));
+    }
+}
+
+template <typename IngredientType> void Stock<IngredientType>::addIngredient(const IngredientType &ingredient)
+{
+    try {
+        _stock.at(ingredient);
+    } catch (const std::out_of_range &my_exception) {
+        _stock.emplace(std::make_pair(ingredient, DEFAULT_STOCK));
+    }
+}
+
+template <typename IngredientType> bool Stock<IngredientType>::isRestockTime() const
+{
+    return (_restockClock.getElapsedTimeDouble() > _restockTime);
 }
 
 template <typename IngredientType> void Stock<IngredientType>::restock()
 {
-    if (difftime(time(nullptr), this->_restockClock) >= this->_restockTime) {
-        this->_mutex.lock();
-        for (const std::pair<IngredientType, size_t> &ingredient : _stock)
-            this->_stock[ingredient.first] += RESTOCK_NBR;
+    std::lock_guard<std::mutex> my_lock(_mutex);
 
-        time(&this->_restockClock);
-        this->_mutex.unlock();
+    _restockClock.setElapsedTime();
+    for (auto &item : _stock) {
+        item.second += RESTOCK_NBR;
     }
 }
 
-/**
- * @brief Return true if can take ingredients. Otherwise return false.
- *
- * @param ingredient
- * @param nbr
- * @return bool
- */
 template <typename IngredientType> bool Stock<IngredientType>::takeIngredients(IngredientType ingredient, size_t nbr)
 {
-    this->_mutex.lock();
+    std::lock_guard<std::mutex> my_lock(_mutex);
+
     if (this->_stock[ingredient] < nbr)
         return false;
-
     this->_stock[ingredient] -= nbr;
-    this->_mutex.unlock();
     return true;
 }
 
 template <typename IngredientType> const std::unordered_map<IngredientType, size_t> Stock<IngredientType>::getStockList()
 {
-    this->_mutex.lock();
+    std::lock_guard<std::mutex> my_lock(_mutex);
     const std::unordered_map<IngredientType, size_t> tempStock(this->_stock);
-    this->_mutex.unlock();
+
     return tempStock;
 }
 
-template class Stock<PizzaIngredient>;
+template class Stock<enum Pizzeria::PizzaIngredient>;

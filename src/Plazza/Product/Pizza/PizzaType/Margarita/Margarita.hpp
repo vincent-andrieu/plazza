@@ -14,7 +14,7 @@ namespace Pizzeria
 {
     class MargaritaPizza : public Pizza {
       public:
-        MargaritaPizza(PizzaSize size, long multiplier);
+        MargaritaPizza(PizzaSize size, double multiplier);
         ~MargaritaPizza() override = default;
     };
 } // namespace Pizzeria

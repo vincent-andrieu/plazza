@@ -17,7 +17,7 @@ CoreDisplay<ProductType, ProductSize, ProductIngredientType>::CoreDisplay(
 {
     listDir lib("./lib/", "arcade_.+\\.so");
     std::vector<std::string> nameList = lib.getDirContent();
-    std::vector<std::string>::iterator it = nameList.begin();
+    auto it = nameList.begin();
 
     for (size_t i = 0; it != nameList.end(); it++, i++) {
         this->_dirName[i] = std::make_unique<DLLib<IDisplayModule>>(std::string("./lib/") + *it);
@@ -57,7 +57,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printKitchen(
 {
     typename std::vector<std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>>>::iterator it =
         kitchenList.begin();
-    std::string to_display = "";
+    std::string to_display;
     std::size_t pos_y = 1;
     std::size_t max = 15;
     size_t len = kitchenList.size();
@@ -85,28 +85,32 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetailledKitchen(
     std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchen)
 {
-    //Logger log("./last_display");
-    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> finish(kitchen->kitchenStatus.getFinishedOrders());
-    std::queue<Order<AProduct<ProductType, ProductSize, ProductIngredientType>>> pending(kitchen->kitchenStatus.getPendingOrders());
+    // Logger log("./last_display");
+    std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> finish(
+        kitchen->kitchenStatus.getFinishedOrders());
+    std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> pending(
+        kitchen->kitchenStatus.getPendingOrders());
     std::unordered_map<ProductIngredientType, size_t> stock(kitchen->kitchenStatus.getStock());
     std::unordered_map<string, PizzaSize>::const_iterator size_it;
     std::unordered_map<string, PizzaType>::const_iterator type_it;
-    std::string to_write = "";
+    std::string to_write;
     std::size_t pos_x = 30;
     std::size_t pos_y = 4;
 
-    this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(IDisplayModule::Color::WHITE, Coord(60, 30), Coord(pos_x, pos_y++));
-    this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("finish order:"));
-    //log.writeLog(std::string("finish size: ") + std::to_string(finish.size()));
-    while (finish.size()) {
-        const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> tmp = finish.front();
+    this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(
+        IDisplayModule::Color::WHITE, Coord(60, 30), Coord(pos_x, pos_y++));
+    this->_dirName[this->_pos]->getEntryPoint()->putText(
+        IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("finish order:"));
+    // log.writeLog(std::string("finish size: ") + std::to_string(finish.size()));
+    while (!finish.empty()) {
+        const Order<Product<ProductType, ProductSize, ProductIngredientType>> tmp = finish.front();
         finish.pop();
         size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [tmp](const auto &params) {
-                            return params.second == tmp.getOrder().getSize();
-                        });
+            return params.second == tmp.getOrder().getSize();
+        });
         type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [tmp](const auto &params) {
-                            return params.second == tmp.getOrder().getType();
-                        });
+            return params.second == tmp.getOrder().getType();
+        });
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
             to_write = "data wrong";
         else
@@ -118,15 +122,15 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
     pos_x += 20;
     this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("pending order:"));
     //log.writeLog(std::string("pending size: ") + std::to_string(pending.size()));
-    while (pending.size()) {
-        const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> tmp = pending.front();
+    while (!pending.empty()) {
+        const Order<Product<ProductType, ProductSize, ProductIngredientType>> tmp = pending.front();
         pending.pop();
         size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [tmp](const auto &params) {
-                            return params.second == tmp.getOrder().getSize();
-                        });
+            return params.second == tmp.getOrder().getSize();
+        });
         type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [tmp](const auto &params) {
-                            return params.second == tmp.getOrder().getType();
-                        });
+            return params.second == tmp.getOrder().getType();
+        });
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
             to_write = "data wrong";
         else
@@ -231,4 +235,4 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::kitchenSwitch
     }
 }
 
-template class CoreDisplay<PizzaType, PizzaSize, PizzaIngredient>;
+template class Pizzeria::CoreDisplay<PizzaType, PizzaSize, PizzaIngredient>;

@@ -14,7 +14,7 @@ namespace Pizzeria
 {
     class FantasiaPizza : public Pizza {
       public:
-        FantasiaPizza(PizzaSize size, long multiplier);
+        FantasiaPizza(PizzaSize size, double multiplier);
         ~FantasiaPizza() override = default;
     };
 } // namespace Pizzeria

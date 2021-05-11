@@ -24,14 +24,13 @@ namespace Pizzeria
       public:
         Reception(double multiplier, std::function<void()> statusFunc, std::function<void()> quitFunc);
         ~Reception() override = default;
-        void sendOrder(const Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>> &order) override;
-        void sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, PizzaIngredient> &kitchenStatus);
+        void sendOrder(const Order<Product<PizzaType, PizzaSize, PizzaIngredient>> &order) override;
+        void sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, PizzaIngredient> &kitchenStatus) override;
         void receiveCommands(
-            const string &cmd, std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> &orderList) override;
+            const string &cmd, std::queue<Order<Product<PizzaType, PizzaSize, PizzaIngredient>>> &orderList) override;
 
       private:
-        void _writePizzasCommand(
-            const string &cmd, std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> &orderList);
+        void _writePizzasCommand(const string &cmd, std::queue<Order<Product<PizzaType, PizzaSize, PizzaIngredient>>> &orderList);
         [[nodiscard]] static PizzaType _getType(const string &type);
         [[nodiscard]] static PizzaSize _getSize(const string &size);
         [[nodiscard]] static size_t _getNbr(const string &nbr);

@@ -13,7 +13,7 @@ using namespace Pizzeria;
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Restaurant<ProductType, ProductSize, ProductIngredientType>::Restaurant(
-    double bakingTime, size_t cooksPerKitchen, size_t restockTime)
+    double bakingTime, size_t cooksPerKitchen, double restockTime)
     : _bakingMultiplier(bakingTime), _cooksPerKitchen(cooksPerKitchen), _restockTime(restockTime),
       _reception(
           bakingTime,
@@ -37,7 +37,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
 {
     string input;
     CoreDisplay<ProductType, ProductSize, ProductIngredientType> core(Vector(1400, 900), Vector(9.95, 21.6), 300);
-    std::queue<Order<AProduct<PizzaType, PizzaSize, PizzaIngredient>>> currentOrderQueue;
+    std::queue<Order<Product<PizzaType, PizzaSize, PizzaIngredient>>> currentOrderQueue;
 
     core.setPrompt("$> ");
     while (this->isOpen() && core.isRunning()) {
@@ -77,7 +77,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::close()
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_distributeOrder(
-    const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order)
+    const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     size_t selectedKitchenIndex;
     size_t maxOrders = this->_cooksPerKitchen * 2;
@@ -97,7 +97,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_distributeOrd
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_newKitchen(
-    const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order)
+    const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     Kitchen<ProductType, ProductSize, ProductIngredientType> *kitchen =
         new Kitchen<ProductType, ProductSize, ProductIngredientType>(
@@ -114,7 +114,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_newKitchen(
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::_sendOrder(
     std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchenManage,
-    const Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &order)
+    const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     kitchenManage->orders.push_back(order);
     kitchenManage->kitchen.send(CommunicationType(ECommunicationType::ORDER_PIZZA));
@@ -151,12 +151,12 @@ bool Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
     switch (commType.getType()) {
         case ECommunicationType::ORDER_PIZZA: {
             Pizza pizza = Pizza();
-            Order<AProduct<ProductType, ProductSize, ProductIngredientType>> order(pizza);
+            Order<Product<ProductType, ProductSize, ProductIngredientType>> order(pizza);
 
             kitchenManage->kitchen.waitingReceive(order);
             this->_reception.sendOrder(order);
 
-            kitchenManage->orders.remove_if([order](Order<AProduct<ProductType, ProductSize, ProductIngredientType>> &elemOrder) {
+            kitchenManage->orders.remove_if([order](Order<Product<ProductType, ProductSize, ProductIngredientType>> &elemOrder) {
                 return order.getOrder() == elemOrder.getOrder();
             });
         } break;
