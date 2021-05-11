@@ -17,9 +17,9 @@
 
 class Logger {
   public:
-    Logger(string filepath);
+    Logger(const string filepath);
     ~Logger();
-    void writeLog(string log);
+    void writeLog(const string log);
 
   private:
     size_t _nbLog;

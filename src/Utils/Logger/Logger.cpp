@@ -7,7 +7,7 @@
 
 #include "Logger.hpp"
 
-Logger::Logger(string filepath) : _nbLog(0), _output(std::ofstream(filepath))
+Logger::Logger(const string filepath) : _nbLog(0), _output(std::ofstream(filepath))
 {
     if (!this->_output.is_open())
         throw std::invalid_argument("Logger");
@@ -18,7 +18,7 @@ Logger::~Logger()
     this->_output.close();
 }
 
-void Logger::writeLog(string log)
+void Logger::writeLog(const string log)
 {
     std::chrono::time_point<std::chrono::system_clock> now_time = std::chrono::system_clock::now();
     std::time_t now_time_print = std::chrono::system_clock::to_time_t(now_time);
