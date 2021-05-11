@@ -118,7 +118,7 @@ Cook<ProductType, ProductSize, ProductIngredientType>::receiveOrder() const
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Cook<ProductType, ProductSize, ProductIngredientType>::deliverOrder()
 {
-    if (_cookingProduct.isFinished())
+    if (!_cookingProduct.isFinished())
         throw CookError("Product not finished");
 
     Order<Product<ProductType, ProductSize, ProductIngredientType>> my_delivery(_cookingProduct);
