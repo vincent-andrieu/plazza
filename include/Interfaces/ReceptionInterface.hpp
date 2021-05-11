@@ -21,6 +21,7 @@ class IReception : public CommandInterpreter {
     virtual ~IReception() = default;
     virtual void sendOrder(const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order) = 0;
     virtual void sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, PizzaIngredient> &kitchenStatus) = 0;
+    virtual void sendKitchenClosed() = 0;
     virtual void receiveCommands(
         const string &cmd, std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &orderList) = 0;
 };

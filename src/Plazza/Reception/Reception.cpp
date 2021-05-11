@@ -44,16 +44,16 @@ void Reception::sendOrder(const Order<Product<PizzaType, PizzaSize, PizzaIngredi
 
 void Reception::sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, PizzaIngredient> &kitchenStatus)
 {
-    std::string tab = "\t";
+    string tab = "\t";
     std::queue<Order<Product<PizzaType, PizzaSize, PizzaIngredient>>> finish(kitchenStatus.getFinishedOrders());
     std::queue<Order<Product<PizzaType, PizzaSize, PizzaIngredient>>> pending(kitchenStatus.getPendingOrders());
     std::unordered_map<PizzaIngredient, size_t> stock(kitchenStatus.getStock());
     std::unordered_map<string, PizzaSize>::const_iterator size_it;
     std::unordered_map<string, PizzaType>::const_iterator type_it;
-    std::string to_write;
+    string to_write;
 
     this->_logger.writeLog("kitchen status:");
-    this->_logger.writeLog(tab + std::string("finished orders:"));
+    this->_logger.writeLog(tab + "finished orders:");
     while (!finish.empty()) {
         const Order<Product<PizzaType, PizzaSize, PizzaIngredient>> tmp = finish.front();
         finish.pop();
@@ -66,11 +66,11 @@ void Reception::sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, Pizz
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
             to_write = "wrong data";
         else
-            to_write = std::string("type: ") + type_it->first + std::string(" size: ") + size_it->first;
+            to_write = "type: " + type_it->first + " size: " + size_it->first;
         this->_logger.writeLog(tab + tab + to_write);
     }
 
-    this->_logger.writeLog(tab + std::string("pending orders:"));
+    this->_logger.writeLog(tab + "pending orders:");
     while (!pending.empty()) {
         const Order<Product<PizzaType, PizzaSize, PizzaIngredient>> tmp = pending.front();
         pending.pop();
@@ -83,19 +83,24 @@ void Reception::sendKitchenStatus(const KitchenStatus<PizzaType, PizzaSize, Pizz
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
             to_write = "wrong data";
         else
-            to_write = std::string("type: ") + type_it->first + std::string(" size: ") + size_it->first;
+            to_write = string("type: ") + type_it->first + " size: " + size_it->first;
         this->_logger.writeLog(tab + tab + to_write);
     }
 
-    this->_logger.writeLog(tab + std::string("stock:"));
+    this->_logger.writeLog(tab + "stock:");
     for (auto &q : stock) {
         try {
-            to_write = PizzaIngredientListName.at(q.first) + std::string(": ") + std::to_string(q.second);
-        } catch (const std::out_of_range & e) {
-            to_write = std::string("Internal error: ") + e.what();
+            to_write = PizzaIngredientListName.at(q.first) + ": " + toString(q.second);
+        } catch (const std::out_of_range &e) {
+            to_write = string("Internal error: ") + e.what();
         }
         this->_logger.writeLog(tab + tab + to_write);
     }
+}
+
+void Reception::sendKitchenClosed()
+{
+    this->_logger.writeLog("Kitchen closed");
 }
 
 void Reception::receiveCommands(

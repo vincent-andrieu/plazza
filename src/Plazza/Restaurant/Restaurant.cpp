@@ -166,7 +166,10 @@ bool Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
             this->_reception.sendKitchenStatus(kitchenManage->kitchenStatus);
         } break;
 
-        case ECommunicationType::KILL_CHILD: return true;
+        case ECommunicationType::KILL_CHILD: {
+            this->_reception.sendKitchenClosed();
+            return true;
+        }
         default: break;
     };
     return false;
