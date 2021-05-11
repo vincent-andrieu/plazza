@@ -39,6 +39,9 @@ int main(int argc, char **argv)
     } catch (const ManageError &e) {
         std::cerr << e.getComponent() + ": " + e.what() << std::endl;
         return EXIT_ERROR;
+    } catch (const std::invalid_argument &e) {
+        std::cerr << e.what() << std::endl;
+        return EXIT_ERROR;
     }
     return EXIT_SUCCESS;
 }
