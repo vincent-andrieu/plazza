@@ -282,7 +282,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::updatingKitch
 
     if (this->_mouseClickedHere(Coord(pos_x, pos_y), Coord(15, 3))) {
         color = IDisplayModule::Color::YELLOW;
-        if (len && this->_kitechToPrint < this->_kitechToPrint)
+        if (len && this->_kitechToPrint < len)
             func(kitchenList[this->_kitechToPrint]->kitchen);
     }
     this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(color, Coord(15, 3), Coord(pos_x, pos_y));
