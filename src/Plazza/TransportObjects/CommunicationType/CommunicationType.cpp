@@ -7,10 +7,6 @@
 
 #include "TransportObjects/CommunicationType/CommunicationType.hpp"
 
-CommunicationType::CommunicationType()
-{
-}
-
 CommunicationType::CommunicationType(ECommunicationType type) : _type(type)
 {
 }

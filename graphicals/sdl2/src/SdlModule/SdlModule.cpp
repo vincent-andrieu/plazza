@@ -18,14 +18,6 @@ extern "C"
     }
 }
 
-SdlModule::SdlModule()
-{
-}
-
-SdlModule::~SdlModule()
-{
-}
-
 void SdlModule::open(Vector screenSize, Vector screenScale)
 {
     this->_isOpen = true;
@@ -51,7 +43,7 @@ void SdlModule::close()
     SDL_DestroyWindow(_window);
     TTF_Quit();
     SDL_Quit();
-    _renderer = NULL;
+    _renderer = nullptr;
 }
 
 bool SdlModule::isOpen() const
@@ -119,15 +111,15 @@ void SdlModule::putCircle(IDisplayModule::Color color, Coord pos, size_t radius)
 
 void SdlModule::putText(IDisplayModule::Color color, Coord pos, std::string const &value)
 {
-    SDL_Surface *textSurface;
-    SDL_Texture *texture;
+    SDL_Surface *textSurface{nullptr};
+    SDL_Texture *texture{nullptr};
     SDL_Rect posRect;
     SDL_Color sdl_color;
 
     if (_colorList.find(color) == _colorList.end())
         return;
     sdl_color = _colorList.at(color);
-    if (_police == NULL)
+    if (_police == nullptr)
         return;
     if (pos.x > this->_screenSize.x || pos.y > this->_screenSize.y)
         return;
@@ -137,7 +129,7 @@ void SdlModule::putText(IDisplayModule::Color color, Coord pos, std::string cons
     posRect.h = textSurface->h;
     posRect.x = pos.x * this->_screenScale.x;
     posRect.y = pos.y * this->_screenScale.y;
-    SDL_RenderCopy(_renderer, texture, NULL, &posRect);
+    SDL_RenderCopy(_renderer, texture, nullptr, &posRect);
     if (texture)
         SDL_DestroyTexture(texture);
     if (textSurface)
@@ -195,7 +187,7 @@ bool SdlModule::isKeyPress(const IDisplayModule::KeyList key) const
 
 bool SdlModule::isMouseClicked() const
 {
-    return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT);
+    return SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT);
 }
 
 Coord SdlModule::getMousePos() const

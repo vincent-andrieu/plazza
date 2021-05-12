@@ -8,26 +8,18 @@
 #include <sys/ioctl.h>
 #include <ncurses.h>
 #include <cstring>
-#include <stdlib.h>
+#include <cstdlib>
 #include <exception>
 #include "Term/Term.hpp"
-
-Term::Term()
-{
-}
-
-Term::~Term()
-{
-}
 
 void Term::open()
 {
     const char *term_env = getenv("TERM");
     const char *keypad_mode = tigetstr("smkx");
 
-    if (term_env == NULL)
+    if (term_env == nullptr)
         throw std::exception(); // No term env
-    if (keypad_mode == NULL)
+    if (keypad_mode == nullptr)
         throw std::exception(); // Keypad mode error
     putp(keypad_mode);
     initscr();
@@ -44,7 +36,7 @@ void Term::close()
 void Term::setTermMode(bool toggle)
 {
     static struct termios old_term;
-    struct termios new_term;
+    struct termios new_term{};
 
     if (!toggle) {
         if (ioctl(0, TCGETS, &old_term) || ioctl(0, TCGETS, &new_term))
@@ -64,8 +56,8 @@ void Term::initNCurses()
     noecho(); // do not print typed characters
     curs_set(0);
     keypad(stdscr, TRUE);
-    mousemask(ALL_MOUSE_EVENTS, NULL);
-    if (has_colors() == false) {
+    mousemask(ALL_MOUSE_EVENTS, nullptr);
+    if (!has_colors()) {
         endwin();
         throw std::exception(); // Didn't have colors
     }

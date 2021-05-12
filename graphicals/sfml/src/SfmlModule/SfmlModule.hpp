@@ -27,8 +27,8 @@ typedef std::string string;
 
 class SfmlModule : public IDisplayModule {
   public:
-    SfmlModule();
-    ~SfmlModule();
+    SfmlModule() = default;
+    ~SfmlModule() = default;
 
     void open(Vector screenSize, Vector screenScale);
     void close();
@@ -53,7 +53,7 @@ class SfmlModule : public IDisplayModule {
     void _refreshKeys();
 
     Vector _screenScale;
-    std::unique_ptr<sf::RenderWindow> _window;
+    std::unique_ptr<sf::RenderWindow> _window{nullptr};
     std::vector<sf::Event> _keysBuffer;
 
     std::unordered_map<IDisplayModule::Color, sf::Color> _colorList = {{IDisplayModule::Color::BLACK, sf::Color::Black},

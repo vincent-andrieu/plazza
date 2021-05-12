@@ -146,7 +146,7 @@ bool Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
 {
     CommunicationType commType;
 
-    if (kitchenManage->kitchen.receive(commType) == false)
+    if (!kitchenManage || kitchenManage->kitchen.receive(commType) == false)
         return false;
     switch (commType.getType()) {
         case ECommunicationType::ORDER_PIZZA: {

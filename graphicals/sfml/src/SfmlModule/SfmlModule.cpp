@@ -18,14 +18,6 @@ extern "C"
     }
 }
 
-SfmlModule::SfmlModule()
-{
-}
-
-SfmlModule::~SfmlModule()
-{
-}
-
 void SfmlModule::open(Vector screenSize, Vector screenScale)
 {
     this->_screenScale = screenScale;
@@ -101,12 +93,14 @@ void SfmlModule::putText(plazza::IDisplayModule::Color color, plazza::Coord pos,
     text.setFillColor(this->_colorList.at(color));
     text.setString(value);
 
-    this->_window->draw(text);
+    if (this->_window)
+        this->_window->draw(text);
 }
 
 void SfmlModule::displayScreen()
 {
-    this->_window->display();
+    if (this->_window)
+        this->_window->display();
 }
 
 void SfmlModule::refreshScreen()
@@ -116,10 +110,10 @@ void SfmlModule::refreshScreen()
 
 void SfmlModule::_refreshKeys()
 {
-    sf::Event event;
+    sf::Event event{};
 
     this->_keysBuffer.clear();
-    while (this->_window->pollEvent(event))
+    while (this->_window && this->_window->pollEvent(event))
         if (event.type == sf::Event::EventType::KeyPressed || event.type == sf::Event::Closed
             || event.type == sf::Event::EventType::MouseButtonPressed)
             this->_keysBuffer.push_back(event);
@@ -134,7 +128,8 @@ void SfmlModule::_refreshKeys()
 
 void SfmlModule::clearScreen()
 {
-    this->_window->clear();
+    if (this->_window)
+        this->_window->clear();
 }
 
 bool SfmlModule::isKeyPress(const IDisplayModule::KeyList key) const

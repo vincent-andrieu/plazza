@@ -12,8 +12,8 @@
 
 class Term {
   public:
-    Term();
-    ~Term();
+    Term() = default;
+    ~Term() = default;
 
     void open();
     void close();

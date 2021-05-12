@@ -27,8 +27,8 @@ using namespace plazza;
 
 class SdlModule : public IDisplayModule {
   public:
-    SdlModule();
-    ~SdlModule();
+    SdlModule() = default;
+    ~SdlModule() = default;
 
     void open(Vector screenSize, Vector screenScale);
     void close();
@@ -53,9 +53,9 @@ class SdlModule : public IDisplayModule {
     bool _isOpen;
     Vector _screenSize;
     Vector _screenScale;
-    SDL_Window *_window;
-    SDL_Renderer *_renderer;
-    TTF_Font *_police;
+    SDL_Window *_window{nullptr};
+    SDL_Renderer *_renderer{nullptr};
+    TTF_Font *_police{nullptr};
 
     std::vector<SDL_Event> _keysBuffer;
 

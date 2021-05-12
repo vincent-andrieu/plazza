@@ -20,7 +20,7 @@ enum ECommunicationType
 
 class CommunicationType : public Serializer {
   public:
-    CommunicationType();
+    CommunicationType() = default;
     explicit CommunicationType(ECommunicationType type);
     ~CommunicationType() = default;
 
