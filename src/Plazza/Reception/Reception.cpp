@@ -38,7 +38,7 @@ void Reception::sendOrder(const Order<Product<PizzaType, PizzaSize, PizzaIngredi
         this->_logger.writeLog("Data not correctly defined");
         return;
     }
-    to_write = "Size: " + size_it->first + " Type: " + type_it->first + "\n";
+    to_write = "Order finished => Size: " + size_it->first + ", Type: " + type_it->first + "\n";
     this->_logger.writeLog(to_write);
 }
 
