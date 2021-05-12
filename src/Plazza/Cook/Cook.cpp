@@ -46,13 +46,13 @@ void Cook<ProductType, ProductSize, ProductIngredientType>::work()
 
     while (_isWorking) {
         try {
-            order = receiveOrder().getOrder();
+            order = _receiveOrder().getOrder();
         } catch (...) {
             continue;
         }
         this->_cook(order);
         if (this->_cookingProduct.isFinished())
-            deliverOrder();
+            _deliverOrder();
     }
 }
 
@@ -94,27 +94,27 @@ void Cook<ProductType, ProductSize, ProductIngredientType>::_getIngredients(cons
     while (!my_ingredients.empty()) {
         my_ingredients.erase(std::remove_if(my_ingredients.begin(), my_ingredients.end(),
                                  [this](ProductIngredientType const &p) {
-                                     return this->pickIngredientInStock(p);
+                                     return this->_pickIngredientInStock(p);
                                  }),
             my_ingredients.end());
     }
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-bool Cook<ProductType, ProductSize, ProductIngredientType>::hasFinishedCooking() const
+bool Cook<ProductType, ProductSize, ProductIngredientType>::_hasFinishedCooking() const
 {
     return _cookingProduct.isFinished();
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Order<Product<ProductType, ProductSize, ProductIngredientType>>
-Cook<ProductType, ProductSize, ProductIngredientType>::receiveOrder() const
+Cook<ProductType, ProductSize, ProductIngredientType>::_receiveOrder() const
 {
     return _orderReceivePlace.getFront();
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void Cook<ProductType, ProductSize, ProductIngredientType>::deliverOrder()
+void Cook<ProductType, ProductSize, ProductIngredientType>::_deliverOrder()
 {
     if (!_cookingProduct.isFinished())
         throw CookError("Product not finished");
@@ -124,7 +124,7 @@ void Cook<ProductType, ProductSize, ProductIngredientType>::deliverOrder()
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-bool Cook<ProductType, ProductSize, ProductIngredientType>::pickIngredientInStock(const ProductIngredientType &ingredient)
+bool Cook<ProductType, ProductSize, ProductIngredientType>::_pickIngredientInStock(const ProductIngredientType &ingredient)
 {
     return _stockPlace.takeIngredients(ingredient, 1);
 }

@@ -52,7 +52,7 @@ class CommandInterpreter {
     void addErrorMsg(uint id, const std::string &msg);
 
   protected:
-    void setActCommand(std::string &command);
+    void _setActCommand(std::string &command);
 
     /**
      * @brief

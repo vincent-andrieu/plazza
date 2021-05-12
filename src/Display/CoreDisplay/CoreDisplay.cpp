@@ -13,7 +13,8 @@ using namespace Pizzeria;
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 CoreDisplay<ProductType, ProductSize, ProductIngredientType>::CoreDisplay(
     Vector screenSize, Vector screenScale, std::size_t maxLen)
-    : _maxLen(maxLen), _input(std::make_unique<UserInput>()), _dirName(), _pos(0), _kitechToPrint(0), _screenSize(screenSize), _screenScale(screenScale)
+    : _maxLen(maxLen), _input(std::make_unique<UserInput>()), _dirName(), _pos(0), _kitechToPrint(0), _screenSize(screenSize),
+      _screenScale(screenScale)
 {
     listDir lib("./lib/", "arcade_.+\\.so");
     std::vector<std::string> nameList = lib.getDirContent();
@@ -72,17 +73,18 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printKitchen(
         this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(1, pos_y + 1), to_display);
     }
     if (it != kitchenList.end()) {
-        this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(0, pos_y + 1), "too much kitchen ...");
+        this->_dirName[this->_pos]->getEntryPoint()->putText(
+            IDisplayModule::Color::CYAN, Coord(0, pos_y + 1), "too much kitchen ...");
         pos_y += 3;
     }
     to_display = std::string("There are ") + std::to_string(kitchenList.size()) + std::string(" kitchens.");
     this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(0, pos_y + 1), to_display);
     if (len)
-        this->printDetailledKitchen(kitchenList[this->_kitechToPrint]);
+        this->_printDetailledKitchen(kitchenList[this->_kitechToPrint]);
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetailledKitchen(
+void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_printDetailledKitchen(
     std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchen)
 {
     // Logger log("./last_display");
@@ -126,8 +128,9 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
 
     pos_y = 5;
     pos_x += 20;
-    this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("pending order:"));
-    //log.writeLog(std::string("pending size: ") + std::to_string(pending.size()));
+    this->_dirName[this->_pos]->getEntryPoint()->putText(
+        IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("pending order:"));
+    // log.writeLog(std::string("pending size: ") + std::to_string(pending.size()));
     for (size_t i = 0; i < limit && !pending.empty(); i++) {
         const Order<Product<ProductType, ProductSize, ProductIngredientType>> tmp = pending.front();
         pending.pop();
@@ -149,7 +152,8 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
 
     pos_y = 5;
     pos_x += 20;
-    this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("cooking order:"));
+    this->_dirName[this->_pos]->getEntryPoint()->putText(
+        IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("cooking order:"));
     size_t u = 0;
     for (; u < limit && u < cooking.size(); u++) {
         size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [cooking, u](const auto &params) {
@@ -170,8 +174,9 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
 
     pos_y = 5;
     pos_x += 20;
-    this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("stock:"));
-    //log.writeLog(std::string("stock size: ") + std::to_string(stock.size()));
+    this->_dirName[this->_pos]->getEntryPoint()->putText(
+        IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("stock:"));
+    // log.writeLog(std::string("stock size: ") + std::to_string(stock.size()));
     for (auto &q : stock) {
         to_write = PizzaIngredientListName.at(q.first) + std::string(": ") + std::to_string(q.second);
         this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::GREEN, Coord(pos_x + 1, pos_y++), to_write);
@@ -201,8 +206,8 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::setLine(std::
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::update()
 {
-    this->libraryDisplaySwitch();
-    this->kitchenSwitch();
+    this->_libraryDisplaySwitch();
+    this->_kitchenSwitch();
     this->_dirName[this->_pos]->getEntryPoint()->displayScreen();
     this->_dirName[this->_pos]->getEntryPoint()->refreshScreen();
 }
@@ -215,7 +220,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::clear()
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::libraryDisplaySwitch()
+void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_libraryDisplaySwitch()
 {
     if (this->_dirName[this->_pos]->getEntryPoint()->isKeyPress(IDisplayModule::KeyList::ARROW_LEFT)) {
         this->_dirName[this->_pos]->getEntryPoint()->close();
@@ -250,13 +255,15 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printError()
     size_t pos_x = 30;
 
     if (this->_error.length()) {
-        this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(IDisplayModule::Color::RED, Coord(52, 3), Coord(pos_x, pos_y));
-        this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::WHITE, Coord(pos_x + 1, pos_y + 1), this->_error);
+        this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(
+            IDisplayModule::Color::RED, Coord(52, 3), Coord(pos_x, pos_y));
+        this->_dirName[this->_pos]->getEntryPoint()->putText(
+            IDisplayModule::Color::WHITE, Coord(pos_x + 1, pos_y + 1), this->_error);
     }
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::kitchenSwitch()
+void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_kitchenSwitch()
 {
     if (this->_dirName[this->_pos]->getEntryPoint()->isKeyPress(IDisplayModule::KeyList::ARROW_UP)) {
         this->_kitechToPrint = (this->_kitechToPrint > 0) ? this->_kitechToPrint - 1 : 0;

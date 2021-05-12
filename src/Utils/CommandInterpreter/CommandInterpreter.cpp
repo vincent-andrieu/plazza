@@ -55,11 +55,11 @@ const std::string &CommandInterpreter::setCommand()
     if (!getline(_inputStream, my_command)) {
         setEnd(true);
     }
-    setActCommand(my_command);
+    _setActCommand(my_command);
     return getActCommand();
 }
 
-void CommandInterpreter::setActCommand(std::string &command)
+void CommandInterpreter::_setActCommand(std::string &command)
 {
     _actCommand = command;
 }

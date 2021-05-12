@@ -61,27 +61,27 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
      * @throw If not cooking or finished cooking
      * @return True if finished cooking, false otherwise
      */
-    virtual bool hasFinishedCooking() const = 0;
+    virtual bool _hasFinishedCooking() const = 0;
 
     /**
      * @brief Take order from order place
      * @return The order that is to be cooked
      */
-    virtual Order<Product<ProductType, ProductSize, ProductIngredientType>> receiveOrder() const = 0;
+    virtual Order<Product<ProductType, ProductSize, ProductIngredientType>> _receiveOrder() const = 0;
 
     /**
      * @brief Deliver cooked order
      * @param product The product to deliver
      * @return True if delivery success, false otherwise
      */
-    virtual void deliverOrder() = 0;
+    virtual void _deliverOrder() = 0;
 
     /**
      * @brief Get ingredient from stock
      * @param ingredient The ingredient to be taken from stock
      * @return True if ingredient was taken, false otherwise
      */
-    virtual bool pickIngredientInStock(const ProductIngredientType &ingredient) = 0;
+    virtual bool _pickIngredientInStock(const ProductIngredientType &ingredient) = 0;
 };
 
 #endif

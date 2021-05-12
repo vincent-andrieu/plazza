@@ -76,27 +76,27 @@ class Cook : public ICook<ProductType, ProductSize, ProductIngredientType> {
      * @throw If not cooking or finished cooking
      * @return True if finished cooking, false otherwise
      */
-    [[nodiscard]] bool hasFinishedCooking() const override;
+    [[nodiscard]] bool _hasFinishedCooking() const override;
 
     /**
      * @brief Take order from order place
      * @return The order that is to be cooked
      */
-    [[nodiscard]] Order<Product<ProductType, ProductSize, ProductIngredientType>> receiveOrder() const override;
+    [[nodiscard]] Order<Product<ProductType, ProductSize, ProductIngredientType>> _receiveOrder() const override;
 
     /**
      * @brief Deliver cooked order
      * @param product The product to deliver
      * @return True if delivery success, false otherwise
      */
-    void deliverOrder() override;
+    void _deliverOrder() override;
 
     /**
      * @brief Get ingredient from stock
      * @param ingredient The ingredient to be taken from stock
      * @return True if ingredient was taken, false otherwise
      */
-    bool pickIngredientInStock(const ProductIngredientType &ingredient) override;
+    bool _pickIngredientInStock(const ProductIngredientType &ingredient) override;
 
   private:
     bool _isWorking{false};

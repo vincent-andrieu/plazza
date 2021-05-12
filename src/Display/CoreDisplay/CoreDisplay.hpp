@@ -31,7 +31,8 @@ namespace Pizzeria
         void printPrompt();
         void setError(std::string error);
         void printError();
-        void printKitchen(std::vector<std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>>> &kitchenList);
+        void printKitchen(
+            std::vector<std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>>> &kitchenList);
         [[nodiscard]] std::string getLine() const;
         void setLine(std::string line);
         bool isRunning();
@@ -39,11 +40,11 @@ namespace Pizzeria
         void clear();
 
       protected:
-        void printDetailledKitchen(std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchen);
+        void _printDetailledKitchen(std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchen);
 
       private:
-        void libraryDisplaySwitch();
-        void kitchenSwitch();
+        void _libraryDisplaySwitch();
+        void _kitchenSwitch();
 
       private:
         std::string _error;

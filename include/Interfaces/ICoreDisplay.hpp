@@ -32,8 +32,8 @@ namespace Pizzeria
         virtual void clear() = 0;
         virtual bool isRunning() = 0;
 
-    protected:
-        virtual void printDetailledKitchen(
+      protected:
+        virtual void _printDetailledKitchen(
             std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchen) = 0;
     };
 } // namespace Pizzeria
