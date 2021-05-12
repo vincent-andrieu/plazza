@@ -27,8 +27,7 @@ int Kitchen<ProductType, ProductSize, ProductIngredientType>::cook()
     while (this->isCooking()) {
         this->_receiveOrder();
         this->_sendFinishedOrders();
-        if (this->_stock.isRestockTime())
-            this->_stock.restock();
+        this->_stock.restock();
         this->_destroyManage();
     }
     this->_cooksStopCooking();
