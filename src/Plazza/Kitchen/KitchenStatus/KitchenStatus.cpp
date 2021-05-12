@@ -78,10 +78,8 @@ const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_Se
         serial += "|";
     }
     serial += "-";
-    while (this->_isCookingOrders.size()) {
-        for (const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order : this->_isCookingOrders)
-            serial +=
-                (toString(order->getType()) + " " + toString(order->getSize()) + " " + toString(order->getPreparationTime()));
+    for (const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order : this->_isCookingOrders) {
+        serial += (toString(order->getType()) + " " + toString(order->getSize()) + " " + toString(order->getPreparationTime()));
         serial += "|";
     }
     return serial;
