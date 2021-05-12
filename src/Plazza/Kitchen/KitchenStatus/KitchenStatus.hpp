@@ -36,6 +36,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
     std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
     std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> _finishedOrders;
     std::unordered_map<ProductIngredientType, size_t> _stock;
+    std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>> _isCookingOrders;
 };
 
 #endif
