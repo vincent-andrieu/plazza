@@ -25,8 +25,9 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
         const std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &isCookingOrders);
 
     const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &getPendingOrders() const;
+    void addPendingOrder(const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order);
     const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &getFinishedOrders() const;
-    void addFinishedOrders(const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order);
+    void addFinishedOrder(const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order);
     const std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &getIsCookingOrders() const;
     const std::unordered_map<ProductIngredientType, size_t> &getStock() const;
 

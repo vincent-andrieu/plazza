@@ -118,6 +118,7 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_sendOrder(
 {
     kitchenManage->orders.push_back(order);
     kitchenManage->kitchen.send(CommunicationType(ECommunicationType::ORDER_PIZZA));
+    kitchenManage->kitchenStatus.addPendingOrder(order);
     kitchenManage->kitchen.send(order);
 }
 

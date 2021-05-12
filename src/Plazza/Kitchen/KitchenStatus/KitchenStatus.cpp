@@ -24,6 +24,13 @@ KitchenStatus<ProductType, ProductSize, ProductIngredientType>::getPendingOrders
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::addPendingOrder(
+    const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order)
+{
+    this->_pendingOrders.push(order);
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &
 KitchenStatus<ProductType, ProductSize, ProductIngredientType>::getFinishedOrders() const
 {
@@ -31,7 +38,7 @@ KitchenStatus<ProductType, ProductSize, ProductIngredientType>::getFinishedOrder
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::addFinishedOrders(
+void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::addFinishedOrder(
     const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     this->_finishedOrders.push(order);
