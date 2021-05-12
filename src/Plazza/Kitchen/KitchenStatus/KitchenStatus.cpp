@@ -9,9 +9,9 @@
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 KitchenStatus<ProductType, ProductSize, ProductIngredientType>::KitchenStatus(
-    const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> pendingOrders,
-    const std::unordered_map<ProductIngredientType, size_t> stock,
-    const std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>> isCookingOrders)
+    const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &pendingOrders,
+    const std::unordered_map<ProductIngredientType, size_t> &stock,
+    const std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &isCookingOrders)
     : _pendingOrders(pendingOrders), _stock(stock), _isCookingOrders(isCookingOrders)
 {
 }
@@ -52,7 +52,7 @@ KitchenStatus<ProductType, ProductSize, ProductIngredientType>::getStock() const
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeToString() const
+const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::SerializeToString() const
 {
     string serial;
     std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> pending(this->_pendingOrders);
@@ -60,11 +60,11 @@ const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_Se
     std::unordered_map<string, PizzaSize>::const_iterator size_it;
     std::unordered_map<string, PizzaType>::const_iterator type_it;
 
-    while (pending.size()) {
+    while (!pending.empty()) {
         const Order<Product<ProductType, ProductSize, ProductIngredientType>> tmp = pending.front();
         pending.pop();
         serial += (toString(tmp->getType()) + " " + toString(tmp->getSize()) + " " + toString(tmp->getPreparationTime()));
-        if (pending.size())
+        if (!pending.empty())
             serial += "|";
     }
     serial += "-";
@@ -81,7 +81,7 @@ const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_Se
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeFromString(const string str)
+void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::SerializeFromString(const string &str)
 {
     std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> emptyQueue;
     std::istringstream lineStream(str);

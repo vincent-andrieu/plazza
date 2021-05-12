@@ -20,9 +20,9 @@ using namespace Pizzeria;
 template <typename ProductType, typename ProductSize, typename ProductIngredientType> class KitchenStatus : public Serializer {
   public:
     KitchenStatus() = default;
-    KitchenStatus(const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> pendingOrders,
-        const std::unordered_map<ProductIngredientType, size_t> stock,
-        const std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>> isCookingOrders);
+    KitchenStatus(const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &pendingOrders,
+        const std::unordered_map<ProductIngredientType, size_t> &stock,
+        const std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &isCookingOrders);
 
     const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &getPendingOrders() const;
     const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &getFinishedOrders() const;
@@ -31,8 +31,8 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
     const std::unordered_map<ProductIngredientType, size_t> &getStock() const;
 
   protected:
-    const string _SerializeToString() const;
-    void _SerializeFromString(const string str);
+    const string SerializeToString() const;
+    void SerializeFromString(const string &str);
 
   private:
     std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;

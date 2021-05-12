@@ -20,12 +20,12 @@ ECommunicationType CommunicationType::getType() const
     return this->_type;
 }
 
-const string CommunicationType::_SerializeToString() const
+const string CommunicationType::SerializeToString() const
 {
     return toString(this->_type);
 }
 
-void CommunicationType::_SerializeFromString(const string str)
+void CommunicationType::SerializeFromString(const string &str)
 {
     this->_type = (ECommunicationType) toInteger(str);
 }

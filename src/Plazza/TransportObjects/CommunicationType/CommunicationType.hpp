@@ -21,14 +21,14 @@ enum ECommunicationType
 class CommunicationType : public Serializer {
   public:
     CommunicationType();
-    CommunicationType(ECommunicationType type);
+    explicit CommunicationType(ECommunicationType type);
     ~CommunicationType() = default;
 
     ECommunicationType getType() const;
 
   protected:
-    const string _SerializeToString() const;
-    void _SerializeFromString(const string str);
+    const string SerializeToString() const override;
+    void SerializeFromString(const string &str) override;
 
   private:
     ECommunicationType _type = ECommunicationType::UNDEFINED;

@@ -32,7 +32,7 @@ template <typename T> void Order<T>::setOrder(T &object)
     this->_object = object;
 }
 
-template <typename T> const string Order<T>::_SerializeToString() const
+template <typename T> const string Order<T>::SerializeToString() const
 {
     string serial = toString(this->_object.getType());
 
@@ -41,7 +41,7 @@ template <typename T> const string Order<T>::_SerializeToString() const
     return serial;
 }
 
-template <typename T> void Order<T>::_SerializeFromString(const string str)
+template <typename T> void Order<T>::SerializeFromString(const string &str)
 {
     stringstream ss(str);
     string word;

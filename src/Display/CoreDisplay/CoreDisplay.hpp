@@ -50,7 +50,7 @@ namespace Pizzeria
         string _error;
         string _prompt;
         std::size_t _maxLen;
-        std::unique_ptr<UserInput> _input;
+        std::unique_ptr<UserInput> _input{nullptr};
         std::unordered_map<size_t, std::unique_ptr<DLLib<IDisplayModule>>> _dirName;
         size_t _pos;
         size_t _kitechToPrint;
