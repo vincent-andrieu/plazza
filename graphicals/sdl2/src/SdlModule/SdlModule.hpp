@@ -121,7 +121,7 @@ class SdlModule : public IDisplayModule {
         {IDisplayModule::KeyList::BACK_SPACE, SDLK_BACKSPACE},    // backspace
         {IDisplayModule::KeyList::KEY_SPACE, SDLK_SPACE},         // space
         {IDisplayModule::KeyList::KEY_MOUSE_CLICK, SDLK_UNKNOWN}, // click souris
-        {IDisplayModule::KeyList::ENTER, SDLK_KP_ENTER},          // enter
+        {IDisplayModule::KeyList::ENTER, SDLK_RETURN},            // enter
         {IDisplayModule::KeyList::SEMICOLON, SDLK_SEMICOLON}      // ;
     };
 };
