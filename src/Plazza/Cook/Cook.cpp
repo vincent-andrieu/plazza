@@ -50,9 +50,6 @@ void Cook<ProductType, ProductSize, ProductIngredientType>::work()
         } catch (...) {
             continue;
         }
-        std::cerr << "ingredients size: " << order.getIngredients().size() << std::endl;
-        for (const auto &ingre : order.getIngredients())
-            std::cerr << "ingre : " << ingre << std::endl;
         this->_cook(order);
         if (this->_cookingProduct.isFinished())
             deliverOrder();
