@@ -27,6 +27,7 @@ class Restaurant : public IRestaurant<ProductType, ProductSize, ProductIngredien
     [[nodiscard]] bool isOpen() const override;
     void close() override;
     void askKitchensStatus() const override;
+    void askKitchenStatus(const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen) const override;
 
   protected:
     void _newKitchen(const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order) override;

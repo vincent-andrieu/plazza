@@ -32,6 +32,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
     virtual bool isOpen() const = 0;
     virtual void close() = 0;
     virtual void askKitchensStatus() const = 0;
+    virtual void askKitchenStatus(const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen) const = 0;
 
   protected:
     virtual void _newKitchen(const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order) = 0;

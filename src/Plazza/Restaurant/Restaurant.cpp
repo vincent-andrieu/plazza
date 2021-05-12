@@ -126,8 +126,15 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void Restaurant<ProductType, ProductSize, ProductIngredientType>::askKitchensStatus() const
 {
     for (const std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchenManage : this->_kitchens) {
-        kitchenManage->kitchen.send(CommunicationType(ECommunicationType::STATUS));
+        this->askKitchenStatus(kitchenManage->kitchen);
     }
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void Restaurant<ProductType, ProductSize, ProductIngredientType>::askKitchenStatus(
+    const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen) const
+{
+    kitchen.send(CommunicationType(ECommunicationType::STATUS));
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -155,7 +162,7 @@ bool Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
             Order<Product<ProductType, ProductSize, ProductIngredientType>> order(pizza);
 
             kitchenManage->kitchen.waitingReceive(order);
-            kitchenManage->kitchenStatus.addFinishedOrders(order);
+            kitchenManage->kitchenStatus.addFinishedOrder(order);
             this->_reception.sendOrder(order);
 
             kitchenManage->orders.remove_if([order](Order<Product<ProductType, ProductSize, ProductIngredientType>> &elemOrder) {
