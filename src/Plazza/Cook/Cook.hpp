@@ -11,6 +11,7 @@
 #include <memory>
 #include <vector>
 #include <thread>
+#include <functional>
 #include "Interfaces/CookInterface.hpp"
 #include "Product/Product.hpp"
 #include "Encapsulations/LockedQueue/LockedQueue.hpp"
@@ -22,7 +23,8 @@ class Cook : public ICook<ProductType, ProductSize, ProductIngredientType> {
   public:
     Cook(Stock<ProductIngredientType> &stockPlace,
         LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &orderReceivePlace,
-        LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &deliveryPlace);
+        LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &deliveryPlace,
+        std::function<void()> updateStatusFunc);
     ~Cook();
 
     Cook(const Cook<ProductType, ProductSize, ProductIngredientType> &rhs);
@@ -111,6 +113,7 @@ class Cook : public ICook<ProductType, ProductSize, ProductIngredientType> {
     LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &_deliveryPlace;
 
     std::thread _thread;
+    std::function<void()> _updateStatusFunc;
 };
 
 #endif

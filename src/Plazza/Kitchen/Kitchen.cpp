@@ -16,7 +16,10 @@ Kitchen<ProductType, ProductSize, ProductIngredientType>::Kitchen(
     double bakingMultiplier, size_t cooksPerKitchen, double restockTime)
     : _lastAct(std::chrono::system_clock::now()), _stock(restockTime), _bakingMultiplier(bakingMultiplier),
       _cooksPerKitchen(cooksPerKitchen),
-      _cooks(cooksPerKitchen, Cook<ProductType, ProductSize, ProductIngredientType>(_stock, _pendingOrders, _finishedOrders))
+      _cooks(cooksPerKitchen,
+          Cook<ProductType, ProductSize, ProductIngredientType>(_stock, _pendingOrders, _finishedOrders, [this]() {
+              this->_sendStatus();
+          }))
 {
 }
 
