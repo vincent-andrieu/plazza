@@ -68,7 +68,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printKitchen(
     }
     for (size_t i = 0; it != kitchenList.end() && max; it++, pos_y += 3, max--, i++) {
         this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(IDisplayModule::Color::YELLOW, Coord(20, 3), Coord(0, pos_y));
-        to_display = (i == this->_kitechToPrint) ? "You are here" : "Available";
+        to_display = (i == this->_kitechToPrint) ? "Selected" : "Available";
         this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(1, pos_y + 1), to_display);
     }
     if (it != kitchenList.end()) {
