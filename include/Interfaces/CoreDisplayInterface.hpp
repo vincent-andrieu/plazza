@@ -11,7 +11,7 @@
 #include <memory>
 #include <list>
 #include "KitchenInterface.hpp"
-#include "ICommandInterpreter.hpp"
+#include "CommandInterpreterInterface.hpp"
 #include "RestaurantInterface.hpp"
 
 namespace Pizzeria

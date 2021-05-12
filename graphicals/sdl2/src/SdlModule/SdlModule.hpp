@@ -14,7 +14,7 @@
 #include <memory>
 #include <algorithm>
 #include <unordered_map>
-#include "IDisplayModule.hpp"
+#include "DisplayModuleInterface.hpp"
 
 #define WIN_TITLE            "Plazza"
 #define OUTLINE_WIDTH        1

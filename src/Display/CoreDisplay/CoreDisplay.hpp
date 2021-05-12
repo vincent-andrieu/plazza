@@ -14,8 +14,8 @@
 #include "DLLib/DLLib.hpp"
 #include "ListDir/ListDir.hpp"
 #include "UserInput/UserInput.hpp"
-#include "Interfaces/ICoreDisplay.hpp"
-#include "Interfaces/IDisplayModule.hpp"
+#include "Interfaces/CoreDisplayInterface.hpp"
+#include "Interfaces/DisplayModuleInterface.hpp"
 #include "Interfaces/RestaurantInterface.hpp"
 
 using namespace Pizzeria;

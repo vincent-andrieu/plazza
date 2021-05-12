@@ -11,7 +11,7 @@
 #include <vector>
 #include <unordered_map>
 #include <SFML/Graphics.hpp>
-#include "IDisplayModule.hpp"
+#include "DisplayModuleInterface.hpp"
 
 using namespace plazza;
 

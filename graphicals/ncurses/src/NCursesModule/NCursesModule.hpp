@@ -10,7 +10,7 @@
 
 #include <ncurses.h>
 #include <unordered_map>
-#include "IDisplayModule.hpp"
+#include "DisplayModuleInterface.hpp"
 #include "Term/Term.hpp"
 
 using namespace plazza;

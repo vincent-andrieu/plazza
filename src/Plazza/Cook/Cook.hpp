@@ -11,7 +11,7 @@
 #include <memory>
 #include <vector>
 #include <thread>
-#include "Interfaces/ICook.hpp"
+#include "Interfaces/CookInterface.hpp"
 #include "Product/Product.hpp"
 #include "Encapsulations/LockedQueue/LockedQueue.hpp"
 #include "Error/Error.hpp"

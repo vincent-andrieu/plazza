@@ -11,7 +11,7 @@
 #include <memory>
 #include <dlfcn.h>
 
-#include "Interfaces/IDisplayModule.hpp"
+#include "Interfaces/DisplayModuleInterface.hpp"
 
 template <typename T> class DLLoader {
   public:

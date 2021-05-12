@@ -2,7 +2,7 @@
  * EPITECH PROJECT, 2021
  * interfaces
  * File description:
- * ICommandInterpreter.hpp
+ * CommandInterpreterInterface.hpp
  */
 
 #ifndef ICOMMANDINTERPRETER_HPP

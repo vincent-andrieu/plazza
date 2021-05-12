@@ -8,7 +8,7 @@
 #ifndef USERINPUT_HPP
 #define USERINPUT_HPP
 
-#include "Interfaces/IDisplayModule.hpp"
+#include "Interfaces/DisplayModuleInterface.hpp"
 
 #include <string>
 #include <memory>
