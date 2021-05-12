@@ -154,6 +154,7 @@ bool Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
             Order<Product<ProductType, ProductSize, ProductIngredientType>> order(pizza);
 
             kitchenManage->kitchen.waitingReceive(order);
+            kitchenManage->kitchenStatus.addFinishedOrders(order);
             this->_reception.sendOrder(order);
 
             kitchenManage->orders.remove_if([order](Order<Product<ProductType, ProductSize, ProductIngredientType>> &elemOrder) {

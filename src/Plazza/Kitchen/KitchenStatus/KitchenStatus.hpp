@@ -21,12 +21,12 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
   public:
     KitchenStatus() = default;
     KitchenStatus(const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> pendingOrders,
-        const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> finishedOrders,
         const std::unordered_map<ProductIngredientType, size_t> stock,
         const std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>> isCookingOrders);
 
     const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &getPendingOrders() const;
     const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &getFinishedOrders() const;
+    void addFinishedOrders(const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order);
     const std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &getIsCookingOrders() const;
     const std::unordered_map<ProductIngredientType, size_t> &getStock() const;
 

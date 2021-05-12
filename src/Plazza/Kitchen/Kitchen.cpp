@@ -95,7 +95,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_sendStatus()
 {
     this->send(CommunicationType(ECommunicationType::STATUS));
     this->send(KitchenStatus<ProductType, ProductSize, ProductIngredientType>(
-        this->_pendingOrders, this->_finishedOrders, this->_stock.getStockList(), this->getCookingOrders()));
+        this->_pendingOrders, this->_stock.getStockList(), this->getCookingOrders()));
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
