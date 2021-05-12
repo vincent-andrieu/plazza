@@ -116,7 +116,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_destroyManage()
     std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
     size_t elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(now - this->_lastAct).count() / 1000;
 
-    if (!this->_pendingOrders.empty() || !this->_finishedOrders.empty() || this->_isCookersWorking()) {
+    if (!this->_pendingOrders.empty() || !this->_finishedOrders.empty() || this->_isCookersCooking()) {
         this->_lastAct = std::chrono::system_clock::now();
     } else if (elapsedTime >= 5) {
         this->_isCooking = false;
@@ -142,10 +142,10 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_cooksStopCooking
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-bool Kitchen<ProductType, ProductSize, ProductIngredientType>::_isCookersWorking() const
+bool Kitchen<ProductType, ProductSize, ProductIngredientType>::_isCookersCooking() const
 {
     for (const Cook<ProductType, ProductSize, ProductIngredientType> &cook : this->_cooks)
-        if (cook.isWorking())
+        if (cook.isCooking())
             return true;
     return false;
 }
@@ -157,7 +157,7 @@ Kitchen<ProductType, ProductSize, ProductIngredientType>::getCookingOrders() con
     std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>> isCookingOrders;
 
     for (const Cook<ProductType, ProductSize, ProductIngredientType> &cook : this->_cooks)
-        if (cook.isWorking())
+        if (cook.isCooking())
             isCookingOrders.push_back(Order<Product<ProductType, ProductSize, ProductIngredientType>>(cook.getCookingProduct()));
 
     return isCookingOrders;
