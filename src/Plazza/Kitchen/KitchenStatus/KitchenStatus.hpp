@@ -26,6 +26,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 
     const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &getPendingOrders() const;
     const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &getFinishedOrders() const;
+    const std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &getIsCookingOrders() const;
     const std::unordered_map<ProductIngredientType, size_t> &getStock() const;
 
   protected:

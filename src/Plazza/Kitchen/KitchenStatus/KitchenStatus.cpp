@@ -24,6 +24,13 @@ KitchenStatus<ProductType, ProductSize, ProductIngredientType>::getPendingOrders
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+const std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &
+KitchenStatus<ProductType, ProductSize, ProductIngredientType>::getIsCookingOrders() const
+{
+    return this->_isCookingOrders;
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &
 KitchenStatus<ProductType, ProductSize, ProductIngredientType>::getFinishedOrders() const
 {
