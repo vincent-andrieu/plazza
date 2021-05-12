@@ -90,6 +90,8 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
         kitchen->kitchenStatus.getFinishedOrders());
     std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> pending(
         kitchen->kitchenStatus.getPendingOrders());
+    std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>> cooking(
+        kitchen->kitchenStatus.getIsCookingOrders());
     std::unordered_map<ProductIngredientType, size_t> stock(kitchen->kitchenStatus.getStock());
     std::unordered_map<string, PizzaSize>::const_iterator size_it;
     std::unordered_map<string, PizzaType>::const_iterator type_it;
@@ -98,7 +100,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
     std::size_t pos_y = 4;
 
     this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(
-        IDisplayModule::Color::WHITE, Coord(60, 30), Coord(pos_x, pos_y++));
+        IDisplayModule::Color::WHITE, Coord(80, 30), Coord(pos_x, pos_y++));
     this->_dirName[this->_pos]->getEntryPoint()->putText(
         IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("finish order:"));
     // log.writeLog(std::string("finish size: ") + std::to_string(finish.size()));
@@ -130,6 +132,23 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printDetaille
         });
         type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [tmp](const auto &params) {
             return params.second == tmp.getOrder().getType();
+        });
+        if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
+            to_write = "data wrong";
+        else
+            to_write = type_it->first + std::string(" ") + size_it->first;
+        this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::GREEN, Coord(pos_x + 1, pos_y++), to_write);
+    }
+
+    pos_y = 5;
+    pos_x += 20;
+    this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("cooking order:"));
+    for (size_t i = 0; i < cooking.size(); i++) {
+        size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [cooking, i](const auto &params) {
+            return params.second == cooking[i].getOrder().getSize();
+        });
+        type_it = std::find_if(PizzaNames.begin(), PizzaNames.end(), [cooking, i](const auto &params) {
+            return params.second == cooking[i].getOrder().getType();
         });
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
             to_write = "data wrong";
