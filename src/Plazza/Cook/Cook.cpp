@@ -83,9 +83,13 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void Cook<ProductType, ProductSize, ProductIngredientType>::_cook(Product<ProductType, ProductSize, ProductIngredientType> &order)
 {
     this->_isCooking = true;
+    _cookingTime.resetStartingPoint();
     this->_cookingProduct = order;
     this->_getIngredients(_cookingProduct.getIngredients());
     this->_cookingProduct.setFinished();
+    do {
+        _cookingTime.setElapsedTime();
+    } while (_cookingTime.getElapsedTimeDouble() < _cookingProduct.getPreparationTime());
     this->_isCooking = false;
 }
 
