@@ -49,7 +49,6 @@ class SdlModule : public IDisplayModule {
     bool isMouseClicked() const; // Any key of the mouse
     Coord getMousePos() const;
 
-  protected:
   private:
     bool _isOpen;
     Vector _screenSize;
