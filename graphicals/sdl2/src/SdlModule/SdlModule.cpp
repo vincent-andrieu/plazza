@@ -43,7 +43,9 @@ void SdlModule::close()
     SDL_DestroyWindow(_window);
     TTF_Quit();
     SDL_Quit();
-    _renderer = nullptr;
+    this->_renderer = nullptr;
+    this->_police = nullptr;
+    this->_window = nullptr;
 }
 
 bool SdlModule::isOpen() const
