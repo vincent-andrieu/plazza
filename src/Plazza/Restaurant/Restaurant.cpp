@@ -134,8 +134,8 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
 {
     for (size_t i = 0; i < this->_kitchens.size(); i++) {
         if (this->_retreiveOrder(this->_kitchens[i])) {
+            this->_kitchens[i].reset();
             this->_kitchens.erase(this->_kitchens.begin() + i);
-            delete this->_kitchens[i].get();
         }
     }
 }
