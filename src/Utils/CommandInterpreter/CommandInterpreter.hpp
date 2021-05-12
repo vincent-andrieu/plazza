@@ -8,12 +8,10 @@
 #ifndef COMMAND_INTERPRETER_HPP
 #define COMMAND_INTERPRETER_HPP
 
-#include <iostream>
-#include <string>
 #include <map>
 #include <vector>
 #include <utility>
-#include <sstream>
+#include "Plazza.hpp"
 
 class CommandInterpreter {
     // to be called in a loop
@@ -29,13 +27,13 @@ class CommandInterpreter {
     [[nodiscard]] bool isEnd() const;
     // tells if CommandInterpreter has received an indication to stop.
 
-    void setPrompt(const std::string &prompt);
-    [[nodiscard]] const std::string &getPrompt() const;
+    void setPrompt(const string &prompt);
+    [[nodiscard]] const string &getPrompt() const;
     void printPrompt();
 
-    const std::string &setCommand();
+    const string &setCommand();
     // get command from standard input, set _actCommand and return it
-    [[nodiscard]] const std::string &getActCommand() const;
+    [[nodiscard]] const string &getActCommand() const;
     // return last command
 
     virtual bool commandExists() const;
@@ -43,25 +41,25 @@ class CommandInterpreter {
 
     virtual void parseCommand();
     // parse command and set vector of strings with command and arguments
-    [[nodiscard]] const std::vector<std::string> &getActCommandParams() const;
+    [[nodiscard]] const std::vector<string> &getActCommandParams() const;
 
     virtual bool executeCommand();
 
-    const std::string &getErrorMsg(uint msgId);
+    const string &getErrorMsg(uint msgId);
     void printErrorMsg(uint msgId);
-    void addErrorMsg(uint id, const std::string &msg);
+    void addErrorMsg(uint id, const string &msg);
 
   protected:
-    void _setActCommand(std::string &command);
+    void _setActCommand(string &command);
 
     /**
      * @brief
      */
-    std::string _prompt = "What can I do for you ? ";
-    std::string _actCommand;
-    std::vector<std::string> _actCommandParams;
+    string _prompt = "What can I do for you ? ";
+    string _actCommand;
+    std::vector<string> _actCommandParams;
     std::istream &_inputStream;
-    std::map<const uint, const std::string> _errors;
+    std::map<const uint, const string> _errors;
     bool _end;
 
   private:

@@ -27,14 +27,14 @@ ExecutingInput::~ExecutingInput()
     this->_functList.clear();
 }
 
-void ExecutingInput::setFunctionCall(std::string name, std::function<void()> func)
+void ExecutingInput::setFunctionCall(string name, std::function<void()> func)
 {
     this->_functList[name] = func;
 }
 
-bool ExecutingInput::callFunction(std::string name)
+bool ExecutingInput::callFunction(string name)
 {
-    std::unordered_map<std::string, std::function<void ()>>::iterator it = this->_functList.find(name);
+    std::unordered_map<string, std::function<void()>>::iterator it = this->_functList.find(name);
 
     if (it == this->_functList.end())
         return false;

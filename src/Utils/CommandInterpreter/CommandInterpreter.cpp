@@ -20,7 +20,7 @@ void CommandInterpreter::setEnd(bool isEnd)
 
 bool CommandInterpreter::isEnd() const
 {
-    const std::string &my_actCommand(getActCommand());
+    const string &my_actCommand(getActCommand());
 
     if (my_actCommand == "exit") {
         return true;
@@ -28,12 +28,12 @@ bool CommandInterpreter::isEnd() const
     return _end;
 }
 
-void CommandInterpreter::setPrompt(const std::string &prompt)
+void CommandInterpreter::setPrompt(const string &prompt)
 {
     _prompt = prompt;
 }
 
-const std::string &CommandInterpreter::getPrompt() const
+const string &CommandInterpreter::getPrompt() const
 {
     return _prompt;
 }
@@ -43,14 +43,14 @@ void CommandInterpreter::printPrompt()
     std::cout << _prompt;
 }
 
-const std::string &CommandInterpreter::getActCommand() const
+const string &CommandInterpreter::getActCommand() const
 {
     return _actCommand;
 }
 
-const std::string &CommandInterpreter::setCommand()
+const string &CommandInterpreter::setCommand()
 {
-    std::string my_command;
+    string my_command;
 
     if (!getline(_inputStream, my_command)) {
         setEnd(true);
@@ -59,7 +59,7 @@ const std::string &CommandInterpreter::setCommand()
     return getActCommand();
 }
 
-void CommandInterpreter::_setActCommand(std::string &command)
+void CommandInterpreter::_setActCommand(string &command)
 {
     _actCommand = command;
 }
@@ -67,7 +67,7 @@ void CommandInterpreter::_setActCommand(std::string &command)
 // return true if _actCommand is listed as existing
 bool CommandInterpreter::commandExists() const
 {
-    const std::string &my_actCommand(getActCommand());
+    const string &my_actCommand(getActCommand());
 
     if (my_actCommand.empty())
         return false;
@@ -77,10 +77,10 @@ bool CommandInterpreter::commandExists() const
 // parse command and set vector of strings with command and arguments
 void CommandInterpreter::parseCommand()
 {
-    const std::string &my_actCommand(getActCommand());
-    std::stringstream ssin(my_actCommand);
-    std::string my_param;
-    std::vector<std::string> my_commandParams;
+    const string &my_actCommand(getActCommand());
+    stringstream ssin(my_actCommand);
+    string my_param;
+    std::vector<string> my_commandParams;
 
     while (ssin.good()) {
         ssin >> my_param;
@@ -88,7 +88,7 @@ void CommandInterpreter::parseCommand()
     }
 }
 
-const std::vector<std::string> &CommandInterpreter::getActCommandParams() const
+const std::vector<string> &CommandInterpreter::getActCommandParams() const
 {
     return _actCommandParams;
 }
@@ -98,7 +98,7 @@ bool CommandInterpreter::executeCommand()
     return false;
 }
 
-const std::string &CommandInterpreter::getErrorMsg(const uint msgId)
+const string &CommandInterpreter::getErrorMsg(const uint msgId)
 {
     return _errors.at(msgId);
 }
@@ -106,14 +106,14 @@ const std::string &CommandInterpreter::getErrorMsg(const uint msgId)
 void CommandInterpreter::printErrorMsg(const uint msgId)
 {
     try {
-        const std::string &my_msg(getErrorMsg(msgId));
+        const string &my_msg(getErrorMsg(msgId));
         std::cerr << my_msg << std::endl;
     } catch (std::out_of_range &my_exception) {
         return;
     }
 }
 
-void CommandInterpreter::addErrorMsg(const uint id, const std::string &msg)
+void CommandInterpreter::addErrorMsg(const uint id, const string &msg)
 {
     auto my_pair(std::make_pair(id, msg));
 

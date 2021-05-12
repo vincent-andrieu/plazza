@@ -12,16 +12,17 @@
 #include <fstream>
 #include <functional>
 #include <unordered_map>
+#include "Plazza.hpp"
 
 class ExecutingInput {
   public:
     ExecutingInput();
     ~ExecutingInput();
-    void setFunctionCall(std::string, std::function<void()>);
-    bool callFunction(std::string);
+    void setFunctionCall(string, std::function<void()>);
+    bool callFunction(string);
 
   private:
-    std::unordered_map<std::string, std::function<void()>> _functList;
+    std::unordered_map<string, std::function<void()>> _functList;
 };
 
 #endif

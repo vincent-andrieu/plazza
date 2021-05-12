@@ -13,7 +13,7 @@
 
 #include "Interfaces/IDisplayModule.hpp"
 
-template<typename T> class DLLoader {
+template <typename T> class DLLoader {
   public:
     DLLoader(std::string filepath);
     ~DLLoader();

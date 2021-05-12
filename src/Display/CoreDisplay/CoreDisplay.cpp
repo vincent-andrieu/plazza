@@ -17,11 +17,11 @@ CoreDisplay<ProductType, ProductSize, ProductIngredientType>::CoreDisplay(
       _screenScale(screenScale)
 {
     listDir lib("./lib/", "arcade_.+\\.so");
-    std::vector<std::string> nameList = lib.getDirContent();
+    std::vector<string> nameList = lib.getDirContent();
     auto it = nameList.begin();
 
     for (size_t i = 0; it != nameList.end(); it++, i++) {
-        this->_dirName[i] = std::make_unique<DLLib<IDisplayModule>>(std::string("./lib/") + *it);
+        this->_dirName[i] = std::make_unique<DLLib<IDisplayModule>>(string("./lib/") + *it);
         this->_dirName[i]->setEntryPoint("entryPoint");
         if (!it->compare(PRIORITORY_LIB))
             this->_pos = i;
@@ -38,7 +38,7 @@ CoreDisplay<ProductType, ProductSize, ProductIngredientType>::~CoreDisplay()
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::setPrompt(std::string prompt)
+void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::setPrompt(string prompt)
 {
     this->_prompt = prompt;
 }
@@ -46,7 +46,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::setPrompt(std
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printPrompt()
 {
-    std::string to_display = this->_prompt + this->_input->getInput();
+    string to_display = this->_prompt + this->_input->getInput();
 
     to_display = to_display.substr(0, this->_maxLen);
     this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::WHITE, Coord(0, 0), to_display);
@@ -58,7 +58,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printKitchen(
 {
     typename std::vector<std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>>>::iterator it =
         kitchenList.begin();
-    std::string to_display;
+    string to_display;
     std::size_t pos_y = 1;
     std::size_t max = 15;
     size_t len = kitchenList.size();
@@ -77,7 +77,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printKitchen(
             IDisplayModule::Color::CYAN, Coord(0, pos_y + 1), "too much kitchen ...");
         pos_y += 3;
     }
-    to_display = std::string("There are ") + std::to_string(kitchenList.size()) + std::string(" kitchens.");
+    to_display = string("There are ") + std::to_string(kitchenList.size()) + string(" kitchens.");
     this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::CYAN, Coord(0, pos_y + 1), to_display);
     if (len)
         this->_printDetailledKitchen(kitchenList[this->_kitechToPrint]);
@@ -97,7 +97,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_printDetaill
     std::unordered_map<ProductIngredientType, size_t> stock(kitchen->kitchenStatus.getStock());
     std::unordered_map<string, PizzaSize>::const_iterator size_it;
     std::unordered_map<string, PizzaType>::const_iterator type_it;
-    std::string to_write;
+    string to_write;
     std::size_t limit = 27;
     std::size_t pos_x = 30;
     std::size_t pos_y = 4;
@@ -105,8 +105,8 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_printDetaill
     this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(
         IDisplayModule::Color::WHITE, Coord(80, 30), Coord(pos_x, pos_y++));
     this->_dirName[this->_pos]->getEntryPoint()->putText(
-        IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("finish order:"));
-    // log.writeLog(std::string("finish size: ") + std::to_string(finish.size()));
+        IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), string("finish order:"));
+    // log.writeLog(string("finish size: ") + std::to_string(finish.size()));
     for (size_t i = 0; i < limit && !finish.empty(); i++) {
         const Order<Product<ProductType, ProductSize, ProductIngredientType>> tmp = finish.front();
         finish.pop();
@@ -119,7 +119,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_printDetaill
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
             to_write = "data wrong";
         else
-            to_write = type_it->first + std::string(" ") + size_it->first;
+            to_write = type_it->first + string(" ") + size_it->first;
         this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::GREEN, Coord(pos_x + 1, pos_y++), to_write);
     }
     if (!finish.empty()) {
@@ -129,8 +129,8 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_printDetaill
     pos_y = 5;
     pos_x += 20;
     this->_dirName[this->_pos]->getEntryPoint()->putText(
-        IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("pending order:"));
-    // log.writeLog(std::string("pending size: ") + std::to_string(pending.size()));
+        IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), string("pending order:"));
+    // log.writeLog(string("pending size: ") + std::to_string(pending.size()));
     for (size_t i = 0; i < limit && !pending.empty(); i++) {
         const Order<Product<ProductType, ProductSize, ProductIngredientType>> tmp = pending.front();
         pending.pop();
@@ -143,7 +143,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_printDetaill
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
             to_write = "data wrong";
         else
-            to_write = type_it->first + std::string(" ") + size_it->first;
+            to_write = type_it->first + string(" ") + size_it->first;
         this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::GREEN, Coord(pos_x + 1, pos_y++), to_write);
     }
     if (!pending.empty()) {
@@ -153,7 +153,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_printDetaill
     pos_y = 5;
     pos_x += 20;
     this->_dirName[this->_pos]->getEntryPoint()->putText(
-        IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("cooking order:"));
+        IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), string("cooking order:"));
     size_t u = 0;
     for (; u < limit && u < cooking.size(); u++) {
         size_it = std::find_if(PizzaSizeList.begin(), PizzaSizeList.end(), [cooking, u](const auto &params) {
@@ -165,7 +165,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_printDetaill
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
             to_write = "data wrong";
         else
-            to_write = type_it->first + std::string(" ") + size_it->first;
+            to_write = type_it->first + string(" ") + size_it->first;
         this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::GREEN, Coord(pos_x + 1, pos_y++), to_write);
     }
     if (u < cooking.size()) {
@@ -175,30 +175,30 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_printDetaill
     pos_y = 5;
     pos_x += 20;
     this->_dirName[this->_pos]->getEntryPoint()->putText(
-        IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), std::string("stock:"));
-    // log.writeLog(std::string("stock size: ") + std::to_string(stock.size()));
+        IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), string("stock:"));
+    // log.writeLog(string("stock size: ") + std::to_string(stock.size()));
     for (auto &q : stock) {
-        to_write = PizzaIngredientListName.at(q.first) + std::string(": ") + std::to_string(q.second);
+        to_write = PizzaIngredientListName.at(q.first) + string(": ") + std::to_string(q.second);
         this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::GREEN, Coord(pos_x + 1, pos_y++), to_write);
     }
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-std::string CoreDisplay<ProductType, ProductSize, ProductIngredientType>::getLine() const
+string CoreDisplay<ProductType, ProductSize, ProductIngredientType>::getLine() const
 {
-    std::string input = this->_input->getInput();
+    string input = this->_input->getInput();
     std::size_t pos = input.find('\n');
-    std::string exec;
+    string exec;
 
-    if (pos == std::string::npos)
-        return std::string("");
+    if (pos == string::npos)
+        return string("");
     exec = input.substr(0, pos);
     this->_input->setInputState(input.substr(pos + 1, input.length()));
     return exec;
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::setLine(std::string line)
+void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::setLine(string line)
 {
     this->_input->setInputState(line);
 }
@@ -241,10 +241,10 @@ bool CoreDisplay<ProductType, ProductSize, ProductIngredientType>::isRunning()
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
-void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::setError(std::string error)
+void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::setError(string error)
 {
     if (error.length() > 50)
-        error = error.substr(0, 24) + std::string(" ...");
+        error = error.substr(0, 24) + string(" ...");
     this->_error = error;
 }
 

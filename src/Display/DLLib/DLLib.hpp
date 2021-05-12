@@ -12,7 +12,7 @@
 #include <dlfcn.h>
 #include "DLLoader/DLLoader.hpp"
 
-template<typename T> class DLLib {
+template <typename T> class DLLib {
   public:
     DLLib(std::string filepath);
     ~DLLib();

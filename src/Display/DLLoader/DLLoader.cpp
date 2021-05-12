@@ -9,8 +9,7 @@
 #include <stdexcept>
 #include "DLLoader.hpp"
 
-template<typename T>
-DLLoader<T>::DLLoader(std::string filepath) : _handle(nullptr)
+template <typename T> DLLoader<T>::DLLoader(std::string filepath) : _handle(nullptr)
 {
     if (std::strncmp("./", filepath.c_str(), 2))
         filepath = std::string("./") + filepath;
@@ -19,14 +18,12 @@ DLLoader<T>::DLLoader(std::string filepath) : _handle(nullptr)
         throw std::invalid_argument(dlerror());
 }
 
-template<typename T>
-DLLoader<T>::~DLLoader()
+template <typename T> DLLoader<T>::~DLLoader()
 {
     dlclose(this->_handle);
 }
 
-template<typename T>
-std::shared_ptr<T> DLLoader<T>::load_sym(std::string funcName)
+template <typename T> std::shared_ptr<T> DLLoader<T>::load_sym(std::string funcName)
 {
     std::shared_ptr<T> (*instance)(void);
 

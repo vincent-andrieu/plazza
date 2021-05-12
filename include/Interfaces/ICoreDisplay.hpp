@@ -20,14 +20,14 @@ namespace Pizzeria
     class ICoreDisplay : public ICommandInterpreter {
       public:
         virtual ~ICoreDisplay() = default;
-        virtual void setPrompt(std::string prompt) = 0;
+        virtual void setPrompt(string prompt) = 0;
         virtual void printPrompt() = 0;
         virtual void printError() = 0;
-        virtual void setError(std::string error) = 0;
+        virtual void setError(string error) = 0;
         virtual void printKitchen(
             std::vector<std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>>> &kitchenList) = 0;
-        [[nodiscard]] std::string getLine() const override = 0;
-        void setLine(std::string line) override = 0;
+        [[nodiscard]] string getLine() const override = 0;
+        void setLine(string line) override = 0;
         virtual void update() = 0;
         virtual void clear() = 0;
         virtual bool isRunning() = 0;

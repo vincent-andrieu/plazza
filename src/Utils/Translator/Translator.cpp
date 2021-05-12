@@ -14,8 +14,8 @@ const string Translator::EnumToString(PizzaType type)
             return params.second == type;
         });
     if (it == PizzaNames.end())
-        return std::string("yolo");
-    return std::string(it->first);
+        return string("yolo");
+    return string(it->first);
 }
 
 const string Translator::EnumToString(PizzaSize size)
@@ -25,8 +25,8 @@ const string Translator::EnumToString(PizzaSize size)
             return params.second == size;
         });
     if (it == PizzaSizeList.end())
-        return std::string("yolo");
-    return std::string(it->first);
+        return string("yolo");
+    return string(it->first);
 }
 
 PizzaType Translator::StringToType(string src)
