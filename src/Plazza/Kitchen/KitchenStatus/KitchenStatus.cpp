@@ -11,8 +11,9 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 KitchenStatus<ProductType, ProductSize, ProductIngredientType>::KitchenStatus(
     const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> pendingOrders,
     const std::queue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> finishedOrders,
-    const std::unordered_map<ProductIngredientType, size_t> stock)
-    : _pendingOrders(pendingOrders), _finishedOrders(finishedOrders), _stock(stock)
+    const std::unordered_map<ProductIngredientType, size_t> stock,
+    const std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>> isCookingOrders)
+    : _pendingOrders(pendingOrders), _finishedOrders(finishedOrders), _stock(stock), _isCookingOrders(isCookingOrders)
 {
 }
 
@@ -76,6 +77,13 @@ const string KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_Se
         serial += toString(q.first) + ":" + toString(q.second);
         serial += "|";
     }
+    serial += "-";
+    while (this->_isCookingOrders.size()) {
+        for (const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order : this->_isCookingOrders)
+            serial +=
+                (toString(order->getType()) + " " + toString(order->getSize()) + " " + toString(order->getPreparationTime()));
+        serial += "|";
+    }
     return serial;
 }
 
@@ -87,6 +95,7 @@ void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeF
     string finish;
     string pending;
     string stock;
+    string isCooking;
     string tmp;
     stringstream ss;
     string word;
@@ -98,6 +107,7 @@ void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeF
     std::getline(lineStream, finish, '-');
     std::getline(lineStream, pending, '-');
     std::getline(lineStream, stock, '-');
+    std::getline(lineStream, isCooking, '-');
     lineStream = std::istringstream(finish);
     this->_finishedOrders.swap(emptyQueue);
     while (std::getline(lineStream, tmp, '|')) {
@@ -134,6 +144,18 @@ void KitchenStatus<ProductType, ProductSize, ProductIngredientType>::_SerializeF
             }
         }
         this->_stock[ingredient] = toSize_t(word);
+    }
+    lineStream = std::istringstream(isCooking);
+    this->_isCookingOrders.clear();
+    while (std::getline(lineStream, tmp, '|')) {
+        ss = stringstream(tmp);
+        ss >> word;
+        tmp_type = (PizzaType) toInteger(word);
+        ss >> word;
+        tmp_size = (PizzaSize) toInteger(word);
+        ss >> word;
+        this->_isCookingOrders.push_back(
+            Order<Product<PizzaType, PizzaSize, PizzaIngredient>>(Factory::callFactory(tmp_type, tmp_size, toSize_t(word))));
     }
 }
 

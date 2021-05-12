@@ -18,6 +18,8 @@ template <typename T> class Order : public Serializer {
     Order(T object);
     ~Order() = default;
 
+    const T *operator->() const;
+
     const T &getOrder() const;
     void setOrder(T &object);
 

@@ -17,6 +17,11 @@ template <typename T> Order<T>::Order(const Order<T> &order) : _object(order.get
 {
 }
 
+template <typename T> const T *Order<T>::operator->() const
+{
+    return &this->getOrder();
+}
+
 template <typename T> const T &Order<T>::getOrder() const
 {
     return _object;

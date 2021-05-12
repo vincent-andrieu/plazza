@@ -95,7 +95,7 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_sendStatus()
 {
     this->send(CommunicationType(ECommunicationType::STATUS));
     this->send(KitchenStatus<ProductType, ProductSize, ProductIngredientType>(
-        this->_pendingOrders, this->_finishedOrders, this->_stock.getStockList()));
+        this->_pendingOrders, this->_finishedOrders, this->_stock.getStockList(), this->getCookingOrders()));
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -148,6 +148,19 @@ bool Kitchen<ProductType, ProductSize, ProductIngredientType>::_isCookersWorking
         if (cook.isWorking())
             return true;
     return false;
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+const std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>>
+Kitchen<ProductType, ProductSize, ProductIngredientType>::getCookingOrders() const
+{
+    std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>> isCookingOrders;
+
+    for (const Cook<ProductType, ProductSize, ProductIngredientType> &cook : this->_cooks)
+        if (cook.isWorking())
+            isCookingOrders.push_back(Order<Product<ProductType, ProductSize, ProductIngredientType>>(cook.getCookingProduct()));
+
+    return isCookingOrders;
 }
 
 template class Kitchen<Pizzeria::PizzaType, Pizzeria::PizzaSize, Pizzeria::PizzaIngredient>;
