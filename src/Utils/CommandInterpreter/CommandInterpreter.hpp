@@ -38,7 +38,7 @@ class CommandInterpreter {
     [[nodiscard]] const std::string &getActCommand() const;
     // return last command
 
-    [[nodiscard]] virtual bool commandExists() const;
+    virtual bool commandExists() const;
     // return true if _actCommand is listed as existing
 
     virtual void parseCommand();

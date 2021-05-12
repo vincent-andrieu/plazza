@@ -34,13 +34,13 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
      * @brief Check if the cook is cooking or has finished cooking but did not delivered yet
      * @return True if cooking, false otherwise
      */
-    [[nodiscard]] virtual bool isCooking() const = 0;
+    virtual bool isCooking() const = 0;
 
     /**
      * @brief Check if the cook is working
      * @return True if Working, false otherwise
      */
-    [[nodiscard]] virtual bool isWorking() const = 0;
+    virtual bool isWorking() const = 0;
 
     /**
      * @brief Stop working
@@ -61,13 +61,13 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
      * @throw If not cooking or finished cooking
      * @return True if finished cooking, false otherwise
      */
-    [[nodiscard]] virtual bool hasFinishedCooking() const = 0;
+    virtual bool hasFinishedCooking() const = 0;
 
     /**
      * @brief Take order from order place
      * @return The order that is to be cooked
      */
-    [[nodiscard]] virtual Order<Product<ProductType, ProductSize, ProductIngredientType>> receiveOrder() const = 0;
+    virtual Order<Product<ProductType, ProductSize, ProductIngredientType>> receiveOrder() const = 0;
 
     /**
      * @brief Deliver cooked order
