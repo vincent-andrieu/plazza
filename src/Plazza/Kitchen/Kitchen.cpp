@@ -84,8 +84,10 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_sendFinishedOrde
     bool doesUpdate = !this->_finishedOrders.empty();
 
     while (!this->_finishedOrders.empty()) {
+        this->_orderMutex.lock();
         this->send(CommunicationType(ECommunicationType::ORDER_PIZZA));
         this->send(this->_finishedOrders.getFront());
+        this->_orderMutex.unlock();
     }
     if (doesUpdate)
         this->_sendStatus();
@@ -94,9 +96,11 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_sendFinishedOrde
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 void Kitchen<ProductType, ProductSize, ProductIngredientType>::_sendStatus()
 {
+    this->_statusMutex.lock();
     this->send(CommunicationType(ECommunicationType::STATUS));
     this->send(KitchenStatus<ProductType, ProductSize, ProductIngredientType>(
         this->_pendingOrders, this->_stock.getStockList(), this->getCookingOrders()));
+    this->_statusMutex.unlock();
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
