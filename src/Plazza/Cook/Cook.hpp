@@ -15,6 +15,7 @@
 #include "Product/Product.hpp"
 #include "Encapsulations/LockedQueue/LockedQueue.hpp"
 #include "Error/Error.hpp"
+#include "Clock/Clock.hpp"
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 class Cook : public ICook<ProductType, ProductSize, ProductIngredientType> {
@@ -101,7 +102,10 @@ class Cook : public ICook<ProductType, ProductSize, ProductIngredientType> {
   private:
     bool _isWorking{false};
     bool _isCooking{false};
+
     Product<ProductType, ProductSize, ProductIngredientType> _cookingProduct;
+    Clock _cookingTime;
+
     Stock<ProductIngredientType> &_stockPlace;
     LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &_orderReceivePlace;
     LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &_deliveryPlace;

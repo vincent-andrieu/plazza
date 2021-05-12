@@ -105,8 +105,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_printDetaill
     this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(
         IDisplayModule::Color::WHITE, Coord(80, 30), Coord(pos_x, pos_y++));
     this->_dirName[this->_pos]->getEntryPoint()->putText(
-        IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), string("finish order:"));
-    // log.writeLog(string("finish size: ") + std::to_string(finish.size()));
+        IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), string("finished orders:"));
     for (size_t i = 0; i < limit && !finish.empty(); i++) {
         const Order<Product<ProductType, ProductSize, ProductIngredientType>> tmp = finish.front();
         finish.pop();
@@ -117,7 +116,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_printDetaill
             return params.second == tmp.getOrder().getType();
         });
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
-            to_write = "data wrong";
+            to_write = "wrong data";
         else
             to_write = type_it->first + string(" ") + size_it->first;
         this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::GREEN, Coord(pos_x + 1, pos_y++), to_write);
@@ -129,8 +128,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_printDetaill
     pos_y = 5;
     pos_x += 20;
     this->_dirName[this->_pos]->getEntryPoint()->putText(
-        IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), string("pending order:"));
-    // log.writeLog(string("pending size: ") + std::to_string(pending.size()));
+        IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), string("pending orders:"));
     for (size_t i = 0; i < limit && !pending.empty(); i++) {
         const Order<Product<ProductType, ProductSize, ProductIngredientType>> tmp = pending.front();
         pending.pop();
@@ -141,7 +139,7 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_printDetaill
             return params.second == tmp.getOrder().getType();
         });
         if (size_it == PizzaSizeList.end() || type_it == PizzaNames.end())
-            to_write = "data wrong";
+            to_write = "wrong data";
         else
             to_write = type_it->first + string(" ") + size_it->first;
         this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::GREEN, Coord(pos_x + 1, pos_y++), to_write);
@@ -176,7 +174,6 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_printDetaill
     pos_x += 20;
     this->_dirName[this->_pos]->getEntryPoint()->putText(
         IDisplayModule::Color::CYAN, Coord(pos_x + 1, pos_y++), string("stock:"));
-    // log.writeLog(string("stock size: ") + std::to_string(stock.size()));
     for (auto &q : stock) {
         to_write = PizzaIngredientListName.at(q.first) + string(": ") + std::to_string(q.second);
         this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::GREEN, Coord(pos_x + 1, pos_y++), to_write);
