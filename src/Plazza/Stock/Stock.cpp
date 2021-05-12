@@ -31,8 +31,9 @@ template <typename IngredientType> void Stock<IngredientType>::addIngredient(con
     }
 }
 
-template <typename IngredientType> bool Stock<IngredientType>::isRestockTime() const
+template <typename IngredientType> bool Stock<IngredientType>::isRestockTime()
 {
+    _restockClock.setElapsedTime();
     return (_restockClock.getElapsedTimeDouble() > _restockTime);
 }
 
@@ -40,7 +41,9 @@ template <typename IngredientType> void Stock<IngredientType>::restock()
 {
     std::lock_guard<std::mutex> my_lock(_mutex);
 
-    _restockClock.setElapsedTime();
+    if (!isRestockTime())
+        return;
+    _restockClock.resetStartingPoint();
     for (auto &item : _stock) {
         item.second += RESTOCK_NBR;
     }
