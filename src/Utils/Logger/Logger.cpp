@@ -22,7 +22,7 @@ void Logger::writeLog(const string log)
 {
     std::chrono::time_point<std::chrono::system_clock> now_time = std::chrono::system_clock::now();
     std::time_t now_time_print = std::chrono::system_clock::to_time_t(now_time);
-    string to_write = std::to_string(this->_nbLog++) + ". ";
+    string to_write = toString(this->_nbLog++) + ". ";
     string tmp(std::ctime(&now_time_print));
 
     tmp.pop_back();

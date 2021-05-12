@@ -26,8 +26,8 @@ void Serializer::pack(const int msqId) const
     const string str = this->_SerializeToString();
 
     if (str.size() > MAX_OBJECT_SIZE)
-        throw SerializerError("The sending string is over limit: " + std::to_string(str.size())
-            + ". Limited to: " + std::to_string(MAX_OBJECT_SIZE));
+        throw SerializerError(
+            "The sending string is over limit: " + toString(str.size()) + ". Limited to: " + toString(MAX_OBJECT_SIZE));
     memset(&sendedObject, 0, sizeof(sendedObject));
     sendedObject.mtype = 1;
     strcpy(sendedObject.mtext, str.c_str());

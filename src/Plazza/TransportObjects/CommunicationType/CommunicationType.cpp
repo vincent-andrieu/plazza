@@ -22,7 +22,7 @@ ECommunicationType CommunicationType::getType() const
 
 const string CommunicationType::_SerializeToString() const
 {
-    return std::to_string(this->_type);
+    return toString(this->_type);
 }
 
 void CommunicationType::_SerializeFromString(const string str)

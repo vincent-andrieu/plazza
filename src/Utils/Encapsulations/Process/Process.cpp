@@ -27,9 +27,9 @@ Process::Process()
         this->_isChild = false;
     }
     this->_parentCommunication =
-        Communication(std::to_string(this->_parentPid) + "-" + std::to_string(this->_childPid)); // parent send to child
+        Communication(toString(this->_parentPid) + "-" + toString(this->_childPid)); // parent send to child
     this->_childCommunication =
-        Communication(std::to_string(this->_childPid) + "-" + std::to_string(this->_parentPid)); // child send to parent
+        Communication(toString(this->_childPid) + "-" + toString(this->_parentPid)); // child send to parent
 }
 
 Process::Process(const Process &process)
