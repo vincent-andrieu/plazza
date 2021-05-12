@@ -276,11 +276,12 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::updatingKitch
 {
     size_t pos_x = 30;
     size_t pos_y = 1;
+    size_t len = kitchenList.size();
     IDisplayModule::Color color = (this->_mouseOver(Coord(pos_x, pos_y), Coord(15, 3))) ? IDisplayModule::Color::GREEN : IDisplayModule::Color::BLUE;
 
     if (this->_mouseClickedHere(Coord(pos_x, pos_y), Coord(15, 3))) {
         color = IDisplayModule::Color::YELLOW;
-        if (kitchenList.size())
+        if (len && this->_kitechToPrint < this->_kitechToPrint)
             func(kitchenList[this->_kitechToPrint]->kitchen);
     }
     this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(color, Coord(15, 3), Coord(pos_x, pos_y));
