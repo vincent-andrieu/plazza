@@ -73,7 +73,6 @@ void Kitchen<ProductType, ProductSize, ProductIngredientType>::_addPendingOrder(
     const Order<Product<ProductType, ProductSize, ProductIngredientType>> &order)
 {
     this->_pendingOrders.push(order);
-    std::cerr << "New pending orders size: " + toString(this->_pendingOrders.size()) + "\n";
     this->_sendStatus();
 }
 
