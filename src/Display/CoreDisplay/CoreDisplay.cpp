@@ -269,4 +269,48 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_kitchenSwitc
     }
 }
 
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::updatingKitchenStatus(
+    std::function<void(const Kitchen<ProductType, ProductSize, ProductIngredientType> &)> func,
+    std::vector<std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>>> &kitchenList)
+{
+    size_t pos_x = 30;
+    size_t pos_y = 1;
+    IDisplayModule::Color color = (this->_mouseOver(Coord(pos_x, pos_y), Coord(15, 3))) ? IDisplayModule::Color::GREEN : IDisplayModule::Color::BLUE;
+
+    if (this->_mouseClickedHere(Coord(pos_x, pos_y), Coord(15, 3))) {
+        color = IDisplayModule::Color::YELLOW;
+        //func(kitchenList[this->_kitechToPrint]->kitchen);
+    }
+    this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(color, Coord(15, 3), Coord(pos_x, pos_y));
+    this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::WHITE, Coord(pos_x + 1, pos_y + 1), string("Update status"));
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+bool CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_mouseClickedHere(Coord pos, Coord size)
+{
+    bool clicked = this->_dirName[this->_pos]->getEntryPoint()->isMouseClicked();
+    Coord mouse = this->_dirName[this->_pos]->getEntryPoint()->getMousePos();
+
+    if (!clicked)
+        return false;
+    if (mouse.x < pos.x || mouse.y < pos.y)
+        return false;
+    if (mouse.x > pos.x + size.x || mouse.y > pos.y + size.y)
+        return false;
+    return true;
+}
+
+template <typename ProductType, typename ProductSize, typename ProductIngredientType>
+bool CoreDisplay<ProductType, ProductSize, ProductIngredientType>::_mouseOver(Coord pos, Coord size)
+{
+    Coord mouse = this->_dirName[this->_pos]->getEntryPoint()->getMousePos();
+
+    if (mouse.x < pos.x || mouse.y < pos.y)
+        return false;
+    if (mouse.x > pos.x + size.x || mouse.y > pos.y + size.y)
+        return false;
+    return true;
+}
+
 template class Pizzeria::CoreDisplay<PizzaType, PizzaSize, PizzaIngredient>;

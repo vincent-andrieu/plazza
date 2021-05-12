@@ -44,6 +44,9 @@ void Restaurant<ProductType, ProductSize, ProductIngredientType>::lunchTime()
         core.clear();
         core.printPrompt();
         core.printKitchen(this->_kitchens);
+        core.updatingKitchenStatus([this](const Kitchen<ProductType, ProductSize, ProductIngredientType> &kitchen) {
+            this->askKitchenStatus(kitchen);
+        }, this->_kitchens);
         input = core.getLine();
         if (input.length()) {
             try {

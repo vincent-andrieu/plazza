@@ -31,6 +31,9 @@ namespace Pizzeria
         virtual void update() = 0;
         virtual void clear() = 0;
         virtual bool isRunning() = 0;
+        virtual void updatingKitchenStatus(
+          std::function<void(const Kitchen<ProductType, ProductSize, ProductIngredientType> &)> func,
+          std::vector<std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>>> &kitchenList) = 0;
 
       protected:
         virtual void _printDetailledKitchen(

@@ -38,6 +38,9 @@ namespace Pizzeria
         bool isRunning();
         void update();
         void clear();
+        void updatingKitchenStatus(
+          std::function<void(const Kitchen<ProductType, ProductSize, ProductIngredientType> &)> func,
+          std::vector<std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>>> &kitchenList);
 
       protected:
         void _printDetailledKitchen(std::unique_ptr<KitchenManage<ProductType, ProductSize, ProductIngredientType>> &kitchen);
@@ -45,6 +48,8 @@ namespace Pizzeria
       private:
         void _libraryDisplaySwitch();
         void _kitchenSwitch();
+        bool _mouseClickedHere(Coord pos, Coord size);
+        bool _mouseOver(Coord pos, Coord size);
 
       private:
         string _error;
