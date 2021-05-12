@@ -51,8 +51,7 @@ class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>
     LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> _pendingOrders;
     LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> _finishedOrders;
     std::vector<Cook<ProductType, ProductSize, ProductIngredientType>> _cooks;
-    std::mutex _statusMutex;
-    std::mutex _orderMutex;
+    std::mutex _communicationMutex;
 };
 
 #endif
