@@ -249,7 +249,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::printError()
 {
     size_t pos_y = 1;
-    size_t pos_x = 30;
+    size_t pos_x = 50;
 
     if (this->_error.length()) {
         this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(
@@ -277,7 +277,8 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::updatingKitch
     size_t pos_x = 30;
     size_t pos_y = 1;
     size_t len = kitchenList.size();
-    IDisplayModule::Color color = (this->_mouseOver(Coord(pos_x, pos_y), Coord(15, 3))) ? IDisplayModule::Color::GREEN : IDisplayModule::Color::BLUE;
+    IDisplayModule::Color color =
+        (this->_mouseOver(Coord(pos_x, pos_y), Coord(15, 3))) ? IDisplayModule::Color::GREEN : IDisplayModule::Color::BLUE;
 
     if (this->_mouseClickedHere(Coord(pos_x, pos_y), Coord(15, 3))) {
         color = IDisplayModule::Color::YELLOW;
@@ -285,7 +286,8 @@ void CoreDisplay<ProductType, ProductSize, ProductIngredientType>::updatingKitch
             func(kitchenList[this->_kitechToPrint]->kitchen);
     }
     this->_dirName[this->_pos]->getEntryPoint()->putRectOutline(color, Coord(15, 3), Coord(pos_x, pos_y));
-    this->_dirName[this->_pos]->getEntryPoint()->putText(IDisplayModule::Color::WHITE, Coord(pos_x + 1, pos_y + 1), string("Update status"));
+    this->_dirName[this->_pos]->getEntryPoint()->putText(
+        IDisplayModule::Color::WHITE, Coord(pos_x + 1, pos_y + 1), string("Update status"));
 }
 
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
