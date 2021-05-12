@@ -11,8 +11,10 @@
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
 Cook<ProductType, ProductSize, ProductIngredientType>::Cook(Stock<ProductIngredientType> &stockPlace,
     LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &orderReceivePlace,
-    LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &deliveryPlace)
-    : _stockPlace(stockPlace), _orderReceivePlace(orderReceivePlace), _deliveryPlace(deliveryPlace)
+    LockedQueue<Order<Product<ProductType, ProductSize, ProductIngredientType>>> &deliveryPlace,
+    std::function<void()> updateStatusFunc)
+    : _stockPlace(stockPlace), _orderReceivePlace(orderReceivePlace), _deliveryPlace(deliveryPlace),
+      _updateStatusFunc(updateStatusFunc)
 {
 }
 template <typename ProductType, typename ProductSize, typename ProductIngredientType>
@@ -28,7 +30,7 @@ template <typename ProductType, typename ProductSize, typename ProductIngredient
 Cook<ProductType, ProductSize, ProductIngredientType>::Cook(const Cook<ProductType, ProductSize, ProductIngredientType> &rhs)
     : _isWorking(rhs.isWorking()), _isCooking(rhs.isCooking()), _cookingProduct(rhs.getCookingProduct()),
       _stockPlace(rhs.getStockPlace()), _orderReceivePlace(rhs.getOrderReceivePlace()), _deliveryPlace(rhs.getDeliveryPlace()),
-      _thread(std::thread())
+      _thread(std::thread()), _updateStatusFunc(rhs._updateStatusFunc)
 {
 }
 
@@ -82,6 +84,7 @@ void Cook<ProductType, ProductSize, ProductIngredientType>::_cook(Product<Produc
     this->_isCooking = true;
     _cookingTime.resetStartingPoint();
     this->_cookingProduct = order;
+    this->_updateStatusFunc();
     this->_getIngredients(_cookingProduct.getIngredients());
     this->_cookingProduct.setFinished();
     do {
