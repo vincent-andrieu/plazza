@@ -37,6 +37,7 @@ class Kitchen : public IKitchen<ProductType, ProductSize, ProductIngredientType>
     void _cooksStartCooking();
     void _cooksStopCooking();
     bool _isCookersWorking() const;
+    const std::vector<Order<Product<ProductType, ProductSize, ProductIngredientType>>> getCookingOrders() const;
 
   private:
     void _destroyManage();
