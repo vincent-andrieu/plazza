@@ -10,8 +10,7 @@
 
 #include <chrono>
 
-class Clock
-{
+class Clock {
   public:
     Clock() = default;
     ~Clock() = default;
@@ -40,10 +39,8 @@ class Clock
      */
     void resetStartingPoint();
 
-  protected:
   private:
-    std::chrono::time_point<std::chrono::system_clock> _startingPoint{
-        std::chrono::system_clock::now()};
+    std::chrono::time_point<std::chrono::system_clock> _startingPoint{std::chrono::system_clock::now()};
 
     std::chrono::duration<double> _elapsedTime{0};
 };
