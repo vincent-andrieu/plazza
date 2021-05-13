@@ -170,9 +170,12 @@ bool Restaurant<ProductType, ProductSize, ProductIngredientType>::_retreiveOrder
             kitchenManage->kitchenStatus.addFinishedOrder(order);
             this->_reception.sendOrder(order);
 
-            kitchenManage->orders.remove_if([order](Order<Product<ProductType, ProductSize, ProductIngredientType>> &elemOrder) {
-                return order.getOrder() == elemOrder.getOrder();
-            });
+            auto foundOrder = std::find_if(kitchenManage->orders.begin(), kitchenManage->orders.end(),
+                [order](const Order<Product<ProductType, ProductSize, ProductIngredientType>> &elemOrder) {
+                    return order.getOrder() == elemOrder.getOrder();
+                });
+            if (foundOrder != kitchenManage->orders.end())
+                kitchenManage->orders.erase(foundOrder);
         } break;
 
         case ECommunicationType::STATUS: {
