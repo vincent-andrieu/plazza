@@ -25,26 +25,25 @@ Product<Type, Size, Ingredient>::Product(const Product<Type, Size, Ingredient> &
 template <typename Type, typename Size, typename Ingredient>
 Product<Type, Size, Ingredient> &Product<Type, Size, Ingredient>::operator=(const Product<Type, Size, Ingredient> &rhs)
 {
-    _type = rhs.getType();
-    _size = rhs.getSize();
-    _preparationTime = rhs.getPreparationTime();
-    _ingredients = rhs.getIngredients();
-    _finished = rhs.isFinished();
+    this->_type = rhs._type;
+    this->_size = rhs._size;
+    this->_preparationTime = rhs._preparationTime;
+    this->_ingredients = rhs._ingredients;
+    this->_finished = rhs._finished;
+
     return *this;
 }
 
 template <typename Type, typename Size, typename Ingredient>
 bool Product<Type, Size, Ingredient>::operator==(const IProduct<Type, Size, Ingredient> &product) const
 {
-    return this->getType() == product.getType() && this->getSize() == product.getSize()
-        && this->getPreparationTime() == product.getPreparationTime() && this->getIngredients() == product.getIngredients();
+    return this->getType() == product.getType() && this->getSize() == product.getSize();
 }
 
 template <typename Type, typename Size, typename Ingredient>
 bool Product<Type, Size, Ingredient>::operator!=(const IProduct<Type, Size, Ingredient> &product) const
 {
-    return this->getType() != product.getType() || this->getSize() != product.getSize()
-        || this->getPreparationTime() != product.getPreparationTime() || this->getIngredients() != product.getIngredients();
+    return this->getType() != product.getType() || this->getSize() != product.getSize();
 }
 
 template <typename Type, typename Size, typename Ingredient> [[nodiscard]] Type Product<Type, Size, Ingredient>::getType() const
