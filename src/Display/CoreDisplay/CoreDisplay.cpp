@@ -26,6 +26,8 @@ CoreDisplay<ProductType, ProductSize, ProductIngredientType>::CoreDisplay(
         if (!it->compare(PRIORITORY_LIB))
             this->_pos = i;
     }
+    if (!this->_dirName.size())
+        throw std::invalid_argument("no lib found");
     this->_dirName[this->_pos]->getEntryPoint()->open(this->_screenSize, this->_screenScale);
 }
 
