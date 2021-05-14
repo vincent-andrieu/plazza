@@ -28,8 +28,7 @@ namespace Pizzeria
       public:
         Factory() = default;
         ~Factory() = default;
-        static Product<PizzaType, PizzaSize, PizzaIngredient> callFactory(
-            const PizzaType type, const PizzaSize size, const double multiplier);
+        static Product<PizzaType, PizzaSize, PizzaIngredient> callFactory(PizzaType type, PizzaSize size, double multiplier);
     };
 } // namespace Pizzeria
 

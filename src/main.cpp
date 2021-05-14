@@ -41,6 +41,9 @@ int main(int argc, char **argv)
     stringstream(argv[1]) >> bakingMultiplier;
     stringstream(argv[2]) >> cooksPerKitchen;
     stringstream(argv[3]) >> restockTime;
+
+    if (restockTime != 0)
+        restockTime /= 1000;
     if (bakingMultiplier == 0.0)
         return EXIT_ERROR;
 
@@ -51,6 +54,9 @@ int main(int argc, char **argv)
         std::cerr << e.getComponent() + ": " + e.what() << std::endl;
         return EXIT_ERROR;
     } catch (const std::invalid_argument &e) {
+        std::cerr << e.what() << std::endl;
+        return EXIT_ERROR;
+    } catch (const std::length_error &e) {
         std::cerr << e.what() << std::endl;
         return EXIT_ERROR;
     }
